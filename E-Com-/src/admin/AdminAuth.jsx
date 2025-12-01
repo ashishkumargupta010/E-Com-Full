@@ -16,6 +16,7 @@ const AdminAuth = () => {
       const res = await fetch("http://localhost:5000/api/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // ⭐ Fix CORS + Cookies
         body: JSON.stringify({ email, password }),
       });
 
@@ -26,13 +27,14 @@ const AdminAuth = () => {
         return;
       }
 
-      // Store admin token
+      // Store admin login data
       localStorage.setItem("adminToken", data.token);
       localStorage.setItem("adminInfo", JSON.stringify(data.admin));
 
-      // Redirect to Admin Dashboard
-      navigate("/admin");
+      // Redirect
+      navigate("/admin/dashboard");
     } catch (err) {
+      console.log(err);
       setError("Server error. Try again later.");
     }
   };
@@ -63,9 +65,7 @@ const AdminAuth = () => {
           <button type="submit">Sign In</button>
         </form>
 
-        <p className="note">
-          Use your registered Admin Email / Password
-        </p>
+        <p className="note">Use your registered Admin Email / Password</p>
       </div>
     </div>
   );
