@@ -1,0 +1,44 @@
+/* GLOBAL RESET — required for zoom stability */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove Vite dark background */
+:root {
+  font-size: 16px;       /* keep rem scaling consistent */
+  color: #000;
+  background: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Body full fluid system */
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: #fff5f8;
+  overflow-x: hidden;    /* prevents layout shift */
+}
+
+/* Links default */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+/* Main container like Amazon */
+.app-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

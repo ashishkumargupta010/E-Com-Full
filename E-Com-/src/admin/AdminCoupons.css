@@ -1,0 +1,121 @@
+/* Main container */
+.admin-coupon-box {
+  padding: 2rem;
+  background-color: #fff0f5; /* soft pink */
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.admin-coupon-box h2 {
+  color: #c2185b;
+  margin-bottom: 1rem;
+}
+
+.admin-coupon-box h3 {
+  color: #c2185b;
+  margin-top: 2rem;
+  border-bottom: 2px solid #f8bbd0;
+  padding-bottom: 5px;
+  width: fit-content;
+}
+
+/* Add Coupon Form */
+.add-coupon-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+}
+
+.add-coupon-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #f48fb1;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.add-coupon-form input:focus {
+  border-color: #c2185b;
+  box-shadow: 0 0 8px rgba(194, 24, 91, 0.3);
+}
+
+.add-coupon-form button {
+  padding: 0.7rem 1.5rem;
+  background-color: #c2185b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.add-coupon-form button:hover {
+  background-color: #a0003f;
+}
+
+/* Coupon list */
+.admin-coupon-box ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.admin-coupon-box li {
+  background: #ffe4ec;
+  padding: 1rem;
+  margin-bottom: 0.7rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.4);
+  font-size: 1rem;
+}
+
+.admin-coupon-box li span {
+  color: #4a148c;
+}
+
+.admin-coupon-box li b {
+  color: #c2185b;
+}
+
+/* Delete button */
+.admin-coupon-box li button {
+  background: #ff4081;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-coupon-box li button:hover {
+  background: #c2185b;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .add-coupon-form {
+    flex-direction: column;
+  }
+
+  .admin-coupon-box li {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .admin-coupon-box li button {
+    width: 100%;
+  }
+}

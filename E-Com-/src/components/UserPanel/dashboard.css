@@ -1,0 +1,37 @@
+.dash-wrapper {
+  width: 100%;
+}
+
+.dash-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.dash-card {
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  transition: 0.3s;
+}
+
+.dash-card:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.dash-card h3 {
+  margin-top: 0;
+  color: #ff2d78;
+}
+
+.dash-card p {
+  color: #555;
+  margin: 5px 0;
+}

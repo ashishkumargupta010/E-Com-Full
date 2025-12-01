@@ -1,0 +1,38 @@
+.about-page {
+  padding: 60px 15%;
+  background-color: #fff0f7;
+  min-height: 80vh;
+  text-align: left;
+}
+
+.about-page h1 {
+  font-size: 2.4rem;
+  color: #e91e63;
+  margin-bottom: 1rem;
+}
+
+.about-page p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.7;
+}
+
+.about-section {
+  margin-top: 2rem;
+}
+
+.about-section h2 {
+  color: #d81b60;
+  margin-bottom: 0.5rem;
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-section li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #444;
+}

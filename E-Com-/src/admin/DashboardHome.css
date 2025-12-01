@@ -1,0 +1,40 @@
+.dashboard-home {
+  padding: 20px;
+  font-family: Poppins;
+}
+
+.dash-cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.dash-card {
+  flex: 1;
+  background: #ffe4f1;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.dash-card p {
+  font-size: 28px;
+  font-weight: 700;
+  color: #c2185b;
+}
+
+.charts-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.chart-box {
+  flex: 1;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}

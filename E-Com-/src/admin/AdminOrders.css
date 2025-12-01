@@ -1,0 +1,197 @@
+/* MAIN CONTAINER */
+.admin-orders-container {
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+.admin-orders-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #c2185b;
+  font-weight: 700;
+}
+
+/* ORDER CARD */
+.admin-order-box {
+  background: white;
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  border-radius: 14px;
+  border-left: 6px solid #c2185b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: 0.3s ease-in-out;
+}
+
+.admin-order-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+}
+
+.admin-order-box h3 {
+  color: #c2185b;
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.admin-order-box p {
+  font-size: 0.95rem;
+  margin: 0.25rem 0;
+  color: #444;
+}
+
+/* ITEMS LIST */
+.admin-order-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.6rem;
+}
+
+.admin-order-box ul li {
+  background: #ffe4ec;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+/* STATUS UPDATE */
+.status-update {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.status-update label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #c2185b;
+}
+
+.status-update select {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.status-update select:hover,
+.status-update select:focus {
+  border-color: #c2185b;
+  box-shadow: 0 0 4px rgba(194, 24, 91, 0.4);
+}
+
+/* TOP ACTION BUTTONS */
+.cancel-btn,
+.remove-btn {
+  padding: 6px 15px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-btn {
+  background: #ff3b3b;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #d62828;
+}
+
+.remove-btn {
+  background: #444;
+  color: white;
+}
+
+.remove-btn:hover {
+  background: #222;
+}
+
+/* RETURN IMAGES GALLERY */
+.return-images {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.return-img {
+  width: 85px;
+  height: 85px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #ffa6c7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* RETURN ACTION BUTTONS */
+.return-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.approve-btn,
+.refund-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: 0.2s;
+}
+
+.approve-btn {
+  background: #0277bd;
+}
+
+.approve-btn:hover {
+  background: #015a92;
+}
+
+.refund-btn {
+  background: #008f39;
+}
+
+.refund-btn:hover {
+  background: #006f2d;
+}
+
+/* COLOR HIGHLIGHT WHEN RETURN REQUESTED */
+.admin-order-box.return-requested {
+  border-left-color: #ff9800 !important;
+  background: #fff7e6;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .admin-order-box {
+    padding: 1.2rem;
+  }
+
+  .status-update {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .return-images {
+    flex-wrap: wrap;
+  }
+
+  .return-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .return-actions {
+    flex-direction: column;
+  }
+}

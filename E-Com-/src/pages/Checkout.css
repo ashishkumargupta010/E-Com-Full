@@ -1,0 +1,171 @@
+/* ------------------------------------------------------ */
+/* 🌸 ULTRA PREMIUM LUXURY CHECKOUT PAGE — FINAL VERSION  */
+/* ------------------------------------------------------ */
+
+.checkout-page {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #ffd1e8, #ffe9f4, #fff5fa);
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Wrapper — Centered Card */
+.checkout-wrapper {
+  width: 100%;
+  max-width: 650px;
+}
+
+/* Heading */
+.checkout-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #ff2d78, #ff77b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Main Card */
+.checkout-box {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  padding: 32px;
+  border: 1px solid rgba(255, 190, 220, 0.6);
+  box-shadow: 0px 12px 25px rgba(255, 120, 160, 0.25);
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+}
+
+.checkout-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 16px 30px rgba(255, 120, 160, 0.3);
+}
+
+/* Items Section */
+.checkout-box h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ff2d78;
+  margin-bottom: 15px;
+}
+
+/* Cart Item */
+.checkout-item {
+  background: #ffffff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #ffe0ef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #444;
+  font-size: 15px;
+  transition: 0.25s ease;
+}
+
+.checkout-item:hover {
+  background: #fff2f8;
+  border-color: #ffafce;
+  transform: scale(1.01);
+}
+
+/* Price Section */
+.price-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff8fc;
+  border-radius: 16px;
+  border: 1px solid #ffd6ea;
+}
+
+.price-section p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.price-section h3 {
+  margin-top: 12px;
+  font-size: 22px;
+  color: #222;
+  font-weight: 700;
+}
+
+/* Coupon Box */
+.coupon-box {
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.coupon-box input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ffb3d8;
+  font-size: 15px;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.coupon-box input:focus {
+  border-color: #ff2d78;
+  box-shadow: 0 0 10px rgba(255, 60, 140, 0.3);
+}
+
+/* Coupon Button */
+.coupon-box button {
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #ff4fa1, #ff2d78);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.coupon-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 30, 120, 0.4);
+}
+
+/* Proceed Button */
+.primary-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 28px;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #427bff, #1a5cff);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.28s ease;
+  letter-spacing: 0.5px;
+}
+
+.primary-btn:hover {
+  background: linear-gradient(90deg, #2f66e6, #003fd0);
+  transform: translateY(-3px);
+  box-shadow: 0px 6px 15px rgba(50, 100, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .checkout-box {
+    padding: 22px;
+  }
+  .checkout-title {
+    font-size: 26px;
+  }
+  .primary-btn {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,19 @@
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+  background: #fffafc;
+}
+
+.admin-sidebar {
+  width: 220px;
+  background: linear-gradient(180deg, #ffb6c1, #ff69b4);
+  color: white;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+
+.admin-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}

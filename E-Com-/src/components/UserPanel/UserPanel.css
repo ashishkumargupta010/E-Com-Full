@@ -1,0 +1,159 @@
+/* ---------------------------------------------------
+   🔥 PINK FLIPKART STYLE USER PANEL
+--------------------------------------------------- */
+
+/* MAIN LAYOUT */
+.flipkart-panel {
+  display: flex;
+  min-height: 100vh;
+  background: #fff5f8; /* soft blush pink */
+  font-family: "Poppins", sans-serif;
+}
+
+/* SIDEBAR */
+.fk-sidebar {
+  width: 260px;
+  background: #ffffff;
+  padding: 25px;
+  border-right: 2px solid #ffddea;
+  box-shadow: 2px 0 10px rgba(255, 135, 175, 0.15);
+}
+
+/* Profile Box */
+.fk-profile-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.fk-profile-avatar {
+  width: 50px;
+  height: 50px;
+  background: #ff4081;
+  color: #fff;
+  font-size: 22px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fk-profile-box h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #ff0066;
+  font-weight: 600;
+}
+
+.fk-profile-box span {
+  font-size: 13px;
+  color: #777;
+}
+
+/* SIDEBAR LINKS */
+.fk-link {
+  display: block;
+  padding: 12px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.fk-link:hover,
+.fk-link.active {
+  background: #ffe4ef;
+  color: #ff2d78;
+  box-shadow: 0 2px 8px rgba(255, 85, 150, 0.2);
+}
+
+/* LOGOUT BUTTON */
+.fk-logout {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #ff4b6e;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fk-logout:hover {
+  background: #e93657;
+  transform: translateY(-2px);
+}
+
+/* MAIN CONTENT */
+.fk-content {
+  flex: 1;
+  padding: 40px 50px;
+}
+
+/* Section Titles */
+.fk-content h2 {
+  color: #ff2d78;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Address Card */
+.address-card {
+  border: 1px solid #ffd4e4;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(255, 120, 185, 0.15);
+}
+
+.address-card input {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #ffb6d0;
+}
+
+.address-card input:focus {
+  border-color: #ff2d78;
+  outline: none;
+}
+
+/* Add New Address Button */
+.add-btn {
+  background: #ff4081;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  background: #d9005f;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: #ff3b52;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #d5002f;
+}
+
+

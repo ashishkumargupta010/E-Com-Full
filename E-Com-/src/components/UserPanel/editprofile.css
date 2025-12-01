@@ -1,0 +1,72 @@
+.profile-wrapper h2 {
+  font-size: 25px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.profile-form {
+  width: 400px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.profile-form label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
+  display: block;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.profile-form button {
+  background: #ff2d78;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.profile-form button:hover {
+  background: #e32067;
+}
+
+/* -------- Password Popup Modal -------- */
+
+.password-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  width: 330px;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.modal-box h3 {
+  margin: 0 0 15px;
+}
+
+.cancel-btn {
+  background: #ddd;
+  color: #333;
+  margin-left: 10px;
+}

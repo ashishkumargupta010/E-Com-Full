@@ -1,0 +1,235 @@
+/* ================================
+   MAIN WRAPPER
+================================ */
+.address-wrapper {
+  padding: 20px 30px;
+  font-family: Poppins, sans-serif;
+}
+
+.address-wrapper h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #222;
+  font-weight: 600;
+}
+
+/* ================================
+   ADD ADDRESS BOX
+================================ */
+.add-address-box {
+  background: #fff;
+  padding: 25px;
+  width: 500px;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 35px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.add-address-box h4 {
+  margin-bottom: 15px;
+  color: #444;
+  font-weight: 600;
+}
+
+.add-address-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: 0.25s;
+  font-size: 14px;
+}
+
+.add-address-box input:focus {
+  border-color: #ff2d78;
+  box-shadow: 0 0 4px rgba(255, 45, 120, 0.4);
+}
+
+.add-address-box button {
+  background: #ff2d78;
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  width: 100%;
+}
+
+.add-address-box button:hover {
+  background: #ff1666;
+}
+
+/* ================================
+   ADDRESS GRID
+================================ */
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+/* ================================
+   ADDRESS CARD
+================================ */
+.address-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #eee;
+  position: relative;
+  transition: 0.3s;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.address-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.address-card h4 {
+  margin: 0 0 10px;
+  color: #ff2d78;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.address-card p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* ================================
+   THREE-DOT MENU
+================================ */
+.card-menu {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.card-menu:hover {
+  background: #f3f3f3;
+}
+
+.menu-options {
+  position: absolute;
+  top: 35px;
+  right: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 8px 0;
+  width: 130px;
+  z-index: 10;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.menu-options button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  color: #444;
+  font-size: 14px;
+}
+
+.menu-options button:hover {
+  background: #f5f5f5;
+}
+
+/* ================================
+   DELIVER HERE BUTTON
+================================ */
+.deliver-here-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  background: #ff2d78;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.deliver-here-btn:hover {
+  background: #ff1766;
+}
+
+/* Highlight selected */
+.address-card.selected {
+  border: 2px solid #ff2d78;
+  box-shadow: 0 4px 14px rgba(255, 45, 120, 0.3);
+}
+
+/* ================================
+   EDIT MODAL
+================================ */
+.edit-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.edit-modal-box {
+  background: white;
+  width: 420px;
+  padding: 25px;
+  border-radius: 14px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.edit-modal-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.save-edit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff2d78;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cancel-edit-btn {
+  width: 100%;
+  padding: 10px;
+  background: #eee;
+  border: none;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}

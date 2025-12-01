@@ -1,0 +1,37 @@
+.hero-banner {
+  background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #d63384;
+  font-family: 'Playfair Display', serif;
+}
+
+.hero-text span {
+  color: #ff69b4;
+}
+
+.hero-text p {
+  color: #555;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.hero-text button {
+  margin-top: 1.5rem;
+  padding: 10px 25px;
+  background: #d63384;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.hero-text button:hover {
+  background: #b02069;
+}

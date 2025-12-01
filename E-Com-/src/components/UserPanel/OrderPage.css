@@ -1,0 +1,321 @@
+/* --------------------------------------------------------
+   My Orders Page (Flipkart Premium Style)
+---------------------------------------------------------*/
+
+.orders-container {
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: #fff5f8;
+  overflow-y: auto;
+  position: relative;
+}
+
+.order-scroll-track {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --------------------------------------------------------
+   ORDER CARD
+---------------------------------------------------------*/
+.order-card {
+  display: flex;
+  gap: 1rem;
+  background: white;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #ffe4ef;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+
+.order-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 64, 129, 0.2);
+}
+
+.order-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #fff0f7;
+  padding: 6px;
+  border: 1px solid #ffd4e7;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.order-product {
+  font-size: 1.25rem;
+  color: #c2185b;
+  font-weight: 600;
+}
+
+.order-id {
+  color: #777;
+  margin: 4px 0 10px 0;
+}
+
+.order-price {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.order-status {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  margin: 8px 0 16px 0;
+  background: #ffe4ef;
+  color: #c2185b;
+  border: 1px solid rgba(194, 24, 91, 0.15);
+}
+
+/* --------------------------------------------------------
+   TIMELINE
+---------------------------------------------------------*/
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 75px;
+  opacity: 0.45;
+  transition: 300ms ease;
+}
+
+.step-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: 300ms;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step.active .step-circle {
+  background: #ff4fa0;
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.45);
+}
+
+.step-line {
+  height: 4px;
+  flex: 1;
+  background: #ddd;
+  border-radius: 5px;
+  transition: 300ms ease;
+}
+
+.step-line.active {
+  background: linear-gradient(90deg, #ffb6d9, #ff4fa0);
+}
+
+/* Return Yellow */
+.step.active.yellow .step-circle {
+  background: #ffb300;
+}
+.step-line.active.yellow {
+  background: linear-gradient(90deg, #ffe7a7, #ffb300);
+}
+
+/* Refund Green */
+.step.active.green .step-circle {
+  background: #28a745;
+}
+.step-line.active.green {
+  background: linear-gradient(90deg, #bdf5cb, #28a745);
+}
+
+/* --------------------------------------------------------
+   BUTTONS
+---------------------------------------------------------*/
+
+.order-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 12px;
+}
+
+.cancel-btn,
+.reorder-btn {
+  padding: 9px 13px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  background: #ff4f6f;
+  color: white;
+}
+.cancel-btn:hover {
+  background: #d83750;
+}
+
+.reorder-btn {
+  background: #ffc266;
+  color: #333;
+}
+.reorder-btn:hover {
+  background: #ffb84d;
+}
+
+.order-date {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* --------------------------------------------------------
+   ⭐ PREMIUM STAR RATING (Flipkart Style)
+---------------------------------------------------------*/
+
+.star-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 20px;
+  cursor: pointer;
+}
+
+.star {
+  font-size: 42px;
+  color: #ddd;
+  transition: 0.25s ease-in-out;
+  transform: scale(1);
+}
+
+.star:hover {
+  transform: scale(1.15);
+  color: #ffb400;
+}
+
+.star.filled {
+  color: #ffb400;
+  text-shadow: 0 0 12px rgba(255, 180, 0, 0.6);
+}
+
+/* --------------------------------------------------------
+   REVIEW MODAL
+---------------------------------------------------------*/
+
+.review-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.review-content {
+  background: white;
+  width: 95%;
+  max-width: 460px;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  animation: popscale 0.35s ease;
+}
+
+@keyframes popscale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.review-title {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #c2185b;
+  font-weight: 700;
+}
+
+.review-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ffb6d9;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.review-image-input {
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.submit-review-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff2d78;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.submit-review-btn:hover {
+  background: #e3005c;
+}
+
+.close-review-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #555;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.close-review-btn:hover {
+  background: #333;
+}
+
+/* --------------------------------------------------------
+   Responsive
+---------------------------------------------------------*/
+
+@media (max-width: 768px) {
+  .order-card {
+    flex-direction: column;
+  }
+  .order-image {
+    width: 100px;
+    height: 100px;
+  }
+}

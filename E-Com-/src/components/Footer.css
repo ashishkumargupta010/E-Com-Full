@@ -1,0 +1,178 @@
+/* 🌸 PinkAura Footer Styling - Modern & Feminine Look */
+
+.footer {
+  background: linear-gradient(135deg, #ffe4ec, #ffc1d6, #ffd6e8);
+  color: #5a0035;
+  padding: 3rem 1.5rem 1rem;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 💫 Soft Glow Animation Background */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 182, 193, 0.3) 0%, transparent 70%);
+  animation: glow 6s infinite linear;
+  z-index: 0;
+}
+
+@keyframes glow {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20%, -20%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Section Headings --- */
+.footer-section h3 {
+  color: #d63384;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  position: relative;
+  font-weight: 600;
+}
+
+.footer-section h3::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #ff69b4;
+  margin-top: 6px;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.footer-section h3:hover::after {
+  width: 80px;
+}
+
+/* --- Logo & About --- */
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #d63384;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.footer-section.about p {
+  font-size: 0.95rem;
+  color: #6d0059;
+  line-height: 1.6;
+  transition: transform 0.3s ease;
+}
+
+.footer-section.about p:hover {
+  transform: translateX(4px);
+}
+
+/* --- Links & Support --- */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #6d0059;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.footer-section ul li a:hover {
+  color: #d63384;
+  margin-left: 6px;
+  text-shadow: 0 0 6px rgba(255, 105, 180, 0.3);
+}
+
+/* --- Social Media --- */
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons a {
+  color: #d63384;
+  font-size: 1.6rem;
+  margin-right: 1rem;
+  transition: all 0.4s ease;
+}
+
+.social-icons a:hover {
+  color: #a5005a;
+  transform: scale(1.25) rotate(5deg);
+  text-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
+}
+
+/* --- Footer Bottom --- */
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #ffb6c1;
+  padding-top: 1rem;
+  margin-top: 2.5rem;
+  font-size: 0.9rem;
+  color: #8a0060;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-bottom strong {
+  color: #d63384;
+}
+
+/* --- Hover Pulse Effect on Brand Name --- */
+.footer-logo:hover {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 5px #ff69b4;
+  }
+  100% {
+    text-shadow: 0 0 15px #ff1493;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .footer-container {
+    text-align: center;
+  }
+
+  .footer-section h3::after {
+    margin: 6px auto 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+

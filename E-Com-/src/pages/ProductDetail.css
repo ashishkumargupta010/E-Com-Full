@@ -1,0 +1,296 @@
+/* 🌸 Product Details Page Styling */
+.product-details-page {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+/* 🌸 Main Card */
+.product-detail-card {
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+/* 🌸 Left Section (Images) */
+.image-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+
+.product-detail-image {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ❤️ Wishlist Button */
+.wishlist-btn {
+  margin-top: 18px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #ffe4ec;
+  border: 1px solid #ff7aa8;
+  cursor: pointer;
+  font-weight: 600;
+  color: #d81b60;
+  transition: 0.3s;
+}
+
+.wishlist-btn:hover {
+  background: #ffb6d2;
+}
+
+.wishlist-btn.active {
+  background: #ff3f6c;
+  color: white;
+  border-color: #ff3f6c;
+}
+
+/* 🌸 Right Section (Details) */
+.product-detail-info {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* ⭐ Rating Row */
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.rating-badge {
+  background: #1aab55;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.rating-count {
+  color: #777;
+  font-size: 15px;
+}
+
+/* 💰 Pricing */
+.price-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.new-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff3f6c;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #777;
+  font-size: 18px;
+}
+
+.discount {
+  color: #1aab55;
+  font-weight: 600;
+}
+
+/* 🏷 Category */
+.details-cat {
+  margin-top: 10px;
+  color: #444;
+  font-size: 16px;
+}
+
+/* 🎁 Offers */
+.offers-box {
+  background: #fff6f8;
+  border: 1px solid #ffd6e0;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 22px;
+}
+
+.offers-box h4 {
+  color: #e6005c;
+  margin-bottom: 8px;
+}
+
+.offers-box ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #333;
+  font-size: 15px;
+}
+
+.offers-box li {
+  margin-bottom: 6px;
+}
+
+/* 🧵 Size Selection */
+.size-section {
+  margin-top: 25px;
+}
+
+.size-section h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.size-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.size-btn {
+  padding: 10px 18px;
+  border: 1px solid #ffc2d6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #ffe4ef;
+  transition: all 0.3s;
+}
+
+.size-btn:hover {
+  border-color: #ff3f6c;
+  color: #ff3f6c;
+}
+
+.size-btn.active {
+  background-color: #ff3f6c;
+  color: white;
+  border-color: #ff3f6c;
+}
+
+/* 📦 Delivery Check */
+.delivery-box {
+  margin-top: 25px;
+}
+
+.delivery-box h4 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.delivery-box input {
+  width: 180px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ffc7d9;
+  outline: none;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.delivery-box input:focus {
+  border-color: #ff3f6c;
+}
+
+.delivery-status {
+  margin-top: 6px;
+  color: #1aab55;
+  font-weight: 600;
+}
+
+/* ✅ Highlights */
+.highlights-box {
+  margin-top: 30px;
+}
+
+.highlights-box h4 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.highlights-box ul {
+  padding-left: 20px;
+  color: #444;
+  font-size: 15px;
+}
+
+.highlights-box li {
+  margin-bottom: 6px;
+}
+
+/* 🌸 Buttons */
+.variant-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.add-btn {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #ff3f6c;
+  color: white;
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #e6005c;
+}
+
+.back-btn {
+  padding: 14px 22px;
+  background: #ffe4ef;
+  border: 1px solid #ff9fbd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  background: #ffb6d2;
+}
+
+/* 🌸 Responsive */
+@media (max-width: 900px) {
+  .product-detail-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-detail-image {
+    max-width: 100%;
+  }
+
+  .price-box {
+    flex-wrap: wrap;
+  }
+}

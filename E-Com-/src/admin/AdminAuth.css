@@ -1,0 +1,87 @@
+.admin-auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffe4ec, #ffb6c1);
+}
+
+.admin-auth-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+  width: 340px;
+  padding: 2rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.admin-auth-card h2 {
+  color: #ff1493;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.admin-auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-auth-card input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.admin-auth-card input:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
+}
+
+.admin-auth-card button {
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.admin-auth-card button:hover {
+  transform: scale(1.05);
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
+
+.note {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+}
+

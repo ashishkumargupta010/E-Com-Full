@@ -1,0 +1,192 @@
+/* --------------------------------------------------- */
+/* 🌟 ULTRA PREMIUM ADDRESS PAGE – SUPER CLEAN UI      */
+/* --------------------------------------------------- */
+
+.address-wrapper {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.address-wrapper h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* -------------------------
+      ADD NEW ADDRESS BUTTON
+-------------------------- */
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  background: #2874F0;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.25s;
+}
+
+.primary-btn:hover {
+  background: #1a5fcc;
+  transform: translateY(-2px);
+}
+
+/* -------------------------
+          ADDRESS LIST
+-------------------------- */
+.address-list {
+  margin-top: 10px;
+}
+
+.address-card {
+  position: relative;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.address-card:hover {
+  border-color: #2874F0;
+  background: #f7faff;
+}
+
+.address-card.selected {
+  border: 2px solid #2874F0;
+  background: #f0f6ff;
+}
+
+/* -------------------------
+          TEXT STYLES
+-------------------------- */
+.address-card h4 {
+  margin: 0;
+  font-weight: 600;
+  color: #222;
+  font-size: 17px;
+}
+
+.address-card p {
+  margin: 3px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* -------------------------
+        THREE DOT MENU
+-------------------------- */
+.address-menu {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.address-menu:hover {
+  background: #eee;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 36px;
+  right: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  width: 120px;
+  z-index: 20;
+}
+
+.dropdown-menu p {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0;
+  color: #333;
+}
+
+.dropdown-menu p:hover {
+  background: #f0f6ff;
+  color: #2874F0;
+}
+
+/* -------------------------
+       ADDRESS FORM
+-------------------------- */
+.address-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  margin-top: 15px;
+}
+
+.address-form input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.address-form input:focus {
+  border-color: #2874F0;
+  background: #f0f6ff;
+}
+
+/* -------------------------
+    DELIVER BUTTON (BOTTOM)
+-------------------------- */
+.deliver-btn {
+  margin-top: 25px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  background: #28a745;
+  color: white !important;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.deliver-btn:hover {
+  background: #1e8a39;
+  transform: translateY(-2px);
+}
+
+/* -------------------------
+        MOBILE RESPONSIVE
+-------------------------- */
+@media (max-width: 480px) {
+  .address-wrapper {
+    padding: 10px;
+  }
+
+  .address-card {
+    padding: 15px;
+  }
+
+  .dropdown-menu {
+    width: 100px;
+  }
+}
