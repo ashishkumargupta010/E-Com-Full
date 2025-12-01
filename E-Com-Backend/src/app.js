@@ -12,12 +12,17 @@ import adminAuthRoutes from "./routes/adminAuthRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 
-
-
 const app = express();
 
-app.use(cors());
+// ✅ CORRECT CORS SETTINGS FOR FRONTEND
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
+
+// Body parser
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // REGISTER ALL ROUTES
 app.use("/api/auth", authRoutes);
@@ -29,9 +34,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/hero", heroRoutes);
 app.use("/api/admin/auth", adminAuthRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/admin/auth", adminAuthRoutes);
 app.use("/api/address", addressRoutes);
-
-
 
 export default app;

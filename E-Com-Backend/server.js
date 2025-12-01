@@ -1,25 +1,27 @@
+import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config();  
-
-import app from "./src/app.js";
 import sequelize from "./src/config/db.js";
+import routes from "./src/routes/index.js";  // If combined
 
-// Import ALL MODELS + RELATIONS
-import "./src/models/index.js";
+dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const app = express();
 
-if (!process.env.JWT_SECRET) {
-  console.error("❌ ERROR: JWT_SECRET missing in .env");
-  process.exit(1);
-}
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log("📦 Tables Synced Successfully");
-    app.listen(PORT, () =>
-      console.log(`🚀 Server running on port ${PORT}`)
-    );
-  })
-  .catch((err) => console.error("❌ Error:", err));
+app.use(express.json());
+
+// Register All Routes
+app.use("/api", routes);
+
+sequelize.sync().then(() => {
+  console.log("📦 Tables Synced Successfully");
+});
+
+app.listen(5000, () => {
+  console.log("🚀 Server running on port 5000");
+});
