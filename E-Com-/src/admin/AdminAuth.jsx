@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./AdminAuth.css";
 
 const AdminAuth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,9 +18,15 @@ const AdminAuth = () => {
     try {
       const res = await fetch("http://localhost:5000/api/admin/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // ⭐ Fix CORS + Cookies
-        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email: form.email.trim(),
+          password: form.password.trim(),
+        }),
       });
 
       const data = await res.json();
@@ -27,14 +36,14 @@ const AdminAuth = () => {
         return;
       }
 
-      // Store admin login data
       localStorage.setItem("adminToken", data.token);
       localStorage.setItem("adminInfo", JSON.stringify(data.admin));
+      localStorage.setItem("isAdminLoggedIn", "true");
 
-      // Redirect
       navigate("/admin/dashboard");
+
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("Server error. Try again later.");
     }
   };
@@ -48,16 +57,20 @@ const AdminAuth = () => {
         <form onSubmit={handleLogin}>
           <input
             type="email"
+            name="email"
             placeholder="Admin Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={handleChange}
+            required
           />
 
           <input
             type="password"
+            name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={handleChange}
+            required
           />
 
           {error && <p className="error">{error}</p>}

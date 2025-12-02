@@ -35,7 +35,12 @@ function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  // 🔥 Correct admin session
+  const admin = JSON.parse(localStorage.getItem("adminInfo") || "null");
+  const adminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+
+  // ✔ Correct user session (unchanged)
+  const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
 
   return (
     <div className="app-container">
@@ -68,11 +73,11 @@ function AppContent() {
           <Route path="orders" element={<OrdersPage />} />
         </Route>
 
-        {/* ADMIN SECURE ROUTES */}
+        {/* ADMIN ROUTES FIXED */}
         <Route
           path="/admin/*"
           element={
-            user && user.role === "admin" ? (
+            admin && adminLoggedIn ? (
               <AdminDashboard />
             ) : (
               <Navigate to="/admin/login" />

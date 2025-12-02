@@ -6,12 +6,15 @@ const AdminNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 🔐 Clear admin login session
+    // 🔐 Remove admin session
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminInfo");
     localStorage.removeItem("isAdminLoggedIn");
+
     alert("Admin logged out successfully!");
 
-    // 🔄 Redirect to home or admin login page
-    navigate("/admin/login"); // or use "/" if no admin login page yet
+    // 🔄 Redirect to login page
+    navigate("/admin/login");
   };
 
   return (
@@ -28,4 +31,3 @@ const AdminNavbar = () => {
 };
 
 export default AdminNavbar;
-
