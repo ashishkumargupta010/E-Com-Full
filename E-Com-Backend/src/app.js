@@ -14,13 +14,10 @@ import addressRoutes from "./routes/addressRoutes.js";
 
 const app = express();
 
-// ⭐ FIXED CORS (no wildcard, correct headers)
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -35,8 +32,11 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/hero", heroRoutes);
+
+// ADMIN
 app.use("/api/admin/auth", adminAuthRoutes);
 app.use("/api/admin", adminRoutes);
+
 app.use("/api/address", addressRoutes);
 
 export default app;

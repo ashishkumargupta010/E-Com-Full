@@ -4,10 +4,12 @@ import app from "./src/app.js";
 
 dotenv.config();
 
-const PORT = 5000;
+// Connect DB
+sequelize.sync()
+  .then(() => console.log("📦 Database synced"))
+  .catch(err => console.log(err));
 
-sequelize.sync().then(() => {
-  console.log("📦 Tables Synced Successfully");
-
-  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Start actual express app
+app.listen(5000, () => {
+  console.log("🚀 Server running on port 5000");
 });
