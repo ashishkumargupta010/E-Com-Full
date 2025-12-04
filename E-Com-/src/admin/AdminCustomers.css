@@ -39,46 +39,6 @@
   margin-bottom: 1.5rem;
 }
 
-/**********************************************
- 🔍 SEARCH + EXPORT ROW
-**********************************************/
-.customer-tools {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-  gap: 10px;
-}
-
-.customer-search {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ffb6d9;
-  border-radius: 10px;
-  background: white;
-  font-size: 15px;
-}
-
-.customer-search:focus {
-  border-color: var(--pink-2);
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.25);
-  outline: none;
-}
-
-.customer-export-btn {
-  padding: 10px 20px;
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: var(--shadow);
-}
-
-.customer-export-btn:hover {
-  transform: scale(1.05);
-}
 
 /**********************************************
  🧊 SUMMARY CARDS (New + Total Customers)

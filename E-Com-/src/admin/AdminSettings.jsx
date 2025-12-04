@@ -108,7 +108,7 @@ const AdminSettings = () => {
     <div className="admin-settings">
       <h2>⚙️ Admin Settings</h2>
       <p className="settings-subtitle">
-        Manage your profile information and account security.
+        Update your personal details and manage your account securely.
       </p>
 
       {successMessage && <div className="settings-message">{successMessage}</div>}

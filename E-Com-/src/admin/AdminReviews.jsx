@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./AdminReviews.css";
 
 const API = "http://localhost:5000/api";
 
@@ -9,15 +10,13 @@ const AdminReviews = () => {
   const loadReviews = async () => {
     try {
       const res = await fetch(`${API}/admin/reviews`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = await res.json();
 
       if (!Array.isArray(data)) {
-        console.log("Invalid data format:", data);
+        console.log("Invalid data:", data);
         return;
       }
 
@@ -34,84 +33,52 @@ const AdminReviews = () => {
   const getStars = (count) => "⭐".repeat(count);
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Poppins" }}>
-      
-      <h2 style={{ textAlign: "center" }}>⭐ Product Reviews</h2>
-      <p style={{ textAlign: "center", color: "#555", marginTop: "-5px" }}>
-        Monitor and moderate customer reviews.
-      </p>
+    <div className="admin-reviews-container">
 
-      <hr style={{ margin: "20px 0" }} />
+      {/* PAGE TITLE */}
+      <h2 className="admin-reviews-title">⭐ Rating & Reviews</h2>
+      <p className="admin-reviews-subtitle">
+       Monitor customer feedback to enhance product experiences and service.
+      </p> 
 
+      {/* NO REVIEWS */}
       {reviews.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#999", fontSize: "18px" }}>
-          No reviews available.
-        </p>
+        <p className="no-reviews">No reviews available.</p>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-            marginTop: "20px",
-          }}
-        >
-          {reviews.map((r, i) => (
-            <div
-              key={i}
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                padding: "15px",
-                boxShadow: "0 3px 12px rgba(0,0,0,0.1)",
-                border: "1px solid #ffddea",
-                display: "flex",
-                gap: "15px",
-                alignItems: "flex-start",
-              }}
-            >
-              {/* Product Image */}
+        <div className="review-list">
+          {reviews.map((r, index) => (
+            <div className="review-card" key={index}>
+              
+              {/* PRODUCT IMAGE */}
               <img
                 src={r.image}
                 alt="product"
-                style={{
-                  width: "90px",
-                  height: "90px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                }}
+                className="review-product-img"
               />
 
-              <div style={{ flex: 1 }}>
-                <h3 style={{ margin: "0", color: "#d6006c" }}>{r.product}</h3>
+              {/* CONTENT */}
+              <div className="review-content">
+                <h3 className="review-product-name">{r.product}</h3>
 
-                <p style={{ margin: "5px 0 0 0", fontSize: "14px", color: "#333" }}>
+                <p className="review-user">
                   <b>User:</b> {r.user}
-                  {r.userPhone && <span> ({r.userPhone})</span>}
+                  {r.userPhone ? ` (${r.userPhone})` : ""}
                 </p>
 
-                <p style={{ margin: "5px 0", fontSize: "16px" }}>
-                  <span style={{ fontSize: "18px" }}>{getStars(r.rating)}</span>
-                </p>
+                <p className="review-stars">{getStars(r.rating)}</p>
 
-                <p style={{ margin: "8px 0", color: "#444" }}>{r.text}</p>
+                <p className="review-text">{r.text}</p>
 
+                {/* USER REVIEW IMAGE */}
                 {r.reviewImg && (
                   <img
                     src={r.reviewImg}
                     alt="review-img"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                      marginTop: "10px",
-                      border: "1px solid #eee",
-                    }}
+                    className="review-img"
                   />
                 )}
 
-                <p style={{ marginTop: "8px", fontSize: "12px", color: "#999" }}>
+                <p className="review-date">
                   Reviewed on: {new Date(r.date).toLocaleString()}
                 </p>
               </div>

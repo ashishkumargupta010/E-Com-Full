@@ -1,5 +1,5 @@
 /* --------------------------------------------------------
-   My Orders Page (Flipkart Premium Style)
+   🌸 My Orders Page — Flipkart Premium + Address Box
 ---------------------------------------------------------*/
 
 .orders-container {
@@ -8,10 +8,21 @@
   min-height: 100vh;
   background: #fff5f8;
   overflow-y: auto;
-  position: relative;
 }
 
-.order-scroll-track {
+/* Title */
+.orders-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #c2185b;
+  margin-bottom: 20px;
+}
+
+/* --------------------------------------------------------
+   ORDER LIST
+---------------------------------------------------------*/
+.order-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -20,97 +31,156 @@
 /* --------------------------------------------------------
    ORDER CARD
 ---------------------------------------------------------*/
+
 .order-card {
-  display: flex;
-  gap: 1rem;
-  background: white;
-  border-radius: 14px;
+  background: #ffffff;
   padding: 1.5rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  border: 1px solid #ffe4ef;
+  border-radius: 18px;
+  border: 1px solid #ffdbea;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+
+  transform: translateY(35px);
   opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.6s ease-out;
+  transition: 0.6s ease;
 }
 
 .order-card.visible {
-  opacity: 1;
   transform: translateY(0);
+  opacity: 1;
 }
 
 .order-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 64, 129, 0.2);
-}
-
-.order-image {
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 10px;
-  background: #fff0f7;
-  padding: 6px;
-  border: 1px solid #ffd4e7;
-}
-
-.order-info {
-  flex: 1;
-}
-
-.order-product {
-  font-size: 1.25rem;
-  color: #c2185b;
-  font-weight: 600;
-}
-
-.order-id {
-  color: #777;
-  margin: 4px 0 10px 0;
-}
-
-.order-price {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.order-status {
-  display: inline-block;
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-weight: 600;
-  margin: 8px 0 16px 0;
-  background: #ffe4ef;
-  color: #c2185b;
-  border: 1px solid rgba(194, 24, 91, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(255, 64, 129, 0.22);
 }
 
 /* --------------------------------------------------------
-   TIMELINE
+   ORDER HEADER (Status + Date + Order ID)
+---------------------------------------------------------*/
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid #ffd4e6;
+}
+
+/* Status Colors */
+.status-Pending {
+  background: #fff4c2;
+  color: #d68b00;
+  border-color: #ffdd7a;
+}
+
+.status-Shipped {
+  background: #cfe8ff;
+  color: #005bbb;
+  border-color: #9cd1ff;
+}
+
+.status-OutforDelivery {
+  background: #ffe9cc;
+  color: #e67e22;
+  border-color: #ffc78b;
+}
+
+.status-Delivered {
+  background: #d5ffda;
+  color: #0d8c2c;
+  border-color: #9dfab0;
+}
+
+.status-ReturnRequested {
+  background: #fff3cd;
+  color: #a67c00;
+  border-color: #ffe49b;
+}
+
+.status-RefundCompleted {
+  background: #e3ffe3;
+  color: #1b8d35;
+  border-color: #baffc2;
+}
+
+.status-Cancelled {
+  background: #ffd4d4;
+  color: #c62828;
+  border-color: #ffb3b3;
+}
+
+.order-date {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.order-id {
+  color: #444;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------
+   DELIVERY ADDRESS BOX
+---------------------------------------------------------*/
+
+.delivery-box {
+  background: #fff0f7;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ffd0e5;
+  margin-bottom: 18px;
+}
+
+.delivery-box h4 {
+  margin: 0 0 6px 0;
+  color: #c2185b;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.delivery-box p {
+  margin: 3px 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------
+   SHIPPING TIMELINE
 ---------------------------------------------------------*/
 
 .timeline {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 18px 0;
+  padding: 12px 6px;
 }
 
 .step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 75px;
-  opacity: 0.45;
-  transition: 300ms ease;
+  text-align: center;
+  flex: 1;
+  opacity: 0.4;
+  transition: 0.3s ease;
 }
 
 .step-circle {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #ddd;
-  transition: 300ms;
+  background: #d0d0d0;
+  margin: 0 auto 5px;
+  transition: 0.3s ease;
 }
 
 .step.active {
@@ -124,99 +194,130 @@
 
 .step-line {
   height: 4px;
-  flex: 1;
+  width: 100%;
+  margin: 0 6px;
   background: #ddd;
-  border-radius: 5px;
-  transition: 300ms ease;
+  border-radius: 6px;
 }
 
 .step-line.active {
   background: linear-gradient(90deg, #ffb6d9, #ff4fa0);
 }
 
-/* Return Yellow */
-.step.active.yellow .step-circle {
-  background: #ffb300;
-}
-.step-line.active.yellow {
-  background: linear-gradient(90deg, #ffe7a7, #ffb300);
-}
-
-/* Refund Green */
-.step.active.green .step-circle {
-  background: #28a745;
-}
-.step-line.active.green {
-  background: linear-gradient(90deg, #bdf5cb, #28a745);
-}
-
 /* --------------------------------------------------------
-   BUTTONS
+   ORDER ITEMS SECTION
 ---------------------------------------------------------*/
 
-.order-buttons {
-  margin-top: 15px;
+.order-items {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #ffe4ef;
 }
 
-.cancel-btn,
-.reorder-btn {
-  padding: 9px 13px;
-  border: none;
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.order-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  border: 1px solid #ffd6e9;
+  object-fit: cover;
+  background: #fff0f7;
+}
+
+.item-details h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #c2185b;
+  font-weight: 650;
+}
+
+.item-details p {
+  margin: 2px 0;
+  color: #555;
+}
+
+/* Reviewed Tag */
+.reviewed-tag {
+  padding: 6px 12px;
+  background: #e8ffe9;
+  color: #0f9d29;
   border-radius: 8px;
-  cursor: pointer;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
-.cancel-btn {
-  background: #ff4f6f;
-  color: white;
-}
-.cancel-btn:hover {
-  background: #d83750;
-}
-
-.reorder-btn {
-  background: #ffc266;
-  color: #333;
-}
-.reorder-btn:hover {
-  background: #ffb84d;
-}
-
-.order-date {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #777;
-}
-
-/* --------------------------------------------------------
-   ⭐ PREMIUM STAR RATING (Flipkart Style)
----------------------------------------------------------*/
-
-.star-container {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0 20px;
+/* Review Button */
+.review-btn {
+  padding: 8px 12px;
+  border: none;
+  background: #ffe2f0;
+  color: #c2185b;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.star {
-  font-size: 42px;
-  color: #ddd;
-  transition: 0.25s ease-in-out;
-  transform: scale(1);
+.review-btn:hover {
+  background: #ffcae6;
 }
 
-.star:hover {
-  transform: scale(1.15);
-  color: #ffb400;
+/* --------------------------------------------------------
+   TOTAL AMOUNT
+---------------------------------------------------------*/
+
+.order-total {
+  border-top: 1px solid #ffddea;
+  padding-top: 12px;
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #333;
 }
 
-.star.filled {
-  color: #ffb400;
-  text-shadow: 0 0 12px rgba(255, 180, 0, 0.6);
+/* --------------------------------------------------------
+   ACTION BUTTONS (Cancel / Return)
+---------------------------------------------------------*/
+
+.order-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cancel-btn,
+.return-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  background: #ff4e6d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #d93a55;
+}
+
+.return-btn {
+  background: #ffcf6f;
+  color: #333;
+}
+
+.return-btn:hover {
+  background: #f7ba3d;
 }
 
 /* --------------------------------------------------------
@@ -228,26 +329,26 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  padding: 16px;
   z-index: 9999;
 }
 
-.review-content {
+.review-card-modal {
   background: white;
   width: 95%;
-  max-width: 460px;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-  animation: popscale 0.35s ease;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 16px;
+  animation: popup 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
-@keyframes popscale {
+@keyframes popup {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.85);
   }
   to {
     opacity: 1;
@@ -255,44 +356,56 @@
   }
 }
 
-.review-title {
-  text-align: center;
-  margin-bottom: 12px;
-  color: #c2185b;
-  font-weight: 700;
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 40px;
+  margin: 12px 0;
 }
 
-.review-textarea {
+.star {
+  cursor: pointer;
+  color: #ddd;
+  transition: 0.25s ease;
+}
+
+.star:hover {
+  transform: scale(1.18);
+  color: #ffb400;
+}
+
+.star.filled {
+  color: #ffb400;
+  text-shadow: 0 0 12px rgba(255, 180, 0, 0.6);
+}
+
+.review-card-modal textarea {
   width: 100%;
-  min-height: 100px;
-  padding: 10px;
-  border-radius: 8px;
+  height: 110px;
+  border-radius: 10px;
   border: 1px solid #ffb6d9;
-  margin-bottom: 10px;
+  padding: 10px;
+  margin: 10px 0;
   font-size: 0.95rem;
 }
 
-.review-image-input {
-  margin-bottom: 15px;
-  border-radius: 8px;
-}
-
-.submit-review-btn {
+.submit-review {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   background: #ff2d78;
   border: none;
   color: white;
   border-radius: 10px;
   font-weight: 700;
-  margin-top: 5px;
   cursor: pointer;
 }
-.submit-review-btn:hover {
-  background: #e3005c;
+
+.submit-review:hover {
+  background: #d90059;
 }
 
-.close-review-btn {
+.close-modal {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
@@ -302,7 +415,8 @@
   color: white;
   cursor: pointer;
 }
-.close-review-btn:hover {
+
+.close-modal:hover {
   background: #333;
 }
 
@@ -312,10 +426,10 @@
 
 @media (max-width: 768px) {
   .order-card {
-    flex-direction: column;
+    padding: 1rem;
   }
-  .order-image {
-    width: 100px;
-    height: 100px;
+  .order-img {
+    width: 75px;
+    height: 75px;
   }
 }

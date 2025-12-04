@@ -128,7 +128,7 @@ export default function AdminOrders() {
 
       {/* ---------------- RIGHT ORDER LIST ---------------- */}
       <div className="orders-right">
-        <h1>📦 All Orders</h1>
+        <h1>Orders Management</h1>
 
         {filteredOrders.length === 0 && (
           <h3>No Orders Found</h3>

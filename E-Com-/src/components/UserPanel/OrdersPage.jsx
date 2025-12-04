@@ -13,7 +13,7 @@ const OrdersPage = () => {
 
   const token = localStorage.getItem("token");
 
-  /* 🔥 LOAD ORDERS FROM BACKEND */
+  /* 🔥 LOAD ORDERS */
   useEffect(() => {
     loadOrders();
   }, []);
@@ -25,8 +25,8 @@ const OrdersPage = () => {
       });
 
       const data = await res.json();
+
       if (Array.isArray(data)) {
-        // sort latest first
         data.sort((a, b) => new Date(b.placedAt) - new Date(a.placedAt));
         setOrders(data);
       }
@@ -55,7 +55,7 @@ const OrdersPage = () => {
     }
   };
 
-  /* ⭐ Return Eligibility */
+  /* ⭐ Check Return Eligibility */
   const isReturnAvailable = (order) => {
     if (!order.returnDeadline) return false;
     return new Date() <= new Date(order.returnDeadline);
@@ -118,30 +118,29 @@ const OrdersPage = () => {
     );
 
     alert("Review Submitted!");
-
     setShowReviewModal(null);
     setRating(0);
     setHoverRating(0);
     setReviewText("");
     setReviewImage(null);
-
     loadOrders();
   };
 
-  /* ⭐ CARD ANIMATION */
+  /* ⭐ Scroll Animation */
   useEffect(() => {
     const cards = document.querySelectorAll(".order-card");
-    const observer = new IntersectionObserver(
+
+    const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("visible");
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.3 }
     );
 
-    cards.forEach((c) => observer.observe(c));
-    return () => observer.disconnect();
+    cards.forEach((c) => obs.observe(c));
+    return () => obs.disconnect();
   }, [orders]);
 
   return (
@@ -151,79 +150,138 @@ const OrdersPage = () => {
       {orders.length === 0 ? (
         <p className="no-orders">No orders found.</p>
       ) : (
-        <div className="order-scroll-track">
+        <div className="order-list">
           {orders.map((order) => (
             <div className="order-card" key={order.id}>
               
-              {/* ⭐ IMAGE FIX */}
-              <img
-                src={order.items?.[0]?.product?.image || ""}
-                alt=""
-                className="order-image"
-              />
-
-              <div className="order-info">
-
-                <h3 className="order-product">
-                  {order.items?.[0]?.product?.name}
-                </h3>
-
-                <p className="order-id">Order ID: {order.id}</p>
-                <p className="order-price">₹{order.total}</p>
-
-                <p className={`order-status status-${order.status.replace(/ /g, "")}`}>
+              {/* ORDER HEADER */}
+              <div className="order-header">
+                <span className={`status-badge ${order.status.replace(/\s+/g, "")}`}>
                   {order.status}
-                </p>
+                </span>
 
-                {/* ⭐ If any item reviewed */}
-                {order.items?.some((it) => it.review) && (
-                  <p className="user-review-done">
-                    ⭐ You reviewed this product
-                  </p>
-                )}
+                <span className="order-date">
+                  {new Date(order.placedAt).toLocaleString()}
+                </span>
 
-                {/* ⭐ Review Button */}
-                {order.status === "Delivered" &&
-                  order.items?.map((it) =>
-                    !it.review ? (
-                      <button
-                        key={it.id}
-                        className="review-btn"
-                        onClick={() =>
-                          setShowReviewModal({ orderId: order.id, itemId: it.id })
-                        }
-                      >
-                        ⭐ Rate & Review
-                      </button>
-                    ) : null
-                  )}
+                <span className="order-id">Order #{order.id}</span>
+              </div>
 
-                <p className="order-date">
-                  Ordered on:{" "}
-                  <b>{new Date(order.placedAt).toLocaleString()}</b>
-                </p>
+              {/* TIMELINE */}
+              <div className="timeline">
 
-                {/* ⭐ Cancel / Return Buttons */}
-                <div className="order-buttons">
-                  {order.status === "Pending" && (
-                    <button
-                      className="cancel-btn"
-                      onClick={() => cancelOrder(order.id)}
-                    >
-                      Cancel
-                    </button>
-                  )}
+                {/* Ordered */}
+                <div className={`step ${["Pending","Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                  <div className="step-circle"></div>
+                  <p>Ordered</p>
+                </div>
 
-                  {order.status === "Delivered" && isReturnAvailable(order) && (
-                    <button
-                      className="reorder-btn"
-                      onClick={() => returnOrder(order.id)}
-                    >
-                      Return
-                    </button>
-                  )}
+                <div className={`step-line ${["Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+
+                {/* Packed */}
+                <div className={`step ${["Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                  <div className="step-circle"></div>
+                  <p>Packed</p>
+                </div>
+
+                <div className={`step-line ${["Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+
+                {/* Shipped */}
+                <div className={`step ${["Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                  <div className="step-circle"></div>
+                  <p>Shipped</p>
+                </div>
+
+                <div className={`step-line ${["Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+
+                {/* Out for Delivery */}
+                <div className={`step ${["Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                  <div className="step-circle"></div>
+                  <p>Out for Delivery</p>
+                </div>
+
+                <div className={`step-line ${["Delivered"].includes(order.status) ? "active" : ""}`} />
+
+                {/* Delivered */}
+                <div className={`step ${order.status === "Delivered" ? "active" : ""}`}>
+                  <div className="step-circle"></div>
+                  <p>Delivered</p>
                 </div>
               </div>
+
+              {/* DELIVERY ADDRESS */}
+              <div className="delivery-box">
+                <h4>Delivery Address</h4>
+
+                <p><b>{order.address?.name}</b></p>
+                <p>📞 {order.address?.phone}</p>
+                <p>
+                  {order.address?.street}, {order.address?.city}
+                  <br />
+                  {order.address?.state} - {order.address?.pincode}
+                </p>
+              </div>
+
+              {/* ORDER ITEMS */}
+              <div className="order-items">
+                {order.items?.map((item) => (
+                  <div className="order-item" key={item.id}>
+
+                    <img
+                      src={item.product?.image}
+                      alt=""
+                      className="order-img"
+                    />
+
+                    <div className="item-details">
+                      <h3>{item.product?.name}</h3>
+                      <p>₹{item.price} × {item.quantity}</p>
+                      {item.size && <p>Size: {item.size}</p>}
+                    </div>
+
+                    {/* ⭐ Review Button */}
+                    {order.status === "Delivered" && !item.review && (
+                      <button
+                        className="review-btn"
+                        onClick={() =>
+                          setShowReviewModal({
+                            orderId: order.id,
+                            itemId: item.id,
+                          })
+                        }
+                      >
+                        ⭐ Review
+                      </button>
+                    )}
+
+                    {item.review && (
+                      <p className="reviewed-tag">Reviewed ✓</p>
+                    )}
+
+                  </div>
+                ))}
+              </div>
+
+              {/* TOTAL */}
+              <div className="order-total">
+                <strong>Total Amount:</strong> ₹{order.total}
+              </div>
+
+              {/* ACTION BUTTONS */}
+              <div className="order-actions">
+                {order.status === "Pending" && (
+                  <button className="cancel-btn" onClick={() => cancelOrder(order.id)}>
+                    Cancel Order
+                  </button>
+                )}
+
+                {order.status === "Delivered" && isReturnAvailable(order) && (
+                  <button className="return-btn" onClick={() => returnOrder(order.id)}>
+                    Return Order
+                  </button>
+                )}
+              </div>
+
             </div>
           ))}
         </div>
@@ -232,19 +290,17 @@ const OrdersPage = () => {
       {/* ⭐ REVIEW MODAL */}
       {showReviewModal && (
         <div className="review-modal">
-          <div className="review-content">
-            <h2 className="review-title">Rate Your Product</h2>
+          <div className="review-card-modal">
+            <h2>Rate Your Product</h2>
 
-            <div className="star-container">
-              {[1, 2, 3, 4, 5].map((num) => (
+            <div className="stars">
+              {[1, 2, 3, 4, 5].map((s) => (
                 <span
-                  key={num}
-                  className={`star ${
-                    (hoverRating || rating) >= num ? "filled" : ""
-                  }`}
-                  onMouseEnter={() => setHoverRating(num)}
+                  key={s}
+                  className={`star ${(hoverRating || rating) >= s ? "filled" : ""}`}
+                  onMouseEnter={() => setHoverRating(s)}
                   onMouseLeave={() => setHoverRating(0)}
-                  onClick={() => setRating(num)}
+                  onClick={() => setRating(s)}
                 >
                   ★
                 </span>
@@ -252,29 +308,20 @@ const OrdersPage = () => {
             </div>
 
             <textarea
-              placeholder="Write your experience..."
+              placeholder="Share your experience..."
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
-              className="review-textarea"
             />
 
-            <label className="review-image-label">
-              Upload Image (optional)
-            </label>
             <input
               type="file"
               onChange={(e) => setReviewImage(e.target.files[0])}
-              className="review-image-input"
             />
 
-            <button className="submit-review-btn" onClick={submitReview}>
+            <button className="submit-review" onClick={submitReview}>
               Submit Review
             </button>
-
-            <button
-              className="close-review-btn"
-              onClick={() => setShowReviewModal(null)}
-            >
+            <button className="close-modal" onClick={() => setShowReviewModal(null)}>
               Close
             </button>
           </div>

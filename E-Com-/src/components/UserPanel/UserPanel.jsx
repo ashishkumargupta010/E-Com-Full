@@ -47,7 +47,7 @@ const UserPanel = () => {
           </NavLink>
 
           <NavLink to="/userpanel/address" className="panel-link">
-            Manage Addresses
+            Manage Address
           </NavLink>
 
           <p className="panel-title">PAYMENTS</p>

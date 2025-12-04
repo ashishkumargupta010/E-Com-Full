@@ -15,23 +15,26 @@ const AdminNavbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <header className="admin-navbar" role="banner">
+    <header className="admin-navbar">
+
+      {/* LEFT SECTION */}
       <div className="admin-navbar-left">
-        <button className="menu-btn" onClick={toggleSidebar} aria-label="Toggle sidebar">
+        
+        {/* Mobile Hamburger */}
+        <button className="menu-btn mobile-only" onClick={toggleSidebar}>
           <Menu size={26} />
         </button>
-        <h1 className="admin-title">Welcome, Admin</h1>
+
+        <h1 className="admin-title">Dashboard</h1>
       </div>
 
-      <div className="admin-navbar-actions" role="navigation" aria-label="Admin actions">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="admin-search-input"
-          aria-label="Search"
-        />
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+      {/* RIGHT SECTION */}
+      <div className="admin-navbar-actions">
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
+
     </header>
   );
 };

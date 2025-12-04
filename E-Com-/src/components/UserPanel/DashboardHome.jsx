@@ -29,7 +29,7 @@ const DashboardHome = () => {
 
         {/* ADDRESS CARD */}
         <div className="dash-card">
-          <h3>Saved Addresses</h3>
+          <h3>Saved Address</h3>
           <p>{addresses.length} Saved</p>
         </div>
 

@@ -1,77 +1,53 @@
-/**********************************************
- 🌈 NAVBAR FIX — ZERO ELLIPSIS FOREVER
-**********************************************/
+/* ---------------------------------------------------
+   🌟 FIXED, CLEAN & RESPONSIVE ADMIN NAVBAR
+--------------------------------------------------- */
 
-/* NAVBAR WRAPPER */
+/* FIXED NAVBAR */
 .admin-navbar {
-  position: sticky;
+  position: fixed;        /* ⭐ Always fixed at top */
   top: 0;
-  left: 0;
-  z-index: 1200;
+  left: 250px;            /* ⭐ Sidebar width adjust */
+  width: calc(100% - 250px);
+
+  height: 70px;
+  z-index: 2000;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 1rem 1.4rem;
+  padding: 0 1.4rem;
 
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.6);
+  background: #fff7fb;
+  border-bottom: 1px solid #ffd4ea;
 
-  width: 100%;
-  overflow: visible; /* MUST */
+  transition: 0.3s ease;
 }
 
-/**********************************************
- 👈 LEFT SIDE
-**********************************************/
+/* LEFT SIDE */
 .admin-navbar-left {
   display: flex;
   align-items: center;
   gap: 12px;
-
-  flex-shrink: 0;   /* 🧨 NEVER SHRINK */
 }
 
-.admin-navbar-left h1 {
+/* TITLE */
+.admin-title {
   font-size: 22px;
   font-weight: 700;
-  margin: 0;
-
   background: linear-gradient(45deg, #ff6ab7, #ff1493);
   -webkit-background-clip: text;
   color: transparent;
 }
 
-/**********************************************
- 👉 RIGHT SIDE (SEARCH + LOGOUT)
-**********************************************/
+/* RIGHT SIDE ACTIONS */
 .admin-navbar-actions {
   display: flex;
   align-items: center;
   gap: 12px;
-
-  flex-shrink: 0;   /* 🧨 NEVER SHRINK */
 }
 
-/**********************************************
- 🔍 SEARCH INPUT
-**********************************************/
-.admin-search-input {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #ffa3ca;
-  background: #fff;
-
-  width: 180px;
-  min-width: 130px; /* 🧨 WON'T COLLAPSE */
-  flex-shrink: 0;
-}
-
-/**********************************************
- 🚪 LOGOUT BUTTON
-**********************************************/
+/* LOGOUT BUTTON */
 .logout-btn {
   padding: 10px 18px;
   border: none;
@@ -80,32 +56,36 @@
   color: white;
   font-weight: 700;
   cursor: pointer;
-
-  flex-shrink: 0;
+  transition: 0.2s;
 }
 
-/**********************************************
- 🍔 MENU BUTTON
-**********************************************/
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
-  color: var(--pink-2);
+.logout-btn:hover {
+  opacity: 0.85;
 }
 
-/**********************************************
- 📱 MOBILE FIX
-**********************************************/
-@media (max-width: 480px) {
-  .admin-search-input {
-    width: 120px;
-    min-width: 80px;
+/* HAMBURGER BUTTON (Desktop hide) */
+.mobile-only {
+  display: none;
+}
+
+/* ---------------------------------------------------
+   📱 MOBILE RESPONSIVE NAVBAR
+--------------------------------------------------- */
+@media (max-width: 768px) {
+  .admin-navbar {
+    left: 0;
+    width: 100%;     /* Full width on mobile */
   }
 
-  .admin-navbar-left h1 {
+  .mobile-only {
+    display: block;
+  }
+
+  .admin-title {
     font-size: 18px;
+  }
+
+  .admin-navbar-actions {
+    gap: 8px;
   }
 }

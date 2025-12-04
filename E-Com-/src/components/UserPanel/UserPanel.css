@@ -48,7 +48,7 @@
 ---------------------------------------------- */
 .profile-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
   margin-bottom: 30px;
   padding: 14px;
@@ -84,10 +84,19 @@
   color: #ff2d78;
 }
 
+/* ⭐ FIXED EMAIL + PHONE WRAP */
 .profile-card span {
   font-size: 13px;
   color: #666;
   display: block;
+  max-width: 150px;          /* Sidebar ke andar fit */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;     /* max 2 line */
+  -webkit-box-orient: vertical;
+  line-height: 1.25rem;
 }
 
 /* ----------------------------------------------
@@ -103,7 +112,7 @@
 }
 
 /* ----------------------------------------------
-   🌸 SIDEBAR LINKS (Premium Animated)
+   🌸 SIDEBAR LINKS
 ---------------------------------------------- */
 .panel-link {
   display: block;
@@ -136,14 +145,13 @@
   transform: translateX(4px);
 }
 
-/* Disabled */
 .panel-link.disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
 
 /* ----------------------------------------------
-   🌸 LOGOUT BUTTON (Premium)
+   🌸 LOGOUT BUTTON
 ---------------------------------------------- */
 .logout-btn {
   margin-top: 20px;

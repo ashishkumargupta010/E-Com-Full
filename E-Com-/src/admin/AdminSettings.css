@@ -28,6 +28,7 @@
 
   max-width: 850px;
   margin: auto;
+  text-align: center;  /* ⭐ Center All Headings */
 }
 
 /**********************************************
@@ -42,12 +43,14 @@
   color: transparent;
 
   margin-bottom: 6px;
+  text-align: center;  /* ⭐ Center fixed */
 }
 
 .settings-subtitle {
   font-size: 14px;
   color: #555;
   margin-bottom: 1.4rem;
+  text-align: center;  /* ⭐ Now centered */
 }
 
 /**********************************************
@@ -80,6 +83,7 @@
   backdrop-filter: blur(10px);
 
   animation: fadeUp 0.5s ease;
+  text-align: center; /* ⭐ Center section headings */
 }
 
 .settings-section h3 {
@@ -91,6 +95,7 @@
   color: transparent;
 
   margin-bottom: 1rem;
+  text-align: center; /* ⭐ Center fixed */
 }
 
 /**********************************************
@@ -100,11 +105,14 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-width: 450px;     /* ⭐ nice center form width */
+  margin: auto;          /* ⭐ CENTER FORM */
 }
 
 .settings-form label {
   font-size: 15px;
   font-weight: 600;
+  text-align: left;
 }
 
 .settings-form input {
@@ -113,7 +121,6 @@
   border: 1px solid #ffc5de;
   font-size: 15px;
   background: white;
-
   transition: var(--transition);
 }
 
@@ -148,7 +155,7 @@
 }
 
 /**********************************************
- 📱 RESPONSIVE DESIGN
+ 📱 RESPONSIVE
 **********************************************/
 @media (max-width: 600px) {
   .admin-settings {
@@ -157,6 +164,10 @@
 
   .settings-section {
     padding: 1.2rem;
+  }
+
+  .settings-form {
+    max-width: 100%;
   }
 }
 
