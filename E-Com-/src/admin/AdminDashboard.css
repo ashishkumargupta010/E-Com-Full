@@ -1,19 +1,158 @@
-.admin-dashboard {
-  display: flex;
-  height: 100vh;
-  background: #fffafc;
+/**********************************************
+ 🌈 BASE THEME
+**********************************************/
+:root {
+  --pink-1: #ff6ab7;
+  --pink-2: #ff1493;
+
+  --light-bg: #fff0f7;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.7);
+
+  --transition: 0.25s ease;
 }
 
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/**********************************************
+ 🔥 MAIN WRAPPER
+**********************************************/
+.admin-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--light-bg);
+  overflow: hidden;
+}
+
+/**********************************************
+ ⚡ SIDEBAR (POSITION ONLY)
+**********************************************/
 .admin-sidebar {
-  width: 220px;
-  background: linear-gradient(180deg, #ffb6c1, #ff69b4);
-  color: white;
-  padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: var(--glass-bg);
+  border-right: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
+
+  transition: transform var(--transition);
+  z-index: 900;
+}
+
+/* MOBILE SIDEBAR (HIDDEN BY DEFAULT) */
+@media (max-width: 900px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/**********************************************
+ 🌙 DARK OVERLAY WHEN SIDEBAR OPEN
+**********************************************/
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 800;
+}
+
+/**********************************************
+ 🚀 MAIN RIGHT SIDE CONTENT WRAPPER
+**********************************************/
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 240px; /* space for sidebar */
+  min-width: 0;       /* 🧨 MAGIC FIX — STOPS (...) */
+  min-height: 100vh;
+
+  transition: margin-left var(--transition);
+}
+
+/* MOBILE FIX */
+@media (max-width: 900px) {
+  .admin-main {
+    margin-left: 0; 
+  }
+}
+
+/**********************************************
+ 📄 INNER CONTENT AREA
+**********************************************/
+.admin-content {
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 1.5rem;
+
+  background: var(--light-bg);
+  overflow-x: hidden; /* 🧨 stops accidental overflow */
+
+  animation: fadeUp 0.4s ease;
+}
+
+/**********************************************
+ 🔮 ANIMATION
+**********************************************/
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* --- FINAL FIX: Prevent ANY content from shrinking navbar --- */
+.admin-main {
+  min-width: 0;            /* prevents ... dots */
+  overflow-x: hidden !important;
 }
 
 .admin-content {
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
+  min-width: 0;
+  overflow-x: hidden !important;
+}
+
+.admin-navbar {
+  flex-shrink: 0 !important;   /* navbar never shrinks */
+}
+
+.admin-navbar-left,
+.admin-navbar-actions,
+.admin-search-input,
+.logout-btn {
+  flex-shrink: 0 !important;   /* prevent dots */
+}
+
+/* All child components */
+.admin-content * {
+  min-width: 0 !important;     /* required */
+  max-width: 100% !important;  /* prevents overflow */
+  overflow-x: hidden !important;
+}
+
+/* Fix BarChart / PieChart overflow */
+.recharts-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
 }

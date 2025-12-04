@@ -1,91 +1,155 @@
 /* ----------------------------------------------------------
-   ✔ PREMIUM WHITE SUCCESS PAGE
-   Clean • Elegant • Modern
+   💥 BOM BLAST ULTRA-PREMIUM SUCCESS PAGE
+   Confetti • Explosion • Glow • Pop Animation
 ---------------------------------------------------------- */
-
-.success-box {
+.success-wrapper {
   min-height: 100vh;
-  background: #f5f7fa;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
+  background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
   font-family: "Poppins", sans-serif;
-  padding: 40px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Green Success Tick */
-.success-icon {
-  width: 100px;
-  height: 100px;
-
+/* -----------------------------
+   💥 EXPLOSION RING EFFECT
+----------------------------- */
+.blast-circle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #4caf50;
   border-radius: 50%;
-  border: 6px solid #4caf50;
+  animation: blast 0.6s ease-out forwards;
+  opacity: 0.7;
+}
+
+@keyframes blast {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(25);
+    opacity: 0;
+  }
+}
+
+/* -----------------------------
+   ✔ POP GREEN SUCCESS TICK
+----------------------------- */
+.success-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  border: 7px solid #4caf50;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 50px;
+  font-size: 65px;
   color: #4caf50;
+  font-weight: 900;
 
-  font-weight: 800;
-  margin-bottom: 20px;
+  box-shadow: 0 6px 25px rgba(76, 175, 80, 0.4);
 
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-  animation: pop 0.5s ease-out;
+  animation: popIn 0.6s ease-out forwards;
 }
 
-@keyframes pop {
+@keyframes popIn {
   0% {
-    transform: scale(0.5);
+    transform: scale(0.3) rotate(-20deg);
     opacity: 0;
   }
-  100% {
-    transform: scale(1);
+  50% {
+    transform: scale(1.2) rotate(5deg);
     opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
   }
 }
 
-/* Titles */
-.success-box h1 {
-  font-size: 32px;
-  color: #222;
-  font-weight: 700;
-  margin-bottom: 5px;
+/* -----------------------------
+   📝 TITLES + TEXT
+----------------------------- */
+.title {
+  font-size: 34px;
+  font-weight: 800;
+  margin-top: 15px;
+
+  background: linear-gradient(90deg, #7e22ce, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: slideDown 0.7s ease-out;
 }
 
-.success-box h2 {
+.order-id {
   font-size: 20px;
-  color: #555;
-  margin-bottom: 20px;
+  color: #333;
+  margin-top: 8px;
+  animation: fadeIn 1s ease-out;
 }
 
-/* Message */
-.success-box p {
-  color: #666;
+.message {
+  margin-top: 15px;
   font-size: 16px;
-  margin-bottom: 25px;
+  color: #666;
+  text-align: center;
+  max-width: 400px;
+
+  animation: fadeIn 1.2s ease-out;
 }
 
-/* Button */
-.success-box button {
-  background: #2874F0;
+/* -----------------------------
+   🔘 BUTTON
+----------------------------- */
+.btn {
+  margin-top: 25px;
+  padding: 14px 26px;
+
+  background: linear-gradient(135deg, #7e22ce, #d946ef);
   color: white;
-  padding: 14px 28px;
 
   border: none;
-  border-radius: 10px;
-
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 15px;
   cursor: pointer;
 
-  box-shadow: 0 4px 15px rgba(40, 116, 240, 0.4);
-  transition: 0.2s ease;
+  font-size: 18px;
+  font-weight: 600;
+
+  box-shadow: 0px 6px 18px rgba(147, 51, 234, 0.35);
+  transition: 0.25s;
 }
 
-.success-box button:hover {
-  background: #0f5bd9;
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 10px 24px rgba(147, 51, 234, 0.55);
+}
+
+/* -----------------------------
+   ✨ ANIMATIONS
+----------------------------- */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

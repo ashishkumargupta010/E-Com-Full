@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
 
+const API = "http://localhost:5000/api";
+
 const AdminReviews = () => {
   const [reviews, setReviews] = useState([]);
+  const token = localStorage.getItem("adminToken");
+
+  const loadReviews = async () => {
+    try {
+      const res = await fetch(`${API}/admin/reviews`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!Array.isArray(data)) {
+        console.log("Invalid data format:", data);
+        return;
+      }
+
+      setReviews(data);
+    } catch (err) {
+      console.log("Review Load Error:", err);
+    }
+  };
 
   useEffect(() => {
-    const adminOrders = JSON.parse(localStorage.getItem("adminOrders")) || [];
-
-    // Extract only orders that have reviews
-    const allReviews = adminOrders
-      .filter((o) => o.review)
-      .map((o) => ({
-        id: o.id,
-        product: o.items?.[0]?.name || "Unknown Product",
-        image: o.items?.[0]?.image || "",
-        rating: o.review.rating,
-        text: o.review.text,
-        reviewImg: o.review.image,
-        date: o.review.date,
-        user: o.userName || "Unknown User",
-        userPhone: o.userPhone || "",
-      }));
-
-    setReviews(allReviews);
+    loadReviews();
   }, []);
 
   const getStars = (count) => "⭐".repeat(count);
@@ -79,8 +86,8 @@ const AdminReviews = () => {
                 <h3 style={{ margin: "0", color: "#d6006c" }}>{r.product}</h3>
 
                 <p style={{ margin: "5px 0 0 0", fontSize: "14px", color: "#333" }}>
-                  <b>User:</b> {r.user}  
-                  {r.userPhone && <span> ( {r.userPhone} )</span>}
+                  <b>User:</b> {r.user}
+                  {r.userPhone && <span> ({r.userPhone})</span>}
                 </p>
 
                 <p style={{ margin: "5px 0", fontSize: "16px" }}>
@@ -117,4 +124,3 @@ const AdminReviews = () => {
 };
 
 export default AdminReviews;
-

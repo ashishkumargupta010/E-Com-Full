@@ -5,8 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function AddressPage() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const [addresses, setAddresses] = useState([]);
+  const [menuIndex, setMenuIndex] = useState(null);
+  const [editIndex, setEditIndex] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
     line1: "",
@@ -15,18 +20,22 @@ export default function AddressPage() {
     phone: "",
   });
 
-  const [editIndex, setEditIndex] = useState(null);
-  const [menuIndex, setMenuIndex] = useState(null);
+  /* CLOSE MENU ON OUTSIDE CLICK */
+  useEffect(() => {
+    const closeMenu = () => setMenuIndex(null);
+    window.addEventListener("click", closeMenu);
+    return () => window.removeEventListener("click", closeMenu);
+  }, []);
 
-  const token = localStorage.getItem("token");
-
-  /* ---------------- LOAD ADDRESSES FROM BACKEND ---------------- */
+  /* LOAD FROM BACKEND */
   const loadAddresses = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/address", {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       const data = await res.json();
+
       if (Array.isArray(data)) {
         setAddresses(
           data.map((a) => ({
@@ -50,12 +59,20 @@ export default function AddressPage() {
     loadAddresses();
   }, []);
 
-  /* ---------------- SAVE NEW ADDRESS TO BACKEND ---------------- */
-  const saveAddress = async () => {
+  /* VALIDATION */
+  const isValid = () => {
     if (!form.name || !form.line1 || !form.city || !form.pincode || !form.phone) {
-      alert("Please fill all fields!");
-      return;
+      alert("All fields required");
+      return false;
     }
+    if (form.pincode.length !== 6) return alert("Pincode must be 6 digits");
+    if (form.phone.length !== 10) return alert("Phone must be 10 digits");
+    return true;
+  };
+
+  /* SAVE NEW ADDRESS */
+  const saveAddress = async () => {
+    if (!isValid()) return;
 
     try {
       const res = await fetch("http://localhost:5000/api/address", {
@@ -73,20 +90,18 @@ export default function AddressPage() {
         }),
       });
 
-      const data = await res.json();
-      if (res.ok && data.address) {
-        alert("Address Saved!");
+      if (res.ok) {
+        alert("Address added!");
+        setShowAddModal(false);
         setForm({ name: "", line1: "", city: "", pincode: "", phone: "" });
         loadAddresses();
-      } else {
-        alert(data.message || "Failed to save address");
       }
     } catch {
-      alert("Server error");
+      alert("Server Error");
     }
   };
 
-  /* ---------------- DELETE ADDRESS (BACKEND) ---------------- */
+  /* DELETE */
   const deleteAddress = async (id) => {
     if (!window.confirm("Delete this address?")) return;
 
@@ -95,22 +110,18 @@ export default function AddressPage() {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
+
       loadAddresses();
     } catch {
       alert("Delete failed");
     }
   };
 
-  /* ---------------- SAVE EDITED ADDRESS (BACKEND) ---------------- */
+  /* UPDATE */
   const saveEditedAddress = async () => {
-    if (editIndex === null) return;
+    if (editIndex === null || !isValid()) return;
 
     const id = addresses[editIndex].id;
-
-    if (!form.name || !form.line1 || !form.city || !form.pincode || !form.phone) {
-      alert("Please fill all fields!");
-      return;
-    }
 
     try {
       const res = await fetch(`http://localhost:5000/api/address/${id}`, {
@@ -128,22 +139,18 @@ export default function AddressPage() {
         }),
       });
 
-      const data = await res.json();
-
       if (res.ok) {
-        alert("Address updated");
+        alert("Address updated!");
         setEditIndex(null);
         setForm({ name: "", line1: "", city: "", pincode: "", phone: "" });
         loadAddresses();
-      } else {
-        alert(data.message || "Update failed");
       }
     } catch {
       alert("Server error");
     }
   };
 
-  /* ---------------- DELIVER HERE (SEND TO PAYMENT) ---------------- */
+  /* CHECKOUT ADDRESS */
   const deliverHere = (addr) => {
     localStorage.setItem("checkoutAddress", JSON.stringify(addr));
     navigate("/payment");
@@ -151,141 +158,127 @@ export default function AddressPage() {
 
   return (
     <div className="address-wrapper">
-      <h2>Manage Addresses</h2>
+      <h2>Your Saved Addresses</h2>
 
-      {/* ADD ADDRESS FORM */}
-      <div className="add-address-box">
-        <h4>Add a New Address</h4>
-
-        <input
-          placeholder="Full Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-
-        <input
-          placeholder="Address Line"
-          value={form.line1}
-          onChange={(e) => setForm({ ...form, line1: e.target.value })}
-        />
-
-        <input
-          placeholder="City"
-          value={form.city}
-          onChange={(e) => setForm({ ...form, city: e.target.value })}
-        />
-
-        <input
-          placeholder="Pincode"
-          value={form.pincode}
-          onChange={(e) => {
-            let val = e.target.value.replace(/[^0-9]/g, "");
-            if (val.length > 6) val = val.slice(0, 6);
-            setForm({ ...form, pincode: val });
-          }}
-        />
-
-        <input
-          placeholder="Phone"
-          value={form.phone}
-          onChange={(e) => {
-            let val = e.target.value.replace(/[^0-9]/g, "");
-            if (val.length > 10) val = val.slice(0, 10);
-            setForm({ ...form, phone: val });
-          }}
-        />
-
-        <button onClick={saveAddress}>Save Address</button>
+      {/* ADD NEW ADDRESS BAR */}
+      <div className="add-address-box" onClick={() => setShowAddModal(true)}>
+        <h4>+ Add a New Address</h4>
       </div>
 
       {/* ADDRESS LIST */}
-      <div className="address-grid">
-        {addresses.map((addr, i) => (
-          <div key={i} className="address-card">
-            <div
-              className="card-menu"
-              onClick={() => setMenuIndex(menuIndex === i ? null : i)}
-            >
-              <FiMoreVertical size={18} />
+      <div className="address-list">
+        {addresses.map((addr, index) => (
+          <div key={index} className="address-card">
+
+            {/* LEFT SIDE */}
+            <div className="address-left">
+              <h4>{addr.name}</h4>
+              <p>{addr.line1}</p>
+              <p>{addr.city}</p>
+              <p><b>{addr.pincode}</b></p>
+              <p>📞 {addr.phone}</p>
             </div>
 
-            {menuIndex === i && (
-              <div className="menu-options">
-                <button
-                  onClick={() => {
-                    setEditIndex(i);
-                    setForm(addr);
-                    setMenuIndex(null);
-                  }}
-                >
-                  Edit
-                </button>
+            {/* RIGHT SIDE SECTION (3-dot + Deliver button) */}
+            <div className="address-actions">
 
-                <button onClick={() => deleteAddress(addr.id)}>Delete</button>
+              {/* 3 DOTS */}
+              <div
+                className="card-menu"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuIndex(menuIndex === index ? null : index);
+                }}
+              >
+                <FiMoreVertical size={20} />
               </div>
-            )}
 
-            <h4>{addr.name}</h4>
-            <p>{addr.line1}</p>
-            <p>{addr.city}</p>
-            <p><b>{addr.pincode}</b></p>
-            <p>📞 {addr.phone}</p>
+              {/* DROPDOWN */}
+              {menuIndex === index && (
+                <div className="menu-options">
+                  <button
+                    onClick={() => {
+                      setEditIndex(index);
+                      setForm(addr);
+                      setMenuIndex(null);
+                    }}
+                  >
+                    Edit
+                  </button>
 
-            <button className="deliver-here-btn" onClick={() => deliverHere(addr)}>
-              Deliver Here
-            </button>
+                  <button onClick={() => deleteAddress(addr.id)}>Delete</button>
+                </div>
+              )}
+
+              {/* DELIVER BUTTON ONLY ON CHECKOUT PAGE */}
+              {window.location.pathname.includes("checkout") && (
+                <button
+                  className="deliver-here-btn"
+                  onClick={() => deliverHere(addr)}
+                >
+                  Deliver Here
+                </button>
+              )}
+
+            </div>
           </div>
         ))}
       </div>
 
-      {/* EDIT MODAL */}
+      {/* ADD NEW ADDRESS POPUP */}
+      {showAddModal && (
+        <div className="edit-modal">
+          <div className="edit-modal-box">
+            <h3>Add New Address</h3>
+
+            {["name", "line1", "city", "pincode", "phone"].map((field) => (
+              <input
+                key={field}
+                placeholder={field}
+                value={form[field]}
+                onChange={(e) => {
+                  let val = e.target.value;
+                  if (field === "pincode") val = val.replace(/\D/g, "").slice(0, 6);
+                  if (field === "phone") val = val.replace(/\D/g, "").slice(0, 10);
+                  setForm({ ...form, [field]: val });
+                }}
+              />
+            ))}
+
+            <button className="save-edit-btn" onClick={saveAddress}>Save Address</button>
+            <button
+              className="cancel-edit-btn"
+              onClick={() => {
+                setShowAddModal(false);
+                setForm({ name: "", line1: "", city: "", pincode: "", phone: "" });
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT ADDRESS POPUP */}
       {editIndex !== null && (
         <div className="edit-modal">
           <div className="edit-modal-box">
             <h3>Edit Address</h3>
 
-            <input
-              placeholder="Full Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
+            {["name", "line1", "city", "pincode", "phone"].map((field) => (
+              <input
+                key={field}
+                value={form[field]}
+                onChange={(e) => {
+                  let val = e.target.value;
+                  if (field === "pincode") val = val.replace(/\D/g, "").slice(0, 6);
+                  if (field === "phone") val = val.replace(/\D/g, "").slice(0, 10);
+                  setForm({ ...form, [field]: val });
+                }}
+              />
+            ))}
 
-            <input
-              placeholder="Address Line"
-              value={form.line1}
-              onChange={(e) => setForm({ ...form, line1: e.target.value })}
-            />
-
-            <input
-              placeholder="City"
-              value={form.city}
-              onChange={(e) => setForm({ ...form, city: e.target.value })}
-            />
-
-            <input
-              placeholder="Pincode"
-              value={form.pincode}
-              onChange={(e) => {
-                let val = e.target.value.replace(/[^0-9]/g, "");
-                if (val.length > 6) val = val.slice(0, 6);
-                setForm({ ...form, pincode: val });
-              }}
-            />
-
-            <input
-              placeholder="Phone"
-              value={form.phone}
-              onChange={(e) => {
-                let val = e.target.value.replace(/[^0-9]/g, "");
-                if (val.length > 10) val = val.slice(0, 10);
-                setForm({ ...form, phone: val });
-              }}
-            />
-
-            <button className="save-edit-btn" onClick={saveEditedAddress}>
-              Save Changes
-            </button>
-
+            <button className="save-edit-btn" onClick={saveEditedAddress}>Save Changes</button>
             <button
               className="cancel-edit-btn"
               onClick={() => {

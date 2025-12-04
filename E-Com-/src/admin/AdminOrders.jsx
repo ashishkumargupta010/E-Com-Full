@@ -1,243 +1,245 @@
 import React, { useState, useEffect } from "react";
 import "./AdminOrders.css";
 
-const AdminOrders = () => {
+const API = "http://localhost:5000/api";
+
+export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const token = localStorage.getItem("adminToken");
+  const role = localStorage.getItem("role");
+
+  // SECURITY CHECK
+  if (!token || role !== "admin") {
+    return <h2 style={{ padding: "20px" }}>❌ Unauthorized – Admin only</h2>;
+  }
+
+  // LOAD ALL ORDERS
+  const loadOrders = async () => {
+    try {
+      const res = await fetch(`${API}/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+
+      if (!Array.isArray(data)) return setOrders([]);
+
+      // Latest first
+      data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      setOrders(data);
+    } catch (err) {
+      console.log("Error loading orders:", err);
+    }
+  };
 
   useEffect(() => {
-    let saved = JSON.parse(localStorage.getItem("adminOrders")) || [];
-
-    // 🔥 Sort: Newest FIRST
-    saved.sort((a, b) => new Date(b.date) - new Date(a.date));
-    setOrders(saved);
+    loadOrders();
   }, []);
 
-  /* -----------------------------------------------------------
-      SAVE to both adminOrders + userOrders
-  ------------------------------------------------------------ */
-  const syncOrders = (updated) => {
-    updated.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // FILTERED ORDERS
+  const filteredOrders = orders.filter((o) => {
+    const matchesSearch =
+      search === "" ||
+      o.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      o.id.toString().includes(search);
 
-    setOrders(updated);
-    localStorage.setItem("adminOrders", JSON.stringify(updated));
-    localStorage.setItem("userOrders", JSON.stringify(updated));
+    const matchesStatus =
+      statusFilter === "All" || o.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  // UPDATE STATUS
+  const updateStatus = async (id, status) => {
+    try {
+      const res = await fetch(`${API}/orders/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!res.ok) return alert("Status update failed");
+
+      loadOrders();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  /* -----------------------------------------------------------
-      UPDATE STATUS
-  ------------------------------------------------------------ */
-  const updateStatus = (id, status) => {
-    const updated = orders.map((o) => {
-      if (o.id !== id) return o;
-
-      let deliveredDate = o.deliveredDate;
-      let returnDeadline = o.returnDeadline;
-
-      if (status === "Delivered" && !o.deliveredDate) {
-        deliveredDate = new Date().toISOString();
-
-        const deadline = new Date();
-        deadline.setDate(deadline.getDate() + 7);
-        returnDeadline = deadline.toISOString();
-      }
-
-      return { ...o, status, deliveredDate, returnDeadline };
-    });
-
-    syncOrders(updated);
-  };
-
-  /* -----------------------------------------------------------
-      CANCEL ORDER
-  ------------------------------------------------------------ */
-  const cancelOrder = (id) => {
+  // CANCEL ORDER
+  const cancelOrder = async (id) => {
     if (!window.confirm("Cancel this order?")) return;
     const reason = prompt("Enter cancellation reason:");
     if (!reason) return;
 
-    const updated = orders.map((o) =>
-      o.id === id ? { ...o, status: "Cancelled", cancelReason: reason } : o
-    );
+    try {
+      await fetch(`${API}/orders/${id}/cancel`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reason }),
+      });
 
-    syncOrders(updated);
-  };
-
-  /* -----------------------------------------------------------
-       RETURN ACTIONS
-  ------------------------------------------------------------ */
-  const approveReturn = (id) => {
-    if (!window.confirm("Approve return request?")) return;
-
-    const updated = orders.map((o) =>
-      o.id === id ? { ...o, status: "Return Approved" } : o
-    );
-
-    syncOrders(updated);
-  };
-
-  const rejectReturn = (id) => {
-    if (!window.confirm("Reject this return?")) return;
-
-    const reason = prompt("Reason for rejection?");
-    if (!reason) return;
-
-    const updated = orders.map((o) =>
-      o.id === id ? { ...o, status: "Return Rejected", rejectReason: reason } : o
-    );
-
-    syncOrders(updated);
-  };
-
-  const completeRefund = (id) => {
-    if (!window.confirm("Mark refund completed?")) return;
-
-    const updated = orders.map((o) =>
-      o.id === id ? { ...o, status: "Refund Completed" } : o
-    );
-
-    syncOrders(updated);
-  };
-
-  /* -----------------------------------------------------------
-       DELETE ORDER
-  ------------------------------------------------------------ */
-  const removeOrder = (id) => {
-    if (!window.confirm("Delete permanently?")) return;
-
-    const updated = orders.filter((o) => o.id !== id);
-    syncOrders(updated);
+      loadOrders();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className="admin-orders-container">
-      <h1>📦 All Orders</h1>
+    <div className="admin-orders-layout">
 
-      {orders.length === 0 && <h3>No Orders Found</h3>}
+      {/* ---------------- LEFT FILTER PANEL ---------------- */}
+      <div className="orders-filter-box">
+        <h3>🔍 Filters</h3>
 
-      {orders.map((o) => (
-        <div key={o.id} className="admin-order-box">
+        <input
+          type="text"
+          placeholder="Search by name or order ID..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="filter-input"
+        />
 
-          {/* Action Buttons */}
-          <div className="order-actions">
-            {o.status === "Pending" && (
-              <button className="cancel-btn" onClick={() => cancelOrder(o.id)}>
-                Cancel
-              </button>
-            )}
-            <button className="remove-btn" onClick={() => removeOrder(o.id)}>
-              Remove
-            </button>
-          </div>
+        <select
+          className="filter-select"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All Status</option>
+          <option value="Pending">Pending</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Return Requested">Return Requested</option>
+          <option value="Return Approved">Return Approved</option>
+          <option value="Refund Completed">Refund Completed</option>
+        </select>
+      </div>
 
-          <h3>Order #{o.id}</h3>
+      {/* ---------------- RIGHT ORDER LIST ---------------- */}
+      <div className="orders-right">
+        <h1>📦 All Orders</h1>
 
-          <p><b>Order Time:</b> {o.date}</p>
-          <p><b>User:</b> {o.user}</p>
+        {filteredOrders.length === 0 && (
+          <h3>No Orders Found</h3>
+        )}
 
-          <p>
-            <b>Address:</b> {o.address?.address}, {o.address?.city} - {o.address?.pincode}
-          </p>
-
-          <p><b>Phone:</b> {o.address?.phone}</p>
-          <p><b>Payment:</b> {o.paymentMethod}</p>
-
-          <p><b>Status:</b> {o.status}</p>
-
-          <h4>Items:</h4>
-          <ul>
-            {o.items?.map((item) => (
-              <li key={item.id}>
-                {item.name} (₹{item.price} × {item.quantity})
-                = <b>₹{item.price * item.quantity}</b>
-              </li>
-            ))}
-          </ul>
-
-          {/* ⭐ PRICE BREAKDOWN ⭐ */}
-          <div className="price-details-admin">
-            {o.subtotal !== undefined && (
-              <p><b>Subtotal:</b> ₹{o.subtotal}</p>
-            )}
-
-            {o.discount > 0 && (
-              <p style={{ color: "green" }}>
-                <b>Discount:</b> -₹{o.discount}
-              </p>
-            )}
-
-            {o.coupon && (
-              <p><b>Coupon Applied:</b> {o.coupon}</p>
-            )}
-
-            <p><b>Final Amount:</b> ₹{o.total}</p>
-          </div>
-
-          {o.returnReason && (
-            <p style={{ color: "orange" }}>
-              <b>Return Reason:</b> {o.returnReason}
-            </p>
-          )}
-
-          {o.returnImages?.length > 0 && (
-            <>
-              <b>Images:</b>
-              <div className="return-images">
-                {o.returnImages.map((img, i) => (
-                  <img key={i} src={img} className="return-img" />
-                ))}
-              </div>
-            </>
-          )}
-
-          {o.cancelReason && (
-            <p style={{ color: "red" }}>
-              <b>Cancelled:</b> {o.cancelReason}
-            </p>
-          )}
-
-          {o.rejectReason && (
-            <p style={{ color: "red" }}>
-              <b>Return Rejected:</b> {o.rejectReason}
-            </p>
-          )}
-
-          {/* STATUS UPDATE */}
-          <div className="status-update">
-            <label>Update Status:</label>
-            <select
-              value={o.status}
-              onChange={(e) => updateStatus(o.id, e.target.value)}
-            >
-              <option value="Pending">Pending</option>
-              <option value="Shipped">Shipped</option>
-              <option value="Delivered">Delivered</option>
-              <option value="Return Requested">Return Requested</option>
-              <option value="Return Approved">Return Approved</option>
-              <option value="Refund Completed">Refund Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
-
-          {o.status === "Return Requested" && (
-            <div className="return-actions">
-              <button className="approve-btn" onClick={() => approveReturn(o.id)}>
-                Approve Return
-              </button>
-              <button className="reject-btn" onClick={() => rejectReturn(o.id)}>
-                Reject
-              </button>
-              <button className="refund-btn" onClick={() => completeRefund(o.id)}>
-                Refund Completed
-              </button>
+        {filteredOrders.map((o) => (
+          <div key={o.id} className="admin-order-card">
+            
+            {/* STATUS BADGE */}
+            <div className={`status-tag ${o.status.replace(/\s+/g, "")}`}>
+              {o.status}
             </div>
-          )}
 
-        </div>
-      ))}
+            <h3>Order #{o.id}</h3>
+
+            {/* USER DETAILS */}
+            <p><b>User:</b> {o.user?.name} ({o.user?.email})</p>
+            <p><b>Phone:</b> {o.address?.phone}</p>
+
+            {/* ORDER TIMING */}
+            <p><b>Placed On:</b> {new Date(o.createdAt).toLocaleString()}</p>
+
+            {/* PAYMENT */}
+            <p><b>Payment:</b> {o.paymentMethod}</p>
+
+            {/* ADDRESS */}
+            <p>
+              <b>Address:</b> {o.address?.address}, {o.address?.city} -{" "}
+              {o.address?.pincode}
+            </p>
+
+            {/* ITEMS */}
+            <h4>Items</h4>
+            <ul className="item-list">
+              {o.items?.map((item) => (
+                <li key={item.id}>
+                  <img
+                    src={item.product?.image || "/no-image.png"}
+                    className="order-img"
+                  />
+                  <div>
+                    <p>{item.product?.name}</p>
+                    <p>₹{item.price} × {item.quantity}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* TOTAL AMOUNT */}
+            <p className="order-total">
+              <b>Total:</b> ₹{o.total}
+            </p>
+
+            {/* ACTION BUTTONS */}
+            <div className="order-actions">
+              {o.status === "Pending" && (
+                <>
+                  <button onClick={() => updateStatus(o.id, "Shipped")}>
+                    Ship
+                  </button>
+                  <button className="cancel" onClick={() => cancelOrder(o.id)}>
+                    Cancel
+                  </button>
+                </>
+              )}
+
+              {o.status === "Shipped" && (
+                <button onClick={() => updateStatus(o.id, "Delivered")}>
+                  Mark Delivered
+                </button>
+              )}
+
+              {o.status === "Return Requested" && (
+                <>
+                  <button
+                    className="approve"
+                    onClick={() => updateStatus(o.id, "Return Approved")}
+                  >
+                    Approve Return
+                  </button>
+
+                  <button
+                    className="reject"
+                    onClick={() => updateStatus(o.id, "Return Rejected")}
+                  >
+                    Reject
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* STATUS DROPDOWN */}
+            <div className="status-update">
+              <label>Update Status:</label>
+              <select
+                value={o.status}
+                onChange={(e) => updateStatus(o.id, e.target.value)}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Return Requested">Return Requested</option>
+                <option value="Return Approved">Return Approved</option>
+                <option value="Refund Completed">Refund Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
-
-export default AdminOrders;
-
-
+}

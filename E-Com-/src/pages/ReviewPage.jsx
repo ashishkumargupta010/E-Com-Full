@@ -1,6 +1,7 @@
 import "./ReviewPage.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function ReviewPage() {
   const navigate = useNavigate();
@@ -13,9 +14,7 @@ export default function ReviewPage() {
 
   const address = JSON.parse(localStorage.getItem("checkoutAddress"));
 
-  // --------------------------------------------------
-  // LOAD CART FROM BACKEND
-  // --------------------------------------------------
+  // LOAD CART
   const loadCart = async () => {
     const res = await fetch("http://localhost:5000/api/cart/items", {
       headers: { Authorization: `Bearer ${token}` },
@@ -27,22 +26,25 @@ export default function ReviewPage() {
       setCartItems(data);
 
       const total = data.reduce(
-        (sum, ci) => sum + (ci.product?.price || 0) * (ci.quantity || 1),
+        (sum, ci) => sum + (ci.product?.price || 0) * ci.quantity,
         0
       );
 
-      setSubtotal(total);
-
       const savedDiscount = Number(localStorage.getItem("cartDiscount")) || 0;
-      setDiscount(savedDiscount);
 
+      setSubtotal(total);
+      setDiscount(savedDiscount);
       setFinalPrice(total - savedDiscount);
     }
   };
 
   useEffect(() => {
-    loadCart();
-  }, []);
+  const fetchData = async () => {
+    await loadCart();
+  };
+  fetchData();
+}, []);
+
 
   const goToPayment = () => {
     localStorage.setItem("finalPrice", finalPrice);
@@ -63,12 +65,27 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="review-wrapper">
+    <motion.div
+      className="review-wrapper"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.h2
+        className="page-title"
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      >
+        Review Your Order
+      </motion.h2>
 
-      <h2 className="page-title">Review Your Order</h2>
-
-      {/* Delivery Address */}
-      <div className="review-box">
+      {/* DELIVERY ADDRESS */}
+      <motion.div
+        className="review-box"
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="box-title">Delivery Address</div>
 
         <div className="address-line">
@@ -76,25 +93,43 @@ export default function ReviewPage() {
             <h4>{address.name}</h4>
             <p>{address.phone}</p>
             <p>{address.line1}</p>
-            <p>{address.city} - {address.pincode}</p>
+            <p>
+              {address.city} - {address.pincode}
+            </p>
           </div>
 
-          <button className="change-btn" onClick={() => navigate("/select-address")}>
+          <motion.button
+            className="change-btn"
+            whileHover={{ scale: 1.05 }}
+            onClick={() => navigate("/select-address")}
+          >
             Change
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Cart Items */}
-      <div className="review-box">
+      {/* ITEMS */}
+      <motion.div
+        className="review-box"
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         <div className="box-title">Items</div>
 
         {cartItems.map((ci) => (
-          <div key={ci.id} className="item-row">
-            <img
+          <motion.div
+            key={ci.id}
+            className="item-row"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <motion.img
               src={ci.product?.image}
-              alt={ci.product?.name}
               className="item-image"
+              alt={ci.product?.name}
+              whileHover={{ scale: 1.05 }}
             />
 
             <div className="item-info">
@@ -106,23 +141,32 @@ export default function ReviewPage() {
             <div className="item-price">
               ₹{(ci.product?.price || 0) * ci.quantity}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Price Summary */}
-      <div className="bottom-box">
+      {/* PRICE BOX */}
+      <motion.div
+        className="bottom-box"
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <h2>Subtotal: ₹{subtotal}</h2>
 
-        {discount > 0 && <h3>Discount: -₹{discount}</h3>}
+        {discount > 0 && <h3>Discount Applied: -₹{discount}</h3>}
 
-        <h2>Final Amount: ₹{finalPrice}</h2>
+        <h1 className="final-amount">Final Amount: ₹{finalPrice}</h1>
 
-        <button className="continue-btn" onClick={goToPayment}>
-          Continue to Payment
-        </button>
-      </div>
-
-    </div>
+        <motion.button
+          className="continue-btn"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={goToPayment}
+        >
+          Continue to Payment →
+        </motion.button>
+      </motion.div>
+    </motion.div>
   );
 }

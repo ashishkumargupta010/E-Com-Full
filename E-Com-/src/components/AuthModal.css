@@ -1,145 +1,160 @@
-/* -------------------------------
-   Modal Background Overlay
--------------------------------- */
+/* ----------------------------------------------------
+ 🌸 BLUSHORA AUTH MODAL — Super Elegant Pink UI
+---------------------------------------------------- */
+
+/* BACKDROP */
 .modal-overlay {
   position: fixed;
   top: 0; 
   left: 0;
   width: 100%; 
   height: 100%;
-  background: rgba(255, 192, 203, 0.35); /* light pink blur */
-  backdrop-filter: blur(6px);
+  background: rgba(255, 182, 193, 0.25); /* soft pink glass */
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
+  animation: fadeBg 0.3s ease-out;
 }
 
-/* -------------------------------
-   Modal Box (Main Card)
--------------------------------- */
+@keyframes fadeBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* MODAL CARD */
 .modal-content {
-  background: #ffffff;
+  width: 360px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
   padding: 2rem;
-  border-radius: 18px;
-  box-shadow: 0px 10px 25px rgba(255, 105, 180, 0.3);
-  width: 330px;
   text-align: center;
-  animation: popIn 0.33s ease-out;
-  border: 1px solid #ffe0ef;
+  border: 1.5px solid rgba(255, 105, 180, 0.25);
+  box-shadow: 0px 15px 40px rgba(255, 20, 147, 0.25);
+  animation: popIn 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  font-family: "Poppins", sans-serif;
 }
 
-/* Entrance Animation */
 @keyframes popIn {
-  from { transform: scale(0.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
-/* -------------------------------
-   Tabs (Sign In / Sign Up)
--------------------------------- */
+/* TABS */
 .auth-tabs {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 1.2rem;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid #ffd0e3;
+  padding-bottom: 6px;
 }
 
 .auth-tabs button {
   flex: 1;
-  padding: 10px;
-  border: none;
   background: none;
+  border: none;
+  padding: 10px 0;
   font-weight: 600;
-  font-size: 16px;
+  color: #666;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: 0.3s;
-  color: #444;
+  font-size: 16px;
+  transition: 0.25s;
+  border-bottom: 3px solid transparent;
 }
 
 .auth-tabs button.active {
-  color: #ff1493;
-  border-bottom: 3px solid #ff1493;
+  color: #ff0c75;
+  border-bottom: 3px solid #ff0c75;
+  text-shadow: 0 1px 8px rgba(255, 20, 147, 0.35);
 }
 
-/* -------------------------------
-   Form Body
--------------------------------- */
+/* FORM BODY */
 .auth-body {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* INPUTS */
 .auth-body input {
-  padding: 11px;
-  border: 1px solid #f7a9c8;
-  border-radius: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  background: #fff7fb;
+  border: 1.5px solid #ffb3d4;
+  border-radius: 12px;
   font-size: 14px;
-  background: #fff5fa;
   transition: 0.25s ease;
 }
 
 .auth-body input:focus {
-  border-color: #ff1493;
-  box-shadow: 0 0 5px rgba(255, 20, 147, 0.3);
-  outline: none;
+  border-color: #ff1a8c;
+  background: #ffe9f3;
+  box-shadow: 0 0 8px rgba(255, 20, 147, 0.35);
 }
 
-/* Buttons */
+/* MAIN BUTTONS */
 .auth-body button {
-  padding: 11px;
+  background: linear-gradient(135deg, #ff3c8e, #ff0c74);
+  padding: 12px;
+  color: #fff;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #ff69b4, #ff1493);
-  color: white;
-  font-size: 15px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s;
+  transition: 0.25s;
+  box-shadow: 0 6px 20px rgba(255, 20, 147, 0.3);
 }
 
 .auth-body button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(255, 20, 147, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 20, 147, 0.45);
 }
 
-/* -------------------------------
-   Error & Success
--------------------------------- */
+/* FORGOT + SWITCH LINKS */
+.forgot-btn {
+  padding-top: 4px;
+  background: none;
+  border: none;
+  color: #ff1493;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.2s;
+}
+
+.forgot-btn:hover {
+  color: #d6006b;
+}
+
+/* ERRORS */
 .error {
-  color: red;
-  font-size: 12px;
-  margin-top: -5px;
+  font-size: 13px;
+  color: #d60000;
+  margin-top: -4px;
 }
 
 .success {
-  color: green;
-  font-size: 12px;
-  margin-top: -5px;
-}
-
-/* -------------------------------
-   Utility Links
--------------------------------- */
-.forgot-btn {
-  background: none;
-  color: #ff1493;
-  border: none;
-  text-decoration: underline;
   font-size: 13px;
-  cursor: pointer;
-  padding-top: 5px;
+  color: #008f3c;
+  margin-top: -4px;
 }
 
-/* Close Button */
+/* CLOSE BUTTON */
 .close-btn {
-  background: #ff4d6d;
-  color: white;
-  margin-top: 5px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, #ff4d7a, #d9004f);
+  border: none;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
 }
+
 .close-btn:hover {
-  background: #e03151;
+  background: linear-gradient(135deg, #c70046, #ff2663);
+  transform: translateY(-2px);
 }

@@ -1,0 +1,111 @@
+/**********************************************
+ 🌈 NAVBAR FIX — ZERO ELLIPSIS FOREVER
+**********************************************/
+
+/* NAVBAR WRAPPER */
+.admin-navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1.4rem;
+
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.6);
+
+  width: 100%;
+  overflow: visible; /* MUST */
+}
+
+/**********************************************
+ 👈 LEFT SIDE
+**********************************************/
+.admin-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;   /* 🧨 NEVER SHRINK */
+}
+
+.admin-navbar-left h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+
+  background: linear-gradient(45deg, #ff6ab7, #ff1493);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/**********************************************
+ 👉 RIGHT SIDE (SEARCH + LOGOUT)
+**********************************************/
+.admin-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;   /* 🧨 NEVER SHRINK */
+}
+
+/**********************************************
+ 🔍 SEARCH INPUT
+**********************************************/
+.admin-search-input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ffa3ca;
+  background: #fff;
+
+  width: 180px;
+  min-width: 130px; /* 🧨 WON'T COLLAPSE */
+  flex-shrink: 0;
+}
+
+/**********************************************
+ 🚪 LOGOUT BUTTON
+**********************************************/
+.logout-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #ff6ab7, #ff1493);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+/**********************************************
+ 🍔 MENU BUTTON
+**********************************************/
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--pink-2);
+}
+
+/**********************************************
+ 📱 MOBILE FIX
+**********************************************/
+@media (max-width: 480px) {
+  .admin-search-input {
+    width: 120px;
+    min-width: 80px;
+  }
+
+  .admin-navbar-left h1 {
+    font-size: 18px;
+  }
+}

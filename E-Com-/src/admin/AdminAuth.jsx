@@ -20,9 +20,7 @@ const AdminAuth = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           email: form.email.trim(),
           password: form.password.trim(),
@@ -36,10 +34,15 @@ const AdminAuth = () => {
         return;
       }
 
-      localStorage.setItem("adminToken", data.token);
-      localStorage.setItem("adminInfo", JSON.stringify(data.admin));
-      localStorage.setItem("isAdminLoggedIn", "true");
+      // -----------------------------
+      //  FIXED STORAGE (MOST IMPORTANT)
+      // -----------------------------
+      localStorage.setItem("adminToken", data.token);        // ✔ correct token
+      localStorage.setItem("adminInfo", JSON.stringify(data.admin)); // ✔ admin details
+      localStorage.setItem("role", "admin");                 // ✔ login role check
+      localStorage.setItem("isAdminLoggedIn", "true");       // ✔ optional use
 
+      // redirect to dashboard
       navigate("/admin/dashboard");
 
     } catch (err) {
@@ -51,7 +54,7 @@ const AdminAuth = () => {
   return (
     <div className="admin-auth-container">
       <div className="admin-auth-card">
-        <h2>👑 Admin Login</h2>
+        <h2>Blushora Admin</h2>
         <p className="subtitle">Secure access to admin dashboard</p>
 
         <form onSubmit={handleLogin}>

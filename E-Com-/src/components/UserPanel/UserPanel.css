@@ -1,159 +1,222 @@
-/* ---------------------------------------------------
-   🔥 PINK FLIPKART STYLE USER PANEL
---------------------------------------------------- */
-
-/* MAIN LAYOUT */
-.flipkart-panel {
+/* ----------------------------------------------
+   🌸 MAIN LAYOUT
+---------------------------------------------- */
+.blush-panel {
   display: flex;
   min-height: 100vh;
-  background: #fff5f8; /* soft blush pink */
+  background: #fff6fa;
   font-family: "Poppins", sans-serif;
 }
 
-/* SIDEBAR */
-.fk-sidebar {
+/* ----------------------------------------------
+   🌸 SIDEBAR (Glass + Smooth Shadow)
+---------------------------------------------- */
+.blush-sidebar {
   width: 260px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
   padding: 25px;
-  border-right: 2px solid #ffddea;
-  box-shadow: 2px 0 10px rgba(255, 135, 175, 0.15);
+  border-right: 2px solid #ffd4e6;
+  box-shadow: 4px 0 25px rgba(255, 120, 170, 0.12);
+  backdrop-filter: blur(6px);
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+
+  animation: fadeSlide 0.4s ease forwards;
 }
 
-/* Profile Box */
-.fk-profile-box {
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hide scrollbar */
+.blush-sidebar::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ----------------------------------------------
+   🌸 USER PROFILE CARD (Premium)
+---------------------------------------------- */
+.profile-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 25px;
+  gap: 14px;
+  margin-bottom: 30px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #fff0f6;
+  box-shadow: 0 4px 16px rgba(255, 50, 120, 0.12);
+  transition: 0.3s ease;
 }
 
-.fk-profile-avatar {
-  width: 50px;
-  height: 50px;
-  background: #ff4081;
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 22px rgba(255, 45, 120, 0.22);
+}
+
+.avatar-circle {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, #ff5ea4, #ff2d78);
   color: #fff;
   font-size: 22px;
-  border-radius: 50%;
+  font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3);
 }
 
-.fk-profile-box h4 {
-  margin: 0;
+.profile-card h4 {
   font-size: 18px;
-  color: #ff0066;
-  font-weight: 600;
-}
-
-.fk-profile-box span {
-  font-size: 13px;
-  color: #777;
-}
-
-/* SIDEBAR LINKS */
-.fk-link {
-  display: block;
-  padding: 12px 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  color: #444;
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.2s;
-}
-
-.fk-link:hover,
-.fk-link.active {
-  background: #ffe4ef;
+  font-weight: 700;
+  margin: 0;
   color: #ff2d78;
-  box-shadow: 0 2px 8px rgba(255, 85, 150, 0.2);
 }
 
-/* LOGOUT BUTTON */
-.fk-logout {
+.profile-card span {
+  font-size: 13px;
+  color: #666;
+  display: block;
+}
+
+/* ----------------------------------------------
+   🌸 SECTION TITLES
+---------------------------------------------- */
+.panel-title {
+  margin-top: 22px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #b8b8b8;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+
+/* ----------------------------------------------
+   🌸 SIDEBAR LINKS (Premium Animated)
+---------------------------------------------- */
+.panel-link {
+  display: block;
+  padding: 13px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+
+  transition: 0.25s ease;
+  cursor: pointer;
+
+  background: #fff;
+  border: 1px solid transparent;
+}
+
+.panel-link:hover {
+  background: #ffe6f1;
+  border-color: #ffb4d1;
+  color: #ff2d78;
+  box-shadow: 0px 4px 12px rgba(255, 20, 147, 0.18);
+  transform: translateX(4px);
+}
+
+.panel-link.active {
+  background: linear-gradient(90deg, #ff5ea4, #ff2d78);
+  color: #fff !important;
+  box-shadow: 0px 6px 14px rgba(255, 45, 120, 0.28);
+  transform: translateX(4px);
+}
+
+/* Disabled */
+.panel-link.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------
+   🌸 LOGOUT BUTTON (Premium)
+---------------------------------------------- */
+.logout-btn {
   margin-top: 20px;
   width: 100%;
-  padding: 12px;
-  border: none;
-  background: #ff4b6e;
+  padding: 14px;
+
+  background: linear-gradient(45deg, #ff4b74, #ff2d78);
   color: #fff;
-  font-size: 16px;
-  border-radius: 8px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+
+  transition: 0.25s ease;
 }
 
-.fk-logout:hover {
-  background: #e93657;
+.logout-btn:hover {
+  background: linear-gradient(45deg, #ff2d78, #d90055);
+  box-shadow: 0px 6px 18px rgba(255, 45, 120, 0.3);
   transform: translateY(-2px);
 }
 
-/* MAIN CONTENT */
-.fk-content {
+/* ----------------------------------------------
+   🌸 CONTENT AREA
+---------------------------------------------- */
+.blush-content {
   flex: 1;
-  padding: 40px 50px;
+  padding: 50px;
+  animation: fadeIn 0.4s ease;
 }
 
-/* Section Titles */
-.fk-content h2 {
-  color: #ff2d78;
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 20px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Address Card */
-.address-card {
-  border: 1px solid #ffd4e4;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(255, 120, 185, 0.15);
+/* ----------------------------------------------
+   🌸 RESPONSIVE
+---------------------------------------------- */
+@media (max-width: 900px) {
+  .blush-panel {
+    flex-direction: column;
+  }
+
+  .blush-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 2px solid #ffddea;
+  }
+
+  .blush-content {
+    padding: 25px;
+  }
 }
 
-.address-card input {
-  width: 100%;
-  padding: 8px;
-  margin: 6px 0;
-  border-radius: 8px;
-  border: 1px solid #ffb6d0;
+@media (max-width: 480px) {
+  .panel-link {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  .logout-btn {
+    padding: 12px;
+  }
+
+  .avatar-circle {
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
 }
-
-.address-card input:focus {
-  border-color: #ff2d78;
-  outline: none;
-}
-
-/* Add New Address Button */
-.add-btn {
-  background: #ff4081;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.add-btn:hover {
-  background: #d9005f;
-}
-
-/* Delete Button */
-.delete-btn {
-  background: #ff3b52;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-top: 8px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background: #d5002f;
-}
-
-

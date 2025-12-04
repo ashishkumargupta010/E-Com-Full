@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./SelectAddress.css";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function SelectAddress() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function SelectAddress() {
   });
 
   /* ---------------------------
-     LOAD ADDRESSES FROM BACKEND
+     LOAD ADDRESSES
   ----------------------------*/
   const loadAddresses = async () => {
     try {
@@ -44,8 +45,7 @@ export default function SelectAddress() {
             }))
           : []
       );
-    } catch (err) {
-      console.log("Address load error:", err);
+    } catch {
       setAddresses([]);
     }
   };
@@ -55,7 +55,7 @@ export default function SelectAddress() {
   }, []);
 
   /* ---------------------------
-      SAVE OR UPDATE ADDRESS
+     ADD / UPDATE ADDRESS
   ----------------------------*/
   const saveNewAddress = async () => {
     if (!newAddress.name || !newAddress.phone || !newAddress.line1) {
@@ -72,10 +72,7 @@ export default function SelectAddress() {
 
     try {
       if (editIndex !== null) {
-        // update
-        const id = addresses[editIndex].id;
-
-        await fetch(`http://localhost:5000/api/address/${id}`, {
+        await fetch(`http://localhost:5000/api/address/${addresses[editIndex].id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +81,6 @@ export default function SelectAddress() {
           body: JSON.stringify(payload),
         });
       } else {
-        // add new
         await fetch("http://localhost:5000/api/address", {
           method: "POST",
           headers: {
@@ -97,7 +93,6 @@ export default function SelectAddress() {
 
       setShowForm(false);
       setEditIndex(null);
-
       setNewAddress({
         name: "",
         phone: "",
@@ -107,7 +102,7 @@ export default function SelectAddress() {
       });
 
       loadAddresses();
-    } catch (err) {
+    } catch {
       alert("Failed to save address");
     }
   };
@@ -118,20 +113,16 @@ export default function SelectAddress() {
   const deleteAddress = async (id) => {
     if (!confirm("Delete this address?")) return;
 
-    try {
-      await fetch(`http://localhost:5000/api/address/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    await fetch(`http://localhost:5000/api/address/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-      loadAddresses();
-    } catch (err) {
-      alert("Delete failed");
-    }
+    loadAddresses();
   };
 
   /* ---------------------------
-      PROCEED WITH SELECTED ADDRESS
+        PROCEED
   ----------------------------*/
   const proceed = () => {
     if (selected === null) {
@@ -140,30 +131,40 @@ export default function SelectAddress() {
     }
 
     localStorage.setItem("checkoutAddress", JSON.stringify(addresses[selected]));
-
-    navigate("/payment", { replace: true });
+    navigate("/review");
   };
 
   return (
     <div className="address-wrapper">
 
-      <h2>Select Delivery Address</h2>
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        Select Delivery Address
+      </motion.h2>
 
-      {/* ADD ADDRESS BUTTON */}
       {!showForm && (
-        <button className="primary-btn" onClick={() => setShowForm(true)}>
+        <motion.button
+          className="primary-btn"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.03 }}
+          onClick={() => setShowForm(true)}
+        >
           + Add New Address
-        </button>
+        </motion.button>
       )}
 
       {/* ADDRESS LIST */}
       <div className="address-list">
         {addresses.map((addr, idx) => (
-          <div
+          <motion.div
             key={addr.id}
             className={`address-card ${selected === idx ? "selected" : ""}`}
+            whileHover={{ scale: 1.01 }}
           >
-            {/* THREE DOT MENU */}
+            {/* 3 DOT MENU */}
             <div
               className="address-menu"
               onClick={() => setMenuIndex(menuIndex === idx ? null : idx)}
@@ -171,29 +172,36 @@ export default function SelectAddress() {
               ⋮
             </div>
 
-            {menuIndex === idx && (
-              <div className="dropdown-menu">
-                <p
-                  onClick={() => {
-                    setNewAddress({
-                      name: addr.name,
-                      phone: addr.phone,
-                      line1: addr.line1,
-                      city: addr.city,
-                      pincode: addr.pincode,
-                    });
-                    setEditIndex(idx);
-                    setShowForm(true);
-                  }}
+            <AnimatePresence>
+              {menuIndex === idx && (
+                <motion.div
+                  className="dropdown-menu"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
                 >
-                  ✏ Edit
-                </p>
+                  <p
+                    onClick={() => {
+                      setNewAddress({
+                        name: addr.name,
+                        phone: addr.phone,
+                        line1: addr.line1,
+                        city: addr.city,
+                        pincode: addr.pincode,
+                      });
+                      setEditIndex(idx);
+                      setShowForm(true);
+                    }}
+                  >
+                    ✏ Edit
+                  </p>
 
-                <p onClick={() => deleteAddress(addr.id)}>🗑 Delete</p>
-              </div>
-            )}
+                  <p onClick={() => deleteAddress(addr.id)}>🗑 Delete</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {/* ADDRESS DETAILS */}
+            {/* SELECT ADDRESS */}
             <div onClick={() => setSelected(idx)}>
               <h4>{addr.name}</h4>
               <p>{addr.phone}</p>
@@ -202,54 +210,63 @@ export default function SelectAddress() {
                 {addr.city} - {addr.pincode}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* ADDRESS FORM */}
-      {showForm && (
-        <div className="address-form">
-          <input
-            placeholder="Full Name"
-            value={newAddress.name}
-            onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
-          />
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            className="address-form"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+          >
+            <input
+              placeholder="Full Name"
+              value={newAddress.name}
+              onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
+            />
+            <input
+              placeholder="Phone"
+              value={newAddress.phone}
+              onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
+            />
+            <input
+              placeholder="Address"
+              value={newAddress.line1}
+              onChange={(e) => setNewAddress({ ...newAddress, line1: e.target.value })}
+            />
+            <input
+              placeholder="City"
+              value={newAddress.city}
+              onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+            />
+            <input
+              placeholder="Pincode"
+              value={newAddress.pincode}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, pincode: e.target.value })
+              }
+            />
 
-          <input
-            placeholder="Phone"
-            value={newAddress.phone}
-            onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
-          />
-
-          <input
-            placeholder="Address"
-            value={newAddress.line1}
-            onChange={(e) => setNewAddress({ ...newAddress, line1: e.target.value })}
-          />
-
-          <input
-            placeholder="City"
-            value={newAddress.city}
-            onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
-          />
-
-          <input
-            placeholder="Pincode"
-            value={newAddress.pincode}
-            onChange={(e) => setNewAddress({ ...newAddress, pincode: e.target.value })}
-          />
-
-          <button className="primary-btn" onClick={saveNewAddress}>
-            {editIndex !== null ? "Update Address" : "Save Address"}
-          </button>
-        </div>
-      )}
+            <button className="primary-btn" onClick={saveNewAddress}>
+              {editIndex !== null ? "Update Address" : "Save Address"}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* PROCEED BUTTON */}
       {addresses.length > 0 && (
-        <button className="primary-btn deliver-btn" onClick={proceed}>
+        <motion.button
+          className="primary-btn deliver-btn"
+          whileHover={{ scale: 1.03 }}
+          onClick={proceed}
+        >
           Deliver to this Address
-        </button>
+        </motion.button>
       )}
     </div>
   );

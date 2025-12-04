@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import User from "./userModel.js";
 
 const Order = sequelize.define(
   "orders",
@@ -9,7 +8,6 @@ const Order = sequelize.define(
 
     userId: { type: DataTypes.INTEGER, allowNull: false },
 
-    // store address as JSON for immutability
     address: { type: DataTypes.JSON, allowNull: false },
 
     paymentMethod: { type: DataTypes.STRING, allowNull: false },
@@ -30,8 +28,5 @@ const Order = sequelize.define(
   },
   { timestamps: true }
 );
-
-Order.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(Order, { foreignKey: "userId" });
 
 export default Order;

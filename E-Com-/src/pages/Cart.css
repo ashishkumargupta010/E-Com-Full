@@ -1,201 +1,221 @@
+/* ============================================================
+    🌸 PREMIUM CART PAGE – Ultra Professional E-Commerce Look
+=============================================================== */
+
 /* MAIN PAGE */
 .cart-page {
   padding: 2rem;
-  background: #fff0f6;
   min-height: 100vh;
-  font-family: "Poppins", sans-serif;
+  background: #faf4f8; /* clean professional soft background */
+  animation: fadeIn 0.7s ease;
 }
 
+/* TITLE */
 .cart-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #c2185b;
-  margin-bottom: 1.5rem;
   text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #d12278; /* premium deep pink instead of neon */
 }
 
+/* EMPTY CART */
 .empty-cart {
   text-align: center;
-  font-size: 1.2rem;
-  color: #8e1158;
-  margin-top: 3rem;
+  font-size: 1.4rem;
+  margin-top: 4rem;
+  color: #a2385f;
+  opacity: 0.7;
 }
 
 /* CART WRAPPER */
 .cart-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
 
-/* SINGLE ITEM CARD */
+/* ============================================================
+    CART ITEM CARD — PROFESSIONAL WHITE GLASS CARD
+=============================================================== */
+
 .cart-item {
   display: flex;
   gap: 1.2rem;
+  padding: 1.3rem;
+  border-radius: 16px;
+
   background: #ffffff;
-  padding: 1rem;
-  border-radius: 14px;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.35);
-  transition: transform 0.3s ease;
+  border: 1px solid #f3d1e4;
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 18px rgba(210, 50, 120, 0.12);
+  transition: 0.25s ease;
 }
 
 .cart-item:hover {
   transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(210, 50, 120, 0.18);
 }
 
 /* PRODUCT IMAGE */
 .cart-item img {
-  width: 110px;
-  height: 130px;
+  width: 120px;
+  height: 140px;
+  border-radius: 12px;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(255, 182, 193, 0.6);
+  box-shadow: 0 5px 14px rgba(180, 30, 100, 0.22);
 }
 
-/* ITEM DETAILS */
+/* TEXT INFO */
 .item-info h3 {
-  margin: 0;
-  color: #c2185b;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #d12278;
 }
 
 .item-info p {
+  color: #4e4e4e;
   margin: 4px 0;
-  color: #4a148c;
   font-size: 0.95rem;
+  font-weight: 500;
 }
 
-/* QUANTITY SECTION */
+/* ============================================================
+    QUANTITY CONTROLS
+=============================================================== */
 .qty-btn {
-  background: #f8b6d3;
+  background: #ffe4f0;
+  border-radius: 8px;
   border: none;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
   cursor: pointer;
-  margin: 0 6px;
   font-weight: 700;
-  color: #8e1158;
-  transition: 0.3s;
+  transition: 0.2s ease;
 }
 
 .qty-btn:hover {
-  background: #c2185b;
-  color: #fff;
+  background: #e91e63;
+  color: white;
 }
 
 .qty-value {
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 0 8px;
+  font-weight: 700;
   color: #c2185b;
 }
 
 /* REMOVE BUTTON */
 .remove-btn {
-  background: #ff4060;
-  color: #fff;
+  background: #ff4d7a;
+  color: white;
   border: none;
-  padding: 6px 14px;
+  padding: 9px 18px;
+  margin-top: 10px;
   border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
-  margin-top: 8px;
-  transition: 0.3s;
+  transition: 0.25s ease;
 }
 
 .remove-btn:hover {
-  background: #b71c1c;
+  background: #c2185b;
 }
 
-/* TOTAL AREA */
+/* ============================================================
+    TOTAL & DISCOUNT
+=============================================================== */
+
 .cart-total {
   font-size: 1.6rem;
-  font-weight: 700;
   text-align: right;
-  margin-top: 1rem;
-  color: #c2185b;
+  font-weight: 800;
+  color: #d12278;
 }
 
-/* COUPON SECTION */
+.discount-text {
+  color: #c2185b;
+  margin-top: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* FINAL PRICE */
+.final-price {
+  font-size: 1.7rem;
+  text-align: right;
+  font-weight: 800;
+  color: #b4005a;
+}
+
+/* ============================================================
+    COUPON INPUT
+=============================================================== */
+
 .coupon-section {
   display: flex;
-  gap: 0.7rem;
+  gap: 10px;
   margin-top: 1rem;
 }
 
 .coupon-section input {
   flex: 1;
-  padding: 0.7rem 1rem;
   border-radius: 12px;
-  border: 2px solid #f8b6d3;
-  outline: none;
+  border: 2px solid #f3b6d4;
+  padding: 0.9rem 1rem;
+  background: white;
   font-size: 1rem;
+  transition: 0.25s ease;
+}
+
+.coupon-section input:focus {
+  border-color: #d12278;
+  box-shadow: 0 0 10px rgba(210, 40, 120, 0.2);
 }
 
 .coupon-section button {
-  padding: 0.7rem 1.3rem;
+  padding: 0.9rem 1.4rem;
+  background: #d12278;
+  color: white;
   border-radius: 12px;
-  background: #c2185b;
   border: none;
-  color: #fff;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
+  transition: 0.25s;
 }
 
 .coupon-section button:hover {
-  background: #8e1158;
+  transform: scale(1.05);
 }
 
-.discount-text {
-  color: #c2185b;
-  margin-top: 0.5rem;
-  font-weight: 600;
-}
+/* ============================================================
+    CHECKOUT BUTTON
+=============================================================== */
 
-.final-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: right;
-  color: #8e1158;
-}
-
-/* CHECKOUT BUTTON */
 .checkout-btn {
-  background: #c2185b;
-  color: #fff;
-  border: none;
+  margin-top: 1.6rem;
   width: 100%;
-  padding: 0.9rem;
-  border-radius: 12px;
-  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 14px;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 800;
   cursor: pointer;
-  font-weight: 700;
-  margin-top: 1.4rem;
-  transition: 0.3s;
+
+  background: #d12278;
+  color: white;
+  transition: 0.25s ease;
 }
 
 .checkout-btn:hover {
-  background: #8e1158;
+  transform: translateY(-2px);
 }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .cart-item {
-    flex-direction: column;
-    text-align: center;
-  }
+/* ============================================================
+    ANIMATION
+=============================================================== */
 
-  .cart-item img {
-    width: 90%;
-    height: auto;
-  }
-
-  .cart-total {
-    text-align: center;
-  }
-
-  .checkout-btn {
-    font-size: 1rem;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

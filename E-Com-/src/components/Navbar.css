@@ -124,7 +124,6 @@
 }
 
 /* Dropdown styles */
-/* Dropdown styles */
 .user-dropdown-container {
   position: relative;
   display: flex;
@@ -132,43 +131,64 @@
   cursor: pointer;
 }
 
-/* ⭐ FIXED: Dropdown now appears exactly under the user icon */
+/* ⭐ PREMIUM UPDATED DROPDOWN */
 .user-dropdown {
   position: absolute;
-  top: 45px;              /* dropdown below icon */
-  right: 0;               /* right aligned */
-  background: #fff0f5;
-  border: 1px solid #ffb6c1;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  width: 220px;
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.25);
-  z-index: 2000;
+  top: 48px;
+  right: 0;
+  width: 240px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 8px 25px rgba(255, 62, 130, 0.25);
+  border: 1px solid #ffd4e6;
   animation: fadeIn 0.25s ease-out;
+  z-index: 2000;
 }
 
-.user-dropdown p {
-  color: #d63384;
-  margin: 0.3rem 0;
-  font-size: 14px;
-  font-weight: 500;
+.ud-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff2d78;
+  margin: 0 0 2px;
 }
 
-.user-dropdown button {
-  background: #ff69b4;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+.ud-phone {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.ud-btn {
   width: 100%;
   text-align: left;
-  margin-top: 6px;
-  border-radius: 6px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff77a9, #ff2d78);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: all 0.25s ease;
 }
 
-.user-dropdown button:hover {
-  background: #d63384;
+.ud-btn:hover {
+  background: #ff2d78;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.35);
+}
+
+.ud-btn.logout {
+  background: #ffe6ee;
+  color: #ff2d78;
+  font-weight: 600;
+}
+
+.ud-btn.logout:hover {
+  background: #ffd1e2;
+  transform: translateY(-2px);
 }
 
 /* Animation */
@@ -176,7 +196,6 @@
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 
 /* Hamburger (hidden now) */
 .hamburger {
@@ -244,12 +263,6 @@
   height: 20px;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
@@ -264,7 +277,7 @@
   }
 }
 
-/* --- Desktop-only spacing fixes --- */
+/* Desktop Fixes */
 @media (min-width: 769px) {
   .nav-links {
     display: flex !important;
@@ -294,7 +307,6 @@
   height: 20px;
 }
 
-/* Updated cart badge */
 .cart-count {
   top: -6px;
   right: -8px;
@@ -322,14 +334,7 @@
   font-size: 16px;
 }
 
-.user-dropdown-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-/* ✅ FIXED SUGGEST DROPDOWN */
+/* Search bar */
 .nav-search {
   flex: 1;
   display: flex;
@@ -360,7 +365,7 @@
   }
 }
 
-/* ✅ UPDATED — better visibility */
+/* Suggestion Box */
 .suggest-box {
   position: absolute;
   top: 50px;

@@ -1,54 +1,84 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import CustomerListModal from "./CustomerListModal";
 import CustomerDetailsModal from "./CustomerDetailsModal";
 
-const AdminCustomers = () => {
+const API = "http://localhost:5000/api";
+
+export default function AdminCustomers() {
   const [users, setUsers] = useState([]);
   const [newCustomers, setNewCustomers] = useState(0);
   const [totalCustomers, setTotalCustomers] = useState(0);
+
   const [showList, setShowList] = useState(false);
   const [showDetails, setShowDetails] = useState(null);
+  const [search, setSearch] = useState("");
 
-  // ----------------------- LOAD CUSTOMERS -------------------------
+  const token = localStorage.getItem("adminToken");
+
+  // ---- Chart reference --------
+  const chartRef = useRef(null);
+
+  // -----------------------------------
+  // LOAD CUSTOMERS FROM BACKEND
+  // -----------------------------------
+  const loadUsers = async () => {
+    try {
+      const res = await fetch(`${API}/admin/users`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+      setUsers(data);
+      setTotalCustomers(data.length);
+
+      // Check new customers this month
+      const now = new Date();
+      const month = now.getMonth();
+      const year = now.getFullYear();
+
+      const newCus = data.filter((u) => {
+        const d = new Date(u.createdAt);
+        return d.getMonth() === month && d.getFullYear() === year;
+      }).length;
+
+      setNewCustomers(newCus);
+    } catch (err) {
+      console.log("Error loading users:", err);
+    }
+  };
+
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("users")) || [];
-    setUsers(userData);
-    setTotalCustomers(userData.length);
-
-    const now = new Date();
-    const month = now.getMonth();
-    const year = now.getFullYear();
-
-    const newCus = userData.filter((u) => {
-      if (!u.createdAt) return false;
-      const d = new Date(u.createdAt);
-      return d.getMonth() === month && d.getFullYear() === year;
-    }).length;
-
-    setNewCustomers(newCus);
+    loadUsers();
   }, []);
 
-  // ----------------------- BAR GRAPH -------------------------
+  // -----------------------------------
+  // CUSTOMER GROWTH CHART (FIXED)
+  // -----------------------------------
   useEffect(() => {
     if (users.length === 0) return;
 
     const ctx = document.getElementById("customerChart");
     if (!ctx) return;
 
-    const monthData = new Array(12).fill(0);
+    // FIX — Destroy previous chart
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
 
+    const monthData = new Array(12).fill(0);
     users.forEach((u) => {
-      if (u.createdAt) {
-        const d = new Date(u.createdAt);
-        monthData[d.getMonth()]++;
-      }
+      const d = new Date(u.createdAt);
+      monthData[d.getMonth()]++;
     });
 
-    new Chart(ctx, {
+    chartRef.current = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+        labels: [
+          "Jan","Feb","Mar","Apr","May","Jun",
+          "Jul","Aug","Sep","Oct","Nov","Dec"
+        ],
         datasets: [
           {
             label: "Customers Joined",
@@ -64,74 +94,62 @@ const AdminCustomers = () => {
         scales: { y: { beginAtZero: true } },
       },
     });
+
+    // Cleanup when leaving component
+    return () => {
+      if (chartRef.current) chartRef.current.destroy();
+    };
   }, [users]);
 
-  // ----------------------- TOP SPENDERS -------------------------
+  // -----------------------------------
+  // TOP SPENDERS
+  // -----------------------------------
   const topSpenders = users
     .map((u) => {
-      const totalSpent = !u.orders
-        ? 0
-        : u.orders.reduce(
-            (sum, o) => sum + (o.finalPrice || o.totalAmount || o.total || 0),
-            0
-          );
+      const spent = u.orders?.reduce((s, o) => s + o.total, 0) || 0;
 
       return {
         name: u.name,
-        emailOrPhone: u.emailOrPhone,
-        spent: totalSpent,
+        emailOrPhone: u.email,
+        spent,
       };
     })
     .sort((a, b) => b.spent - a.spent)
     .slice(0, 10);
 
-  // ----------------------- EXPORT CSV -------------------------
+  // -----------------------------------
+  // EXPORT CSV
+  // -----------------------------------
   const exportCSV = () => {
-    let csv = "Name,Email/Phone,Joined Date,Total Orders,Total Spent\n";
+    let csv = "Name,Email,Joined,Total Orders,Total Spent\n";
 
     users.forEach((u) => {
-      const totalSpent = u.orders
-        ? u.orders.reduce(
-            (sum, o) => sum + (o.finalPrice || o.totalAmount || o.total || 0),
-            0
-          )
-        : 0;
+      const spent = u.orders?.reduce((s, o) => s + o.total, 0) || 0;
 
-      csv += `${u.name},${u.emailOrPhone},${u.createdAt || "-"},${u.orders?.length || 0},${totalSpent}\n`;
+      csv += `${u.name},${u.email},${u.createdAt},${u.orders?.length || 0},${spent}\n`;
     });
 
     const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
-    a.href = url;
+    a.href = URL.createObjectURL(blob);
     a.download = "customers_report.csv";
     a.click();
   };
 
-  // ----------------------- SEARCH FILTER -------------------------
-  const [search, setSearch] = useState("");
-
-  const filteredUsers = users.filter((u) =>
-    u.name.toLowerCase().includes(search.toLowerCase()) ||
-    u.emailOrPhone.includes(search)
+  // -----------------------------------
+  // SEARCH FILTER
+  // -----------------------------------
+  const filteredUsers = users.filter(
+    (u) =>
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.email?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div style={{ padding: "20px", fontFamily: "Poppins" }}>
       <h2 style={{ textAlign: "center" }}>👥 All Customers</h2>
-      <p
-        style={{
-          textAlign: "center",
-          fontsize: "15px",
-          color: "#555",
-          marginTop: "-5px",
-          marginBottom: "20px",
-        }}
-      >
-      Monitor and analyze customer activity.</p>
 
-      {/* Search + Export */}
+      {/* SEARCH + EXPORT */}
       <div style={{ display: "flex", justifyContent: "space-between", margin: "10px 0" }}>
         <input
           type="text"
@@ -161,7 +179,7 @@ const AdminCustomers = () => {
         </button>
       </div>
 
-      {/* Summary Cards */}
+      {/* SUMMARY CARDS */}
       <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
         <div
           onClick={() => setShowList("new")}
@@ -172,12 +190,11 @@ const AdminCustomers = () => {
             flex: 1,
             cursor: "pointer",
             textAlign: "center",
-            boxShadow: "0 2px 10px rgba(255,182,193,0.4)",
           }}
         >
           <h3>New Customers</h3>
           <p style={{ fontSize: "24px", fontWeight: "700" }}>{newCustomers}</p>
-          <p style={{ textDecoration: "underline", color: "#c2185b" }}>View List</p>
+          <p style={{ color: "#c2185b", textDecoration: "underline" }}>View List</p>
         </div>
 
         <div
@@ -189,16 +206,15 @@ const AdminCustomers = () => {
             flex: 1,
             cursor: "pointer",
             textAlign: "center",
-            boxShadow: "0 2px 10px rgba(255,182,193,0.4)",
           }}
         >
           <h3>Total Customers</h3>
           <p style={{ fontSize: "24px", fontWeight: "700" }}>{totalCustomers}</p>
-          <p style={{ textDecoration: "underline", color: "#c2185b" }}>View All</p>
+          <p style={{ color: "#c2185b", textDecoration: "underline" }}>View All</p>
         </div>
       </div>
 
-      {/* Customer Growth Chart */}
+      {/* CHART */}
       <div
         style={{
           marginTop: "2rem",
@@ -206,17 +222,16 @@ const AdminCustomers = () => {
           background: "white",
           borderRadius: "12px",
           boxShadow: "0 3px 14px rgba(0,0,0,0.1)",
-          border: "1px solid #ffddea",
         }}
       >
-        <h3 style={{ textAlign: "center", marginBottom: "10px", color: "#c2185b" }}>
+        <h3 style={{ textAlign: "center", marginBottom: "10px" }}>
           📅 Monthly Customer Growth
         </h3>
 
         <canvas id="customerChart" height="120"></canvas>
       </div>
 
-      {/* ---------------- SPENDING LEADERBOARD ---------------- */}
+      {/* TOP SPENDERS */}
       <div
         style={{
           marginTop: "2rem",
@@ -224,72 +239,48 @@ const AdminCustomers = () => {
           background: "white",
           borderRadius: "12px",
           boxShadow: "0 3px 14px rgba(0,0,0,0.1)",
-          border: "1px solid #ffddea",
         }}
       >
-        <h3 style={{ textAlign: "center", marginBottom: "15px", color: "#c2185b" }}>
+        <h3 style={{ textAlign: "center", marginBottom: "15px" }}>
           💰 Top Spending Customers
         </h3>
 
-        {/* Premium aligned table */}
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "#fff0f6" }}>
-              <th style={{ padding: "10px", width: "80px", textAlign: "center" }}>Rank</th>
-              <th style={{ padding: "10px", width: "60%", textAlign: "left" }}>Customer</th>
-              <th style={{ padding: "10px", width: "20%", textAlign: "right" }}>Total Spent</th>
+              <th style={{ padding: "10px" }}>Rank</th>
+              <th style={{ padding: "10px" }}>Customer</th>
+              <th style={{ padding: "10px", textAlign: "right" }}>Total Spent</th>
             </tr>
           </thead>
 
           <tbody>
             {topSpenders.map((u, i) => (
               <tr key={i} style={{ borderBottom: "1px solid #eee" }}>
-                {/* Rank */}
-                <td
-                  style={{
-                    padding: "12px",
-                    fontWeight: "600",
-                    textAlign: "center",
-                  }}
-                >
-                  #{i + 1}
+                <td style={{ padding: "10px", textAlign: "center" }}>#{i + 1}</td>
+
+                <td style={{ padding: "10px" }}>
+                  <b>{u.name}</b>
+                  <br />
+                  <small style={{ color: "#888" }}>{u.emailOrPhone}</small>
                 </td>
 
-                {/* Customer */}
                 <td
                   style={{
-                    padding: "12px",
-                    display: "flex",
-                    flexDirection: "column",
-                    lineHeight: "1.3",
-                  }}
-                >
-                  <span style={{ fontSize: "16px", fontWeight: "600", color: "#333" }}>
-                    {u.name}
-                  </span>
-                  <small style={{ color: "#777" }}>{u.emailOrPhone}</small>
-                </td>
-
-                {/* Total Spent */}
-                <td
-                  style={{
-                    padding: "12px",
-                    fontWeight: "700",
-                    fontSize: "16px",
-                    color: "#d6006c",
+                    padding: "10px",
                     textAlign: "right",
+                    fontWeight: "700",
                   }}
                 >
                   ₹{u.spent}
                 </td>
-
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Modals */}
+      {/* MODALS */}
       {showList && (
         <CustomerListModal
           type={showList}
@@ -307,6 +298,4 @@ const AdminCustomers = () => {
       )}
     </div>
   );
-};
-
-export default AdminCustomers;
+}

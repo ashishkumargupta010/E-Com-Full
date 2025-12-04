@@ -1,35 +1,107 @@
-import React, { useState } from "react";
-import "./Admin.css";
+import React, { useState, useEffect } from "react";
+import "./AdminSettings.css";
+
+const API = "http://localhost:5000/api";
 
 const AdminSettings = () => {
-  const [adminName, setAdminName] = useState("Admin User");
-  const [email, setEmail] = useState("admin@example.com");
+  const token = localStorage.getItem("adminToken");
+
+  const [adminName, setAdminName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const handleProfileUpdate = (e) => {
-    e.preventDefault();
-    setSuccessMessage("✅ Profile updated successfully!");
-    setTimeout(() => setSuccessMessage(""), 3000);
+  // =============================
+  // LOAD ADMIN PROFILE
+  // =============================
+  const loadProfile = async () => {
+    try {
+      const res = await fetch(`${API}/admin/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+
+      setAdminName(data.name);
+      setEmail(data.email);
+    } catch (err) {
+      console.log("Profile Load Error:", err);
+    }
   };
 
-  const handlePasswordChange = (e) => {
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
+  // =============================
+  // UPDATE PROFILE
+  // =============================
+  const handleProfileUpdate = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch(`${API}/admin/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: adminName,
+          email: email,
+        }),
+      });
+
+      const data = await res.json();
+      setSuccessMessage("✅ Profile updated successfully!");
+
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      setSuccessMessage("❌ Something went wrong!");
+    }
+  };
+
+  // =============================
+  // UPDATE PASSWORD
+  // =============================
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+
     if (newPassword !== confirmPassword) {
       setSuccessMessage("❌ New passwords do not match!");
       return;
     }
-    if (!password || !newPassword) {
-      setSuccessMessage("❌ Please fill all password fields!");
-      return;
+
+    try {
+      const res = await fetch(`${API}/admin/change-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          currentPassword: password,
+          newPassword: newPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSuccessMessage(`❌ ${data.message}`);
+        return;
+      }
+
+      setSuccessMessage("🔒 Password changed successfully!");
+      setPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      setSuccessMessage("❌ Unable to update password!");
     }
-    setSuccessMessage("🔒 Password changed successfully!");
-    setPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setTimeout(() => setSuccessMessage(""), 3000);
   };
 
   return (
@@ -97,5 +169,3 @@ const AdminSettings = () => {
 };
 
 export default AdminSettings;
-
-

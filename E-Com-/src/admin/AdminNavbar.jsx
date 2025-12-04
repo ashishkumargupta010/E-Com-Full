@@ -1,30 +1,36 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Admin.css";
+import { Menu } from "lucide-react";
+import "./AdminNavbar.css";
 
-const AdminNavbar = () => {
+const AdminNavbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 🔐 Remove admin session
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminInfo");
     localStorage.removeItem("isAdminLoggedIn");
-
-    alert("Admin logged out successfully!");
-
-    // 🔄 Redirect to login page
+    localStorage.removeItem("role");
     navigate("/admin/login");
   };
 
   return (
-    <header className="admin-navbar">
-      <h1>Welcome, Admin</h1>
-      <div className="admin-navbar-actions">
-        <input type="text" placeholder="Search..." />
-        <button className="logout-btn" onClick={handleLogout}>
-          Logout
+    <header className="admin-navbar" role="banner">
+      <div className="admin-navbar-left">
+        <button className="menu-btn" onClick={toggleSidebar} aria-label="Toggle sidebar">
+          <Menu size={26} />
         </button>
+        <h1 className="admin-title">Welcome, Admin</h1>
+      </div>
+
+      <div className="admin-navbar-actions" role="navigation" aria-label="Admin actions">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="admin-search-input"
+          aria-label="Search"
+        />
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </header>
   );

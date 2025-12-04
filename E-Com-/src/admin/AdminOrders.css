@@ -1,66 +1,204 @@
-/* MAIN CONTAINER */
-.admin-orders-container {
-  padding: 2rem;
+/* ================================
+   MAIN LAYOUT (LEFT FILTER + RIGHT LIST)
+================================ */
+.admin-orders-layout {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
   font-family: "Poppins", sans-serif;
-  background: #f7f7f7;
+  background: #f5f6fa;
   min-height: 100vh;
 }
 
-.admin-orders-container h1 {
-  text-align: center;
-  margin-bottom: 2rem;
+/* ================================
+   LEFT FILTER PANEL
+================================ */
+.orders-filter-box {
+  width: 260px;
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.orders-filter-box h3 {
+  margin-bottom: 15px;
   color: #c2185b;
   font-weight: 700;
 }
 
-/* ORDER CARD */
-.admin-order-box {
-  background: white;
-  padding: 1.8rem;
-  margin-bottom: 2rem;
-  border-radius: 14px;
-  border-left: 6px solid #c2185b;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: 0.3s ease-in-out;
-}
-
-.admin-order-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.22);
-}
-
-.admin-order-box h3 {
-  color: #c2185b;
-  font-size: 1.3rem;
-  margin-bottom: 0.4rem;
-}
-
-.admin-order-box p {
-  font-size: 0.95rem;
-  margin: 0.25rem 0;
-  color: #444;
-}
-
-/* ITEMS LIST */
-.admin-order-box ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 0.6rem;
-}
-
-.admin-order-box ul li {
-  background: #ffe4ec;
-  padding: 8px 12px;
+.filter-input {
+  width: 100%;
+  padding: 10px;
   border-radius: 8px;
-  margin-bottom: 6px;
-  font-size: 0.9rem;
+  border: 1px solid #bbb;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
 }
 
-/* STATUS UPDATE */
-.status-update {
-  margin-top: 1rem;
+.filter-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+/* ================================
+   RIGHT ORDERS LIST SECTION
+================================ */
+.orders-right {
+  flex: 1;
+}
+
+.orders-right h1 {
+  color: #c2185b;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ================================
+   ORDER CARD (Amazon/Flipkart style)
+================================ */
+.admin-order-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  position: relative;
+  border-left: 6px solid #c2185b;
+  transition: 0.2s ease;
+}
+
+.admin-order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+.admin-order-card h3 {
+  font-size: 1.3rem;
+  color: #c2185b;
+  margin-bottom: 6px;
+}
+
+/* ================================
+   STATUS TAG BADGES
+================================ */
+.status-tag {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* COLORS */
+.Pending { background: #ff9800; }
+.Shipped { background: #0277bd; }
+.Delivered { background: #4caf50; }
+.Cancelled { background: #e53935; }
+.ReturnRequested { background: #ff9800; }
+.ReturnApproved { background: #03a9f4; }
+.RefundCompleted { background: #2e7d32; }
+.ReturnRejected { background: #b71c1c; }
+
+/* ================================
+   ITEM LIST
+================================ */
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+
+.item-list li {
   display: flex;
-  gap: 1rem;
+  gap: 12px;
+  background: #ffe4ec;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.order-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #f8bcd0;
+}
+
+/* ================================
+   TOTAL PRICE
+================================ */
+.order-total {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  font-weight: 700;
+  color: #c2185b;
+}
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+.order-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.order-actions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
+  transition: 0.2s;
+}
+
+/* COLORS */
+.order-actions button {
+  background: #0277bd;
+}
+
+.order-actions button:hover {
+  background: #015a92;
+}
+
+.order-actions .cancel {
+  background: #e53935 !important;
+}
+
+.order-actions .cancel:hover {
+  background: #c62828 !important;
+}
+
+.order-actions .approve {
+  background: #008f39 !important;
+}
+
+.order-actions .reject {
+  background: #b71c1c !important;
+}
+
+/* ================================
+   STATUS UPDATE DROPDOWN
+================================ */
+.status-update {
+  margin-top: 15px;
+  display: flex;
+  gap: 12px;
   align-items: center;
 }
 
@@ -71,127 +209,45 @@
 }
 
 .status-update select {
-  padding: 0.6rem 1rem;
+  padding: 8px 16px;
   border-radius: 8px;
   border: 1px solid #bbb;
-  background: #fff;
   font-size: 1rem;
   cursor: pointer;
+  background: #fff;
   transition: 0.2s;
 }
 
-.status-update select:hover,
-.status-update select:focus {
+.status-update select:hover {
   border-color: #c2185b;
   box-shadow: 0 0 4px rgba(194, 24, 91, 0.4);
 }
 
-/* TOP ACTION BUTTONS */
-.cancel-btn,
-.remove-btn {
-  padding: 6px 15px;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .admin-orders-layout {
+    flex-direction: column;
+  }
 
-.cancel-btn {
-  background: #ff3b3b;
-  color: white;
-}
+  .orders-filter-box {
+    width: 100%;
+    position: relative;
+  }
 
-.cancel-btn:hover {
-  background: #d62828;
-}
+  .item-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.remove-btn {
-  background: #444;
-  color: white;
-}
-
-.remove-btn:hover {
-  background: #222;
-}
-
-/* RETURN IMAGES GALLERY */
-.return-images {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.return-img {
-  width: 85px;
-  height: 85px;
-  border-radius: 8px;
-  object-fit: cover;
-  border: 2px solid #ffa6c7;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-/* RETURN ACTION BUTTONS */
-.return-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 1rem;
-}
-
-.approve-btn,
-.refund-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  transition: 0.2s;
-}
-
-.approve-btn {
-  background: #0277bd;
-}
-
-.approve-btn:hover {
-  background: #015a92;
-}
-
-.refund-btn {
-  background: #008f39;
-}
-
-.refund-btn:hover {
-  background: #006f2d;
-}
-
-/* COLOR HIGHLIGHT WHEN RETURN REQUESTED */
-.admin-order-box.return-requested {
-  border-left-color: #ff9800 !important;
-  background: #fff7e6;
-}
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-  .admin-order-box {
-    padding: 1.2rem;
+  .order-img {
+    width: 100%;
+    height: 140px;
   }
 
   .status-update {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .return-images {
-    flex-wrap: wrap;
-  }
-
-  .return-img {
-    width: 70px;
-    height: 70px;
-  }
-
-  .return-actions {
-    flex-direction: column;
   }
 }

@@ -1,6 +1,5 @@
 /* ----------------------------------------------------------
-   🌸 ULTRA PREMIUM PINK PAYMENT PAGE
-   Glassmorphism + Neon Shadows + Gradient Pink
+   🌟 PREMIUM PAYMENT PAGE — Soft Pink + Purple Gradient
 ---------------------------------------------------------- */
 
 .payment-container {
@@ -8,132 +7,132 @@
   padding: 2rem;
   text-align: center;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+
+  background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Page Heading */
+/* --------------------- PAGE TITLE ----------------------- */
 .payment-container h1 {
-  font-size: 2.8rem;
-  color: #b4004e;
+  font-size: 2.6rem;
   font-weight: 700;
+
+  background: linear-gradient(90deg, #7f1d8d, #db2777);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
   margin-bottom: 1rem;
-  text-shadow: 0px 3px 10px rgba(255, 105, 180, 0.6);
 }
 
-.payment-container h2,
-.payment-container h3 {
-  color: #7a003c;
-  font-weight: 600;
-  margin: 0.3rem 0;
+/* --------------------- AMOUNT SECTION ----------------------- */
+.payment-container h2 {
+  color: #4a044e;
+  margin: 0.4rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
-/* ----------------------------------------------------------
-   🌟 Glass Card Box
----------------------------------------------------------- */
+.payment-container h1:nth-of-type(2) {
+  font-size: 2.1rem;
+  color: #b1045f;
+}
+
+/* ---------------------- GLASS CARD ------------------------ */
 .payment-box {
   width: 380px;
   padding: 2rem;
   margin-top: 2rem;
-  background: rgba(255, 240, 245, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
 
   border-radius: 20px;
-  box-shadow: 0 10px 35px rgba(255, 105, 180, 0.4);
-  border: 2px solid rgba(255, 182, 193, 0.6);
+  border: 1px solid rgba(164, 119, 255, 0.25);
+
+  box-shadow: 0 10px 30px rgba(164, 119, 255, 0.25);
 
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  animation: fadeIn 0.8s ease-out;
 }
 
 .payment-box h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6b0f6b;
   margin-bottom: 0.5rem;
-  font-size: 1.4rem;
-  color: #b0004c;
-  font-weight: 600;
 }
 
-/* ----------------------------------------------------------
-   💳 Payment Buttons (Option Buttons)
----------------------------------------------------------- */
+/* ---------------------- PAYMENT OPTIONS ------------------------ */
 .payment-option {
-  padding: 0.9rem;
+  padding: 1rem;
   border-radius: 15px;
-  background: linear-gradient(135deg, #ff9abb, #ff6aa6);
-  color: white;
-  border: none;
-  cursor: pointer;
+
+  border: 2px solid transparent;
+  background: #ffffff;
+
   font-weight: 600;
-  transition: 0.25s;
-  box-shadow: 0px 4px 15px rgba(255, 105, 180, 0.5);
+  font-size: 1rem;
+  cursor: pointer;
+  color: #6b0f6b;
+
+  transition: 0.25s ease-in-out;
 }
 
 .payment-option:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(135deg, #ff6aa6, #d5006d);
-  box-shadow: 0px 8px 20px rgba(255, 20, 147, 0.7);
+  background: #fdf2ff;
+  border-color: #d946ef;
 }
 
-/* Active selection */
+/* ACTIVE */
 .payment-option.active {
-  background: linear-gradient(135deg, #8e0038, #ff2b7f);
-  color: #fff;
-  border: 2px solid #ffb6c1;
-  box-shadow: 0px 0px 20px rgba(255, 20, 147, 1);
+  background: linear-gradient(135deg, #d946ef, #7e22ce);
+  border-color: #6b21a8;
+  color: white;
+
+  box-shadow: 0px 4px 20px rgba(147, 51, 234, 0.4);
   transform: scale(1.05);
 }
 
-/* ----------------------------------------------------------
-   🔥 PLACE ORDER BUTTON
----------------------------------------------------------- */
-
+/* ---------------------- PAY BUTTON ------------------------ */
 .pay-btn {
-  padding: 1rem 2.5rem;
   margin-top: 1.5rem;
+  padding: 1rem 2.4rem;
+
+  background: linear-gradient(135deg, #7e22ce, #db2777);
+  color: white;
 
   border: none;
-  background: linear-gradient(135deg, #d5006d, #ff2c92);
-  color: #fff;
+  border-radius: 18px;
 
-  border-radius: 20px;
-  cursor: pointer;
   font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-weight: 700;
 
-  box-shadow: 0px 10px 30px rgba(255, 20, 147, 0.7);
-  transition: 0.3s;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0px 8px 25px rgba(195, 42, 163, 0.45);
 }
 
 .pay-btn:hover {
-  transform: translateY(-4px);
-  background: linear-gradient(135deg, #ff2c92, #b0004c);
-  box-shadow: 0px 15px 35px rgba(255, 20, 147, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0px 12px 30px rgba(195, 42, 163, 0.6);
 }
 
-/* Disabled State */
 .pay-btn:disabled {
-  background: #ff9ac2;
+  background: #e5c7f5;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* ----------------------------------------------------------
-   ✨ Animations
----------------------------------------------------------- */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
+/* ---------------------- RESPONSIVE ------------------------ */
+@media (max-width: 500px) {
+  .payment-box {
+    width: 90%;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
+
+  .payment-container h1 {
+    font-size: 2rem;
   }
 }

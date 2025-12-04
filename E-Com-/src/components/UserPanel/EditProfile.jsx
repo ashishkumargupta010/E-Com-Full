@@ -1,33 +1,57 @@
 import { useState, useEffect } from "react";
 import "./editprofile.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const API = "http://localhost:5000/api/users";
 
 const EditProfile = () => {
   const token = localStorage.getItem("token");
+
   const [user, setUser] = useState(null);
+
+  // Profile Fields
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
+  // Password Change Fields
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Popup for verifying contact update
   const [showPassPopup, setShowPassPopup] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
+  const [verifyPasswordInput, setVerifyPasswordInput] = useState("");
 
-  // 🔥 Load user from backend
+  /* ------------------------------------
+        LOAD USER DETAILS
+  ------------------------------------ */
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("loggedInUser"));
     if (stored) {
       setUser(stored);
       setName(stored.name);
-      setPhone(stored.phone || "");
       setEmail(stored.email);
+      setPhone(stored.phone || "");
     }
   }, []);
 
-  if (!user) return <h2 style={{ padding: "20px" }}>You are not logged in.</h2>;
+  if (!user)
+    return (
+      <h2 style={{ textAlign: "center", padding: "20px", color: "#ff2d78" }}>
+        You are not logged in.
+      </h2>
+    );
 
-  // ⭐ Save Name Backend
-  const saveName = async () => {
+  /* ------------------------------------
+        UPDATE NAME
+  ------------------------------------ */
+  const updateNameHandler = async () => {
+    if (!name.trim()) return toast.error("Name cannot be empty");
+
     try {
-      const res = await fetch("http://localhost:5000/api/user/update-name", {
+      const res = await fetch(`${API}/update-name`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -37,55 +61,102 @@ const EditProfile = () => {
       });
 
       const data = await res.json();
+      if (!res.ok) return toast.error(data.message);
 
-      if (!res.ok) return alert(data.message);
-
-      // update local
       const updated = { ...user, name };
-      setUser(updated);
       localStorage.setItem("loggedInUser", JSON.stringify(updated));
+      setUser(updated);
 
-      alert("Name Updated Successfully!");
-    } catch (err) {
-      alert("Server Error");
+      toast.success("Name updated successfully! 💖");
+    } catch {
+      toast.error("Server error");
     }
   };
 
-  // ⭐ Step 1 → Ask for password before email/phone update
-  const askPassword = () => {
+  /* ------------------------------------
+        ASK PASSWORD BEFORE CONTACT UPDATE
+  ------------------------------------ */
+  const askPasswordBeforeUpdate = () => {
     if (email !== user.email || phone !== user.phone) {
       setShowPassPopup(true);
+    } else {
+      toast.info("No changes detected");
     }
   };
 
-  // ⭐ Step 2 → Verify Password + Update Email/Phone
-  const verifyPassword = async () => {
+  /* ------------------------------------
+        VERIFY PASSWORD + UPDATE CONTACT
+  ------------------------------------ */
+  const updateContactHandler = async () => {
+    if (!verifyPasswordInput.trim())
+      return toast.error("Please enter your password");
+
     try {
-      const res = await fetch("http://localhost:5000/api/user/update-contact", {
+      const res = await fetch(`${API}/update-contact`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          password: passwordInput,
+          password: verifyPasswordInput,
           email,
           phone,
         }),
       });
 
       const data = await res.json();
-      if (!res.ok) return alert(data.message);
+      if (!res.ok) return toast.error(data.message);
 
       const updated = { ...user, email, phone };
-      setUser(updated);
       localStorage.setItem("loggedInUser", JSON.stringify(updated));
+      setUser(updated);
 
-      alert("Contact Details Updated!");
+      toast.success("Contact details updated successfully 💗");
+
       setShowPassPopup(false);
-      setPasswordInput("");
-    } catch (err) {
-      alert("Server Error");
+      setVerifyPasswordInput("");
+    } catch {
+      toast.error("Server error");
+    }
+  };
+
+  /* ------------------------------------
+        CHANGE PASSWORD
+  ------------------------------------ */
+  const changePasswordHandler = async () => {
+    if (!oldPassword || !newPassword || !confirmPassword)
+      return toast.error("All fields are required");
+
+    if (newPassword.length < 6)
+      return toast.error("New password must be at least 6 characters");
+
+    if (newPassword !== confirmPassword)
+      return toast.error("Passwords do not match!");
+
+    try {
+      const res = await fetch(`${API}/change-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          oldPassword,
+          newPassword,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.message);
+
+      toast.success("Password changed successfully! 🔐");
+
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch {
+      toast.error("Server error");
     }
   };
 
@@ -93,10 +164,11 @@ const EditProfile = () => {
     <div className="profile-wrapper">
       <h2>Edit Profile</h2>
 
+      {/* ---------- NAME + CONTACT SECTION ---------- */}
       <div className="profile-form">
-        <label>Name</label>
+        <label>Full Name</label>
         <input value={name} onChange={(e) => setName(e.target.value)} />
-        <button onClick={saveName}>Save Name</button>
+        <button onClick={updateNameHandler}>Save Name</button>
 
         <label>Email</label>
         <input value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -104,21 +176,59 @@ const EditProfile = () => {
         <label>Phone</label>
         <input value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-        <button onClick={askPassword}>Update Contact</button>
+        <button onClick={askPasswordBeforeUpdate}>
+          Update Email / Phone
+        </button>
       </div>
 
+      {/* ---------- CHANGE PASSWORD SECTION ---------- */}
+      <div className="profile-form" style={{ marginTop: "30px" }}>
+        <h3 style={{ marginBottom: "10px", color: "#ff2d78" }}>
+          Change Password
+        </h3>
+
+        <label>Old Password</label>
+        <input
+          type="password"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
+
+        <label>New Password</label>
+        <input
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+
+        <label>Confirm New Password</label>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        <button onClick={changePasswordHandler}>Save New Password</button>
+      </div>
+
+      {/* ---------- POPUP PASSWORD VERIFY ---------- */}
       {showPassPopup && (
         <div className="password-modal">
           <div className="modal-box">
-            <h3>Enter Password</h3>
+            <h3>Verify Password</h3>
+
             <input
               type="password"
-              placeholder="Enter password"
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
+              placeholder="Enter your password"
+              value={verifyPasswordInput}
+              onChange={(e) => setVerifyPasswordInput(e.target.value)}
             />
-            <button onClick={verifyPassword}>Confirm</button>
-            <button className="cancel-btn" onClick={() => setShowPassPopup(false)}>
+
+            <button onClick={updateContactHandler}>Confirm Update</button>
+            <button
+              className="cancel-btn"
+              onClick={() => setShowPassPopup(false)}
+            >
               Cancel
             </button>
           </div>

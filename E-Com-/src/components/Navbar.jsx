@@ -28,7 +28,6 @@ function Navbar() {
 
   const dropdownRef = useRef(null);
 
-  // Hide search on specific pages
   const hideSearchOn = [
     "/cart",
     "/checkout",
@@ -42,9 +41,9 @@ function Navbar() {
     location.pathname.startsWith(path)
   );
 
-  // ⭐ LOAD USER FROM localStorage (use same key used across app)
+  // Load user
   useEffect(() => {
-    const saved = localStorage.getItem("loggedInUser"); // <-- unified
+    const saved = localStorage.getItem("loggedInUser");
     const token = localStorage.getItem("token");
 
     if (saved && token) {
@@ -58,7 +57,7 @@ function Navbar() {
     }
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
+  // Hide dropdown outside click
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -69,7 +68,6 @@ function Navbar() {
     return () => document.removeEventListener("click", handler);
   }, []);
 
-  // ⭐ LOGOUT
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
@@ -78,7 +76,6 @@ function Navbar() {
     navigate("/");
   };
 
-  // ⭐ SEARCH BAR TYPING
   const handleSearchChange = (val) => {
     setSearchTerm(val);
 
@@ -94,7 +91,6 @@ function Navbar() {
     setSuggestions(filtered);
   };
 
-  // ⭐ SUBMIT SEARCH
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (!searchTerm.trim()) return;
@@ -105,7 +101,9 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h2 className="logo" onClick={() => navigate("/")}>Blushora</h2>
+      <h2 className="logo" onClick={() => navigate("/")}>
+        Blushora
+      </h2>
 
       {/* 🔍 SEARCH BAR */}
       {!shouldHideSearch && (
@@ -116,9 +114,10 @@ function Navbar() {
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
           />
-          <button type="submit" className="search-btn">🔍</button>
+          <button type="submit" className="search-btn">
+            🔍
+          </button>
 
-          {/* Suggestions */}
           {suggestions.length > 0 && (
             <div className="suggest-box">
               {suggestions.map((item) => (
@@ -140,11 +139,15 @@ function Navbar() {
         </form>
       )}
 
-      {/* Desktop Nav */}
+      {/* DESKTOP NAV */}
       <div className="nav-links">
         <div className="nav-main-icons">
-          <Link to="/"><img src={homeIcon} className="nav-icon" alt="home" /></Link>
-          <Link to="/products"><img src={productIcon} className="nav-icon" alt="products" /></Link>
+          <Link to="/">
+            <img src={homeIcon} className="nav-icon" alt="home" />
+          </Link>
+          <Link to="/products">
+            <img src={productIcon} className="nav-icon" alt="products" />
+          </Link>
 
           <Link to="/cart" className="cart-link">
             <img src={cartIcon} className="nav-icon" alt="cart" />
@@ -154,10 +157,7 @@ function Navbar() {
 
         {/* USER LOGGED IN */}
         {user ? (
-          <div
-            className="user-dropdown-container"
-            ref={dropdownRef}
-          >
+          <div className="user-dropdown-container" ref={dropdownRef}>
             <button
               className="user-toggle-btn"
               onClick={() => setShowUserDropdown((s) => !s)}
@@ -168,20 +168,57 @@ function Navbar() {
 
             {showUserDropdown && (
               <div className="user-dropdown">
-                <p className="user-name-head">{user.name}</p>
-                <p className="user-email">{user.email || user.phone}</p>
 
-                <button onClick={() => { setShowUserDropdown(false); navigate("/userpanel/profile"); }}>My Profile</button>
-                <button onClick={() => { setShowUserDropdown(false); navigate("/userpanel/orders"); }}>My Orders</button>
-                <button onClick={() => { setShowUserDropdown(false); navigate("/userpanel/address"); }}>Saved Addresses</button>
+                {/* ⭐ NEW PREMIUM HEADING */}
+                <p className="ud-name">{user.name}</p>
+                {user.phone && <p className="ud-phone">📞 {user.phone}</p>}
+
+                {/* ⭐ NEW BUTTON STYLE */}
+                <button
+                  className="ud-btn"
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    navigate("/userpanel/profile");
+                  }}
+                >
+                  My Profile
+                </button>
+
+                <button
+                  className="ud-btn"
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    navigate("/userpanel/orders");
+                  }}
+                >
+                  My Orders
+                </button>
+
+                <button
+                  className="ud-btn"
+                  onClick={() => {
+                    setShowUserDropdown(false);
+                    navigate("/userpanel/address");
+                  }}
+                >
+                  Saved Addresses
+                </button>
 
                 {user.role === "admin" && (
-                  <button onClick={() => { setShowUserDropdown(false); navigate("/admin/products"); }}>
+                  <button
+                    className="ud-btn"
+                    onClick={() => {
+                      setShowUserDropdown(false);
+                      navigate("/admin/products");
+                    }}
+                  >
                     Admin Dashboard
                   </button>
                 )}
 
-                <button className="logout-btn" onClick={handleLogout}>Logout</button>
+                <button className="ud-btn logout" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             )}
           </div>
@@ -192,7 +229,7 @@ function Navbar() {
         )}
       </div>
 
-      {/* Mobile */}
+      {/* MOBILE MENU */}
       <div className="mobile-more-menu">
         <button className="more-btn" onClick={() => setShowMoreMenu(!showMoreMenu)}>
           <FiMoreHorizontal size={22} />
@@ -200,9 +237,15 @@ function Navbar() {
 
         {showMoreMenu && (
           <div className="more-dropdown">
-            <Link to="/" onClick={() => setShowMoreMenu(false)}><img src={homeIcon} alt="home" /> Home</Link>
-            <Link to="/products" onClick={() => setShowMoreMenu(false)}><img src={productIcon} alt="prod" /> Categories</Link>
-            <Link to="/cart" onClick={() => setShowMoreMenu(false)}><img src={cartIcon} alt="cart" /> Cart</Link>
+            <Link to="/" onClick={() => setShowMoreMenu(false)}>
+              <img src={homeIcon} alt="home" /> Home
+            </Link>
+            <Link to="/products" onClick={() => setShowMoreMenu(false)}>
+              <img src={productIcon} alt="prod" /> Categories
+            </Link>
+            <Link to="/cart" onClick={() => setShowMoreMenu(false)}>
+              <img src={cartIcon} alt="cart" /> Cart
+            </Link>
 
             {!user && (
               <button
@@ -217,22 +260,45 @@ function Navbar() {
 
             {user && (
               <>
-                <button onClick={() => { setShowMoreMenu(false); navigate("/userpanel"); }}>Dashboard</button>
+                <button
+                  onClick={() => {
+                    setShowMoreMenu(false);
+                    navigate("/userpanel");
+                  }}
+                >
+                  Dashboard
+                </button>
+
                 {user.role === "admin" && (
-                  <button onClick={() => { setShowMoreMenu(false); navigate("/admin/products"); }}>Admin Panel</button>
+                  <button
+                    onClick={() => {
+                      setShowMoreMenu(false);
+                      navigate("/admin/products");
+                    }}
+                  >
+                    Admin Panel
+                  </button>
                 )}
-                <button onClick={() => { setShowMoreMenu(false); handleLogout(); }}>Logout</button>
+
+                <button
+                  onClick={() => {
+                    setShowMoreMenu(false);
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </button>
               </>
             )}
           </div>
         )}
       </div>
 
+      {/* AUTH MODAL */}
       {showAuthModal && (
         <AuthModal
           onClose={() => setShowAuthModal(false)}
           onLogin={(u) => {
-            // ensure the same storage key is used by AuthModal (loggedInUser)
             setUser(u);
             setShowAuthModal(false);
           }}

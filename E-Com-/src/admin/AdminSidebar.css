@@ -1,0 +1,124 @@
+/**********************************************
+ 🌈 SIDEBAR BASE THEME
+**********************************************/
+:root {
+  --pink-1: #ff6ab7;
+  --pink-2: #ff1493;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --transition: 0.25s ease;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/**********************************************
+ 🔥 SIDEBAR CONTAINER
+**********************************************/
+.admin-sidebar {
+  width: 240px;
+  height: 100vh;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid var(--glass-border);
+
+  padding: 1.8rem 1.2rem;
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900;
+
+  animation: sidebarSlide 0.45s ease;
+}
+
+/**********************************************
+ 🎨 BRAND TITLE
+**********************************************/
+.sidebar-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+
+  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  -webkit-background-clip: text;
+  color: transparent;
+
+  letter-spacing: 0.5px;
+  margin-bottom: 25px;
+}
+
+/**********************************************
+ 📌 SIDEBAR LINKS
+**********************************************/
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-links a {
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+
+  color: #2c2c2c;
+  background: rgba(255, 255, 255, 0.75);
+
+  display: block;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.12);
+
+  transition: var(--transition);
+}
+
+/* Hover Effect */
+.sidebar-links a:hover {
+  transform: translateX(6px);
+  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  color: white;
+  box-shadow: 0 6px 18px rgba(255, 20, 147, 0.35);
+}
+
+/* Active Link */
+.sidebar-links a.active {
+  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  color: white;
+  transform: translateX(6px);
+  box-shadow: 0 6px 20px rgba(255, 20, 147, 0.35);
+}
+
+/**********************************************
+ 📱 MOBILE RESPONSIVE SIDEBAR
+**********************************************/
+@media (max-width: 900px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/**********************************************
+ 🔮 ANIMATION
+**********************************************/
+@keyframes sidebarSlide {
+  from { 
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,87 +1,147 @@
+/**********************************************
+ 🌈 AUTH PAGE BASE THEME
+**********************************************/
+:root {
+  --pink-1: #ff6ab7;
+  --pink-2: #ff1493;
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --transition: 0.25s ease;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  transition: var(--transition);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #ffe6f3, #ffd1eb, #ffc0e5);
+  min-height: 100vh;
+}
+
+/**********************************************
+ 🚀 MAIN AUTH CONTAINER (CENTER SCREEN)
+**********************************************/
 .admin-auth-container {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ffe4ec, #ffb6c1);
-}
-
-.admin-auth-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
-  width: 340px;
   padding: 2rem;
+  min-height: 100vh;
+}
+
+/**********************************************
+ 💫 AUTH CARD
+**********************************************/
+.admin-auth-card {
+  width: 380px;
+  padding: 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(255, 20, 147, 0.15);
+
+  animation: fadeUp 0.45s ease;
   text-align: center;
-  animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
+/**********************************************
+ 🔥 HEADING
+**********************************************/
 .admin-auth-card h2 {
-  color: #ff1493;
-  margin-bottom: 0.5rem;
+  font-size: 28px;
+  margin: 0;
+  margin-bottom: 8px;
+
+  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
+  font-size: 15px;
   color: #555;
-  font-size: 14px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
 }
 
+/**********************************************
+ 📝 FORM INPUTS
+**********************************************/
 .admin-auth-card form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 
 .admin-auth-card input {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 14px;
-  outline: none;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ffc2de;
+  font-size: 15px;
+  background: white;
 }
 
 .admin-auth-card input:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
+  border-color: var(--pink-1);
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.25);
+  outline: none;
 }
 
-.admin-auth-card button {
-  background: linear-gradient(45deg, #ff69b4, #ff1493);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 15px;
+/**********************************************
+ ⚠️ ERROR MESSAGE
+**********************************************/
+.error {
+  color: #d6005c;
+  font-size: 14px;
+  background: #ffe0ef;
+  padding: 8px;
+  border-radius: 8px;
   font-weight: 600;
+}
+
+/**********************************************
+ 🔘 BUTTON
+**********************************************/
+.admin-auth-card button {
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s ease;
+
+  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  color: white;
+  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.25);
 }
 
 .admin-auth-card button:hover {
   transform: scale(1.05);
 }
 
-.error {
-  color: red;
-  font-size: 13px;
-}
-
+/**********************************************
+ 📝 NOTE
+**********************************************/
 .note {
-  font-size: 12px;
-  color: #666;
-  margin-top: 10px;
+  margin-top: 1rem;
+  font-size: 14px;
+  color: #444;
 }
 
+/**********************************************
+ 🔮 ANIMATION
+**********************************************/
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
