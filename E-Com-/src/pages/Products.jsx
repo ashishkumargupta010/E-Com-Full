@@ -22,32 +22,29 @@ export default function Products() {
     setProducts(data);
   };
 
-  // ⭐ Read ?category=Ethnic Wear from URL
+  // ⭐ Read ?category=Name from URL for View All
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const cat = params.get("category");
     if (cat) setSelectedCategory(cat);
   }, [location.search]);
 
-  // ⭐ Navigate to product details
   const handleProductClick = (item) => {
     navigate(`/product/${item.id}`);
   };
 
-  // ⭐ Create category list from backend product.category.name
   const categoryList = [
     ...new Set(products.map((p) => p.category?.name || "Others")),
   ];
 
-  // ⭐ Filter products by backend category
   const filtered = selectedCategory
     ? products.filter((p) => p.category?.name === selectedCategory)
     : products;
 
   return (
     <div className="products-page">
-      
-      {/* If category selected → show its products */}
+
+      {/* If View All clicked → show full grid */}
       {selectedCategory ? (
         <>
           <h2 className="category-title">{selectedCategory}</h2>
@@ -74,11 +71,25 @@ export default function Products() {
         /* ALL CATEGORY SECTIONS */
         categoryList.map((cat) => (
           <div key={cat} className="category-section">
-            <h2 className="category-title">{cat}</h2>
+
+            {/* ⭐ Category + View All */}
+            <div className="cat-header">
+              <h2 className="category-title">{cat}</h2>
+
+              <button
+                className="view-btn"
+                onClick={() =>
+                  navigate(`/products?category=${encodeURIComponent(cat)}`)
+                }
+              >
+                View All →
+              </button>
+            </div>
 
             <div className="category-grid">
               {products
                 .filter((p) => p.category?.name === cat)
+                .slice(0, 5) /* ⭐ First 5 items only */
                 .map((product) => (
                   <div
                     key={product.id}

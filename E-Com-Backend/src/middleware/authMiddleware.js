@@ -3,28 +3,43 @@ import User from "../models/userModel.js";
 
 export const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    const header = req.headers.authorization;
 
-    if (!token) {
+    if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({ message: "No token, authorization denied" });
     }
 
+    const token = header.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Load user including password (needed for bcrypt.compare)
-    req.user = await User.findByPk(decoded.id);
+    // If token contains role "admin" → no need to check DB
+    if (decoded.role === "admin") {
+      req.user = {
+        id: decoded.id,
+        role: "admin",
+        name: decoded.name || "Admin",
+        email: decoded.email || "",
+      };
 
-    if (!req.user) {
+      req.userSafe = req.user;
+      return next();
+    }
+
+    // -------- Normal User Token → Load from DB --------
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Also provide safe user without password
+    req.user = user;
+
     req.userSafe = {
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      phone: req.user.phone,
-      role: req.user.role,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
     };
 
     next();

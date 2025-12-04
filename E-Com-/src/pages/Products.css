@@ -1,6 +1,6 @@
 .products-page {
   padding: 1rem;
-  background-color: #fff0f5; /* soft pink */
+  background-color: #fff0f5;
   font-family: "Poppins", sans-serif;
 }
 
@@ -17,11 +17,14 @@
   cursor: pointer;
 }
 
+/* ⭐ HORIZONTAL ROW — Flipkart style */
 .category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  justify-content: center;
   gap: 2rem;
   padding: 0 1rem;
+  flex-wrap: nowrap;      /* row me rahe, neeche na jaye */
+  overflow: hidden;       /* scroll hat gaya */
 }
 
 .product-card {
@@ -29,6 +32,7 @@
   border: 1px solid #f8bbd0;
   border-radius: 12px;
   padding: 1rem;
+  width: 220px;           /* ⭐ fixed width — line me properly fit */
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 2px 10px rgba(255, 182, 193, 0.3);
@@ -64,6 +68,7 @@
   font-size: 1rem;
 }
 
+/* Buttons */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
