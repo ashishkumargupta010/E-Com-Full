@@ -12,7 +12,7 @@ import adminAuthRoutes from "./routes/adminAuthRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
-
+import contactRoutes from "./routes/contactRoutes.js";
 import CouponRoute from "./routes/CouponRoute.js";
 
 const app = express();
@@ -57,5 +57,7 @@ app.use("/api/admin", adminRoutes);
    COUPON ROUTES
 -------------------------------- */
 app.use("/api/coupons", CouponRoute);
+
+app.use("/api/contact", contactRoutes);
 
 export default app;
