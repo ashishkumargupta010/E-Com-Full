@@ -1,119 +1,137 @@
-/* ================================
-   MAIN LAYOUT (LEFT FILTER + RIGHT LIST)
-================================ */
+/**********************************************
+ 🖤 CORPORATE ADMIN ORDERS THEME
+**********************************************/
+:root {
+  --bg-white: #ffffff;
+  --bg-light: #f5f6fa;
+
+  --text-dark: #111;
+  --text-gray: #555;
+  --text-light: #888;
+
+  --border: rgba(0,0,0,0.12);
+  --soft-border: rgba(0,0,0,0.08);
+
+  --shadow: 0 4px 14px rgba(0,0,0,0.10);
+  --shadow-hover: 0 8px 20px rgba(0,0,0,0.15);
+
+  --transition: 0.25s ease;
+}
+
+/**********************************************
+ 📌 MAIN LAYOUT
+**********************************************/
 .admin-orders-layout {
   display: flex;
   gap: 20px;
   padding: 20px;
   font-family: "Poppins", sans-serif;
-  background: #f5f6fa;
+  background: var(--bg-light);
   min-height: 100vh;
 }
 
-/* ================================
-   LEFT FILTER PANEL
-================================ */
+/**********************************************
+ 📌 LEFT FILTER PANEL
+**********************************************/
 .orders-filter-box {
   width: 260px;
-  background: white;
+  background: var(--bg-white);
   padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow);
   height: fit-content;
   position: sticky;
   top: 20px;
+  border: 1px solid var(--soft-border);
 }
 
 .orders-filter-box h3 {
   margin-bottom: 15px;
-  color: #c2185b;
+  color: var(--text-dark);
   font-weight: 700;
 }
 
-.filter-input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #bbb;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
-}
-
+.filter-input,
 .filter-select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--border);
+  margin-bottom: 15px;
   font-size: 0.95rem;
-  cursor: pointer;
-  margin-bottom: 5px;
+  background: var(--bg-white);
+  color: var(--text-dark);
 }
 
-/* ================================
-   RIGHT ORDERS LIST SECTION
-================================ */
+/**********************************************
+ 📌 RIGHT SECTION
+**********************************************/
 .orders-right {
   flex: 1;
 }
 
 .orders-right h1 {
-  color: #c2185b;
-  font-weight: 700;
+  color: var(--text-dark);
+  font-weight: 800;
   margin-bottom: 20px;
 }
 
-/* ================================
-   ORDER CARD (Amazon/Flipkart style)
-================================ */
+/**********************************************
+ 📦 ORDER CARD (Corporate Box)
+**********************************************/
 .admin-order-card {
-  background: white;
+  background: var(--bg-white);
   padding: 20px;
   border-radius: 14px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  box-shadow: var(--shadow);
   position: relative;
-  border-left: 6px solid #c2185b;
-  transition: 0.2s ease;
+
+  border-left: 6px solid var(--text-dark);
+  transition: var(--transition);
 }
 
 .admin-order-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  box-shadow: var(--shadow-hover);
 }
 
 .admin-order-card h3 {
   font-size: 1.3rem;
-  color: #c2185b;
+  color: var(--text-dark);
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
-/* ================================
-   STATUS TAG BADGES
-================================ */
+/**********************************************
+ 🔖 STATUS TAGS
+**********************************************/
 .status-tag {
   position: absolute;
   top: 15px;
   right: 15px;
+
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: bold;
+  font-weight: 700;
   color: white;
 }
 
-/* COLORS */
-.Pending { background: #ff9800; }
+/* Professional status colors */
+.Pending { background: #f8b400; }
 .Shipped { background: #0277bd; }
-.Delivered { background: #4caf50; }
-.Cancelled { background: #e53935; }
-.ReturnRequested { background: #ff9800; }
-.ReturnApproved { background: #03a9f4; }
-.RefundCompleted { background: #2e7d32; }
-.ReturnRejected { background: #b71c1c; }
+.Delivered { background: #2e7d32; }
+.Cancelled { background: #c62828; }
+.ReturnRequested { background: #f9a825; }
+.ReturnApproved { background: #0288d1; }
+.RefundCompleted { background: #1b5e20; }
+.ReturnRejected { background: #8e0d0d; }
 
-/* ================================
-   ITEM LIST
-================================ */
+/**********************************************
+ 🛒 ITEM LIST
+**********************************************/
 .item-list {
   list-style: none;
   padding: 0;
@@ -123,9 +141,12 @@
 .item-list li {
   display: flex;
   gap: 12px;
-  background: #ffe4ec;
+
+  background: #f2f2f2;
   padding: 10px;
   border-radius: 10px;
+
+  border: 1px solid var(--soft-border);
   margin-bottom: 10px;
   align-items: center;
 }
@@ -135,22 +156,22 @@
   height: 70px;
   border-radius: 8px;
   object-fit: cover;
-  border: 2px solid #f8bcd0;
+  border: 1px solid var(--border);
 }
 
-/* ================================
-   TOTAL PRICE
-================================ */
+/**********************************************
+ 💰 TOTAL
+**********************************************/
 .order-total {
   font-size: 1.1rem;
   margin-top: 10px;
   font-weight: 700;
-  color: #c2185b;
+  color: var(--text-dark);
 }
 
-/* ================================
-   ACTION BUTTONS
-================================ */
+/**********************************************
+ 🔘 ACTION BUTTONS
+**********************************************/
 .order-actions {
   margin-top: 12px;
   display: flex;
@@ -160,41 +181,38 @@
 .order-actions button {
   padding: 8px 16px;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   border: none;
+  transition: var(--transition);
   color: white;
-  transition: 0.2s;
 }
 
-/* COLORS */
+/* Corporate button colors */
 .order-actions button {
   background: #0277bd;
 }
-
 .order-actions button:hover {
   background: #015a92;
 }
 
 .order-actions .cancel {
-  background: #e53935 !important;
-}
-
-.order-actions .cancel:hover {
   background: #c62828 !important;
+}
+.order-actions .cancel:hover {
+  background: #8e0d0d !important;
 }
 
 .order-actions .approve {
-  background: #008f39 !important;
+  background: #2e7d32 !important;
 }
-
 .order-actions .reject {
-  background: #b71c1c !important;
+  background: #8e0d0d !important;
 }
 
-/* ================================
-   STATUS UPDATE DROPDOWN
-================================ */
+/**********************************************
+ ⏱ STATUS UPDATE
+**********************************************/
 .status-update {
   margin-top: 15px;
   display: flex;
@@ -205,27 +223,26 @@
 .status-update label {
   font-size: 1rem;
   font-weight: 600;
-  color: #c2185b;
+  color: var(--text-dark);
 }
 
 .status-update select {
   padding: 8px 16px;
   border-radius: 8px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--border);
   font-size: 1rem;
   cursor: pointer;
-  background: #fff;
-  transition: 0.2s;
+  background: white;
+  transition: var(--transition);
 }
 
 .status-update select:hover {
-  border-color: #c2185b;
-  box-shadow: 0 0 4px rgba(194, 24, 91, 0.4);
+  border-color: #000;
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
+/**********************************************
+ 📱 MOBILE RESPONSIVE
+**********************************************/
 @media (max-width: 900px) {
   .admin-orders-layout {
     flex-direction: column;

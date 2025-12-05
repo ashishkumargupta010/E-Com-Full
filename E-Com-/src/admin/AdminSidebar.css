@@ -1,12 +1,13 @@
 /**********************************************
- 🌈 SIDEBAR BASE THEME
+ 🖤 CORPORATE SIDEBAR THEME (BLACK & WHITE)
 **********************************************/
 :root {
-  --pink-1: #ff6ab7;
-  --pink-2: #ff1493;
-
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --border-light: rgba(0,0,0,0.10);
+  --bg-white: #ffffff;
+  --text-dark: #111;
+  --text-gray: #555;
+  --hover-bg: #f2f2f2;
+  --active-bg: #e5e5e5;
   --transition: 0.25s ease;
 }
 
@@ -21,12 +22,10 @@
   width: 240px;
   height: 100vh;
 
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  border-right: 1px solid var(--glass-border);
+  background: var(--bg-white);
+  border-right: 1px solid var(--border-light);
 
   padding: 1.8rem 1.2rem;
-  box-shadow: 0 0 25px rgba(255, 105, 180, 0.18);
 
   display: flex;
   flex-direction: column;
@@ -35,7 +34,8 @@
   left: 0;
   z-index: 900;
 
-  animation: sidebarSlide 0.45s ease;
+  animation: sidebarSlide 0.35s ease;
+  box-shadow: 2px 0 15px rgba(0,0,0,0.05);
 }
 
 /**********************************************
@@ -45,11 +45,7 @@
   font-size: 26px;
   font-weight: 700;
   text-align: center;
-
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  -webkit-background-clip: text;
-  color: transparent;
-
+  color: var(--text-dark);
   letter-spacing: 0.5px;
   margin-bottom: 25px;
 }
@@ -65,35 +61,33 @@
 
 .sidebar-links a {
   padding: 12px 16px;
-  border-radius: 12px;
+  border-radius: 10px;
 
   text-decoration: none;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 
-  color: #2c2c2c;
-  background: rgba(255, 255, 255, 0.75);
+  color: var(--text-gray);
+  background: var(--bg-white);
 
-  display: block;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.12);
-
+  border: 1px solid transparent;
   transition: var(--transition);
 }
 
 /* Hover Effect */
 .sidebar-links a:hover {
-  transform: translateX(6px);
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  color: white;
-  box-shadow: 0 6px 18px rgba(255, 20, 147, 0.35);
+  background: var(--hover-bg);
+  color: var(--text-dark);
+  border-color: rgba(0,0,0,0.08);
+  transform: translateX(4px);
 }
 
 /* Active Link */
 .sidebar-links a.active {
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  color: white;
-  transform: translateX(6px);
-  box-shadow: 0 6px 20px rgba(255, 20, 147, 0.35);
+  background: var(--active-bg);
+  color: var(--text-dark);
+  border-color: rgba(0,0,0,0.10);
+  transform: translateX(4px);
 }
 
 /**********************************************
@@ -115,7 +109,7 @@
 @keyframes sidebarSlide {
   from { 
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateX(-30px);
   }
   to { 
     opacity: 1;

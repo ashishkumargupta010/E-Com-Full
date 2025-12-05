@@ -1,10 +1,10 @@
 /****************************************************
- 🌸 GLOBAL PAGE LAYOUT
+ 🔵 GLOBAL PAGE LAYOUT (FLIPKART BLUE)
 ****************************************************/
 .admin-products-page {
   padding: 30px;
   text-align: center;
-  background: #fff5fa;
+  background: #f0f4ff; /* light blue */
   min-height: 100vh;
 }
 
@@ -12,13 +12,13 @@
   font-size: 32px;
   font-weight: 800;
   margin-bottom: 25px;
-  background: linear-gradient(45deg, #ff4fa0, #ff2d78);
+  background: linear-gradient(45deg, #2874f0, #0d47a1);
   -webkit-background-clip: text;
   color: transparent;
 }
 
 /****************************************************
- 🌸 TABS (Products | Categories | Trending | Hero)
+ 🔵 TABS (Products | Categories | Trending | Hero)
 ****************************************************/
 .admin-tabs {
   display: flex;
@@ -30,36 +30,35 @@
 .admin-tabs button {
   padding: 12px 28px;
   border-radius: 14px;
-  border: 1px solid #ffb6d9;
-  background: #ffe6f1;
+  border: 1px solid #bbd4ff;
+  background: #e7efff;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  color: #c2185b;
+  color: #0d47a1;
   transition: 0.25s ease;
 }
 
 .admin-tabs button:hover {
-  background: #ffcee7;
+  background: #d7e6ff;
   transform: translateY(-2px);
 }
 
 .admin-tabs .active {
-  background: linear-gradient(45deg, #ff4fa0, #ff2d78);
+  background: linear-gradient(45deg, #2874f0, #0d47a1);
   border-color: transparent;
   color: white;
-  box-shadow: 0px 4px 14px rgba(255, 50, 140, 0.3);
+  box-shadow: 0px 4px 14px rgba(0, 80, 200, 0.3);
 }
 
 /****************************************************
- 🌸 SEARCH & FILTER BAR
+ 🔵 SEARCH & FILTER BAR
 ****************************************************/
 .ap-controls {
   max-width: 1100px;
   margin: 0 auto 25px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -73,7 +72,7 @@
 .ap-filter {
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid #ffcce1;
+  border: 1px solid #b7ceff;
   background: white;
   font-size: 14px;
   min-width: 180px;
@@ -82,7 +81,7 @@
 .ap-right-controls .ap-btn {
   padding: 12px 22px;
   border-radius: 12px;
-  background: #ff4e6d;
+  background: #d32f2f; /* delete = red */
   color: white;
   font-weight: 700;
   border: none;
@@ -90,7 +89,7 @@
 }
 
 /****************************************************
- 🌸 ADD PRODUCT FORM
+ 🔵 ADD PRODUCT FORM
 ****************************************************/
 .admin-form {
   max-width: 1100px;
@@ -98,7 +97,7 @@
   background: white;
   padding: 18px;
   border-radius: 18px;
-  box-shadow: 0 4px 20px rgba(255, 20, 120, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 70, 200, 0.08);
 }
 
 .form-row {
@@ -112,11 +111,11 @@
   flex: 1;
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid #ffd0e8;
+  border: 1px solid #bbd4ff;
 }
 
 .add-btn {
-  background: linear-gradient(45deg, #ff4fa0, #ff2d78);
+  background: linear-gradient(45deg, #2874f0, #0d47a1);
   color: white;
   font-weight: 700;
   border: none;
@@ -127,7 +126,7 @@
 }
 
 /****************************************************
- 🌸 PRODUCT TABLE
+ 🔵 PRODUCT TABLE
 ****************************************************/
 .ap-table-wrap {
   overflow-x: auto;
@@ -141,14 +140,14 @@
 
 .ap-table th {
   padding: 12px;
-  color: #c2185b;
+  color: #0d47a1;
   font-weight: 700;
-  background: #ffe6f1;
+  background: #e3eeff;
 }
 
 .ap-table td {
   padding: 14px;
-  border-bottom: 1px solid #ffd4e9;
+  border-bottom: 1px solid #bbd4ff;
 }
 
 .td-img img {
@@ -158,12 +157,9 @@
   object-fit: cover;
 }
 
-.stock-badge {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
+/****************************************************
+ 🔵 STOCK BADGES
+****************************************************/
 .stock-badge.ok {
   background: #d7ffd8;
   color: #0f9d29;
@@ -180,26 +176,27 @@
 }
 
 /****************************************************
- 🌟 TRENDING BUTTON
+ 🔵 TRENDING BUTTON
 ****************************************************/
 .trend-toggle {
   padding: 8px 14px;
   border-radius: 10px;
-  border: 1px solid #ffcde5;
-  background: #fff0f7;
+  border: 1px solid #bbd4ff;
+  background: #edf4ff;
   cursor: pointer;
   font-size: 18px;
+  transition: 0.25s ease;
 }
 
 .trend-toggle.active {
-  background: #ff4fa0;
+  background: #2874f0;
   color: white;
   border-color: transparent;
-  box-shadow: 0px 4px 12px rgba(255, 50, 140, 0.3);
+  box-shadow: 0px 4px 12px rgba(40, 116, 240, 0.3);
 }
 
 /****************************************************
- 🌸 EDIT MODAL
+ 🔵 EDIT MODAL
 ****************************************************/
 .ap-modal {
   position: fixed;
@@ -230,12 +227,12 @@
 }
 
 .modal-actions .ap-btn {
-  background: #ff2d78;
+  background: #2874f0;
   color: white;
 }
 
 /****************************************************
- 🌟 TRENDING GRID FIXED CENTERED
+ 🔵 TRENDING GRID
 ****************************************************/
 .trending-grid {
   display: grid;
@@ -249,17 +246,17 @@
   background: white;
   padding: 18px;
   border-radius: 16px;
-  box-shadow: 0 4px 18px rgba(255, 20, 120, 0.1);
+  box-shadow: 0 4px 18px rgba(0, 60, 200, 0.08);
   text-align: center;
   transition: 0.25s ease;
 }
 
 .trend-card.active {
-  border: 2px solid #ff4fa0;
+  border: 2px solid #2874f0;
 }
 
 /****************************************************
- 🌟 CATEGORIES CENTER FIX
+ 🔵 CATEGORIES SECTION
 ****************************************************/
 .category-section {
   max-width: 500px;
@@ -277,13 +274,13 @@
   flex: 1;
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid #ffcde1;
+  border: 1px solid #bcd4ff;
 }
 
 .category-row button {
   padding: 12px 18px;
   border-radius: 12px;
-  background: #ff2d78;
+  background: #2874f0;
   color: white;
   border: none;
   cursor: pointer;
@@ -294,13 +291,13 @@
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 10px;
-  box-shadow: 0 3px 12px rgba(255, 20, 130, 0.1);
+  box-shadow: 0 3px 12px rgba(0, 60, 200, 0.1);
   display: flex;
   justify-content: space-between;
 }
 
 /****************************************************
- 🌟 HERO SECTION CENTER FIX
+ 🔵 HERO SECTION
 ****************************************************/
 .hero-section {
   max-width: 900px;
@@ -318,7 +315,7 @@
 .hero-form select {
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid #ffcfe4;
+  border: 1px solid #bbd4ff;
   flex: 1;
 }
 
@@ -332,7 +329,7 @@
   background: white;
   padding: 14px;
   border-radius: 16px;
-  box-shadow: 0 4px 18px rgba(255, 20, 120, 0.1);
+  box-shadow: 0 4px 18px rgba(0, 60, 200, 0.08);
   text-align: center;
 }
 
@@ -343,7 +340,7 @@
 }
 
 /****************************************************
- 🌟 ANIMATION
+ 🔵 ANIMATION
 ****************************************************/
 @keyframes fadeUp {
   from {
@@ -352,6 +349,5 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }

@@ -1,83 +1,110 @@
 /**********************************************
- 🌈 DASHBOARD HOME STYLES — PREMIUM UI
+ 🖤 CORPORATE DASHBOARD — PROFESSIONAL BLUE THEME
 **********************************************/
 .dashboard-home {
-  padding: 20px;
+  padding: 22px;
   font-family: "Poppins", sans-serif;
-
   animation: fadeUp 0.5s ease;
+  color: #0f0f0f;
 }
 
 /**********************************************
- 🔥 TOP CARDS
+ 🔥 TOP STAT CARDS (Stripe/Shopify Style)
 **********************************************/
 .dash-cards {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+  gap: 1.6rem;
+  margin-top: 1.8rem;
 }
 
 .dash-card {
   flex: 1;
-  background: linear-gradient(145deg, #ffe4ec, #ffd0e3);
-  padding: 1.6rem;
-  text-align: center;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.07);
+  padding: 1.7rem;
+  border-radius: 16px;
 
-  border-radius: 18px;                   /* ⬅ Smooth Curved Corners */
-  box-shadow: 0 10px 24px rgba(255, 105, 180, 0.18); /* Pink soft shadow */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  transition: 0.25s ease;
 
-  transition: 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+
+  background: linear-gradient(180deg, #007bff, #0056d6); /* Blue Accent */
+  border-radius: 8px 0 0 8px;
 }
 
 .dash-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(255, 105, 180, 0.28);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 .dash-card h3 {
   margin-bottom: 8px;
-  font-size: 18px;
-  color: #d63384;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a4a4a;
 }
 
 .dash-card p {
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 700;
-  color: #c2185b;
+  color: #0e0e0e;
 }
 
 /**********************************************
- 📊 CHARTS ROW
+ 📊 CHARTS — Modern Corporate Cards
 **********************************************/
 .charts-row {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 2.3rem;
+  gap: 1.6rem;
+  margin-top: 2.4rem;
 }
 
 .chart-box {
   flex: 1;
   background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.07);
+  padding: 1.6rem;
 
-  padding: 1.5rem;
-
-  border-radius: 20px;  /* ⬅ More soft curved box */
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
 
   transition: 0.3s ease;
+  position: relative;
+}
+
+.chart-box::before {
+  content: "";
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #007bff, #0056d6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 18px 18px 0 0;
 }
 
 .chart-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.14);
 }
 
 .chart-box h3 {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-size: 18px;
   font-weight: 700;
-  color: #d63384;
+  color: #111;
 }
 
 /**********************************************

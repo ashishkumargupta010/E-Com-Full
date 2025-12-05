@@ -20,6 +20,7 @@
   letter-spacing: 1px;
   color: white;
   font-family: "Poppins", sans-serif;
+  cursor: pointer;
 }
 
 /* Navigation Links */
@@ -197,7 +198,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hamburger (hidden now) */
+/* Hamburger hidden */
 .hamburger {
   display: none !important;
 }
@@ -327,6 +328,7 @@
   cursor: pointer;
 }
 
+/* Search user Hi text */
 .hello-user {
   color: white;
   margin-right: 6px;
@@ -342,6 +344,46 @@
   position: relative;
 }
 
+/* 🟢 Flipkart-style WHITE Search Button */
+.search-btn {
+  position: absolute;
+  right: 23%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff !important;   /* always white */
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* prevent any color change on active / click */
+.search-btn:active,
+.search-btn:focus,
+.search-btn:hover {
+  background: #ffffff !important;  /* force white */
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.search-btn img,
+.search-btn svg {
+  filter: brightness(0) !important; /* icon always black (visible) */
+}
+
+
+.search-btn:hover {
+  transform: translateY(-50%) scale(1.14);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* Search input */
 .nav-search input {
   width: 55%;
   padding: 10px 15px;

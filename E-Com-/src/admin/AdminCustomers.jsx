@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import CustomerListModal from "./CustomerListModal";
 import CustomerDetailsModal from "./CustomerDetailsModal";
+
 import "./AdminCustomers.css";
 
 const API = "http://localhost:5000/api";
@@ -52,7 +53,7 @@ export default function AdminCustomers() {
   }, []);
 
   // -----------------------------------
-  // CHART
+  // CHART (BLUE CORPORATE)
   // -----------------------------------
   useEffect(() => {
     if (users.length === 0) return;
@@ -60,6 +61,7 @@ export default function AdminCustomers() {
     const ctx = document.getElementById("customerChart");
     if (!ctx) return;
 
+    // Destroy old chart before drawing new
     if (chartRef.current) chartRef.current.destroy();
 
     const monthData = new Array(12).fill(0);
@@ -79,15 +81,25 @@ export default function AdminCustomers() {
           {
             label: "Customers Joined",
             data: monthData,
-            backgroundColor: "rgba(255, 20, 147, 0.65)",
-            borderRadius: 10
+            backgroundColor: "rgba(0, 123, 255, 0.65)", // 🔵 BLUE FIXED
+            borderColor: "#0056d6",
+            borderWidth: 2,
+            borderRadius: 10,
           }
         ]
       },
       options: {
         responsive: true,
         plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
+        scales: { 
+          y: { 
+            beginAtZero: true,
+            ticks: { color: "#222" }
+          },
+          x: {
+            ticks: { color: "#222" }
+          }
+        }
       }
     });
 
@@ -141,7 +153,6 @@ export default function AdminCustomers() {
 
       {/* PAGE TITLE */}
       <h2>👥 Customers Overview</h2>
-
 
       {/* SUMMARY CARDS */}
       <div className="customer-summary">
@@ -197,7 +208,7 @@ export default function AdminCustomers() {
         </table>
       </div>
 
-      {/* LIST & DETAILS MODALS */}
+      {/* LIST MODAL */}
       {showList && (
         <CustomerListModal
           type={showList}
@@ -207,6 +218,7 @@ export default function AdminCustomers() {
         />
       )}
 
+      {/* DETAILS MODAL */}
       {showDetails && (
         <CustomerDetailsModal
           user={showDetails}

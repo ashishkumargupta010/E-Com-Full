@@ -7,7 +7,7 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
   const month = now.getMonth();
   const year = now.getFullYear();
 
-  // Filter list depending on type
+  // Filter new / all customers
   let list =
     type === "new"
       ? users.filter((u) => {
@@ -41,14 +41,11 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
       "data:text/csv;charset=utf-8," +
       [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
 
-    const encodedUri = encodeURI(csvContent);
+    const encoded = encodeURI(csvContent);
     const link = document.createElement("a");
 
-    link.href = encodedUri;
-    link.download = `customers_export_${now.getDate()}-${
-      now.getMonth() + 1
-    }-${now.getFullYear()}.csv`;
-
+    link.href = encoded;
+    link.download = `customers_${now.getDate()}-${month + 1}-${year}.csv`;
     link.click();
   };
 
@@ -57,7 +54,7 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.4)",
+        background: "rgba(0,0,0,0.45)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -66,19 +63,29 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
     >
       <div
         style={{
-          background: "white",
-          padding: "20px",
-          width: "420px",
-          borderRadius: "12px",
+          background: "#ffffff",
+          padding: "22px",
+          width: "470px",
+          borderRadius: "14px",
           maxHeight: "85vh",
           overflowY: "auto",
+          boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
+          animation: "fadeIn 0.3s ease",
         }}
       >
-        <h3 style={{ marginBottom: "10px" }}>
-          {type === "new" ? "New Customers" : "Total Customers"}
+        {/* MODAL TITLE */}
+        <h3
+          style={{
+            fontSize: "20px",
+            fontWeight: "700",
+            marginBottom: "12px",
+            color: "#0d47a1",
+          }}
+        >
+          {type === "new" ? "New Customers" : "All Customers"}
         </h3>
 
-        {/* Search Bar */}
+        {/* SEARCH BAR */}
         <input
           type="text"
           placeholder="Search customers..."
@@ -86,50 +93,73 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
           onChange={(e) => setSearch(e.target.value)}
           style={{
             width: "100%",
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-            marginBottom: "12px",
+            padding: "11px",
+            borderRadius: "10px",
+            border: "1px solid #d0d8ff",
+            background: "#f5f7ff",
+            fontSize: "15px",
+            marginBottom: "14px",
+            outline: "none",
           }}
         />
 
-        {/* Export Button */}
+        {/* EXPORT BUTTON */}
         <button
           style={{
             width: "100%",
-            padding: "10px",
-            marginBottom: "12px",
-            background: "#ff69b4",
+            padding: "12px",
+            marginBottom: "16px",
+            background: "#0d47a1",
             border: "none",
             color: "white",
-            borderRadius: "8px",
+            borderRadius: "10px",
             cursor: "pointer",
             fontWeight: "600",
+            letterSpacing: "0.3px",
+            transition: "0.25s",
           }}
           onClick={exportCSV}
         >
           📤 Export CSV
         </button>
 
-        {/* Customer List */}
-        {filtered.length === 0 && <p>No customers found.</p>}
+        {/* CUSTOMER LIST */}
+        {filtered.length === 0 && (
+          <p style={{ textAlign: "center", color: "#666" }}>
+            No customers found.
+          </p>
+        )}
 
         {filtered.map((u, i) => (
           <div
             key={i}
             onClick={() => onSelect(u)}
             style={{
-              padding: "10px",
-              margin: "8px 0",
-              borderBottom: "1px solid #eee",
+              padding: "14px",
+              marginBottom: "12px",
+              borderRadius: "12px",
+              background: "#ffffff",
+              border: "1px solid #e0e0e0",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
               cursor: "pointer",
+              transition: "0.25s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-3px)";
+              e.currentTarget.style.boxShadow =
+                "0 6px 18px rgba(0,0,0,0.12)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow =
+                "0 2px 10px rgba(0,0,0,0.05)";
             }}
           >
-            <b>{u.name}</b>
-            <br />
-            <span>{u.emailOrPhone}</span>
-            <br />
-            <small>
+            <p style={{ fontWeight: "600", fontSize: "15px" }}>{u.name}</p>
+
+            <p style={{ color: "#444" }}>{u.emailOrPhone}</p>
+
+            <small style={{ color: "#777" }}>
               Joined:{" "}
               {u.createdAt
                 ? new Date(u.createdAt).toLocaleDateString()
@@ -138,16 +168,20 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
           </div>
         ))}
 
+        {/* CLOSE BUTTON */}
         <button
           onClick={onClose}
           style={{
-            marginTop: "15px",
+            marginTop: "12px",
             width: "100%",
-            padding: "10px",
-            background: "#ff4d6d",
+            padding: "12px",
+            background: "#0d47a1",
             color: "white",
-            borderRadius: "8px",
+            borderRadius: "10px",
             border: "none",
+            cursor: "pointer",
+            fontWeight: "600",
+            transition: "0.25s",
           }}
         >
           Close
@@ -158,4 +192,3 @@ const CustomerListModal = ({ type, users, onClose, onSelect }) => {
 };
 
 export default CustomerListModal;
-

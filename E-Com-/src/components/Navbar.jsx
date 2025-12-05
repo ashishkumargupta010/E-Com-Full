@@ -57,7 +57,7 @@ function Navbar() {
     }
   }, [location.pathname]);
 
-  // Hide dropdown outside click
+  // Hide dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -101,8 +101,26 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      {/* ⭐ NEW BLUSHORA SVG LOGO */}
       <h2 className="logo" onClick={() => navigate("/")}>
-        Blushora
+        <svg width="160" height="45" viewBox="0 0 600 160">
+          <defs>
+            <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%">
+              <stop offset="0%" stopColor="#ff6fb1" />
+              <stop offset="100%" stopColor="#ff297d" />
+            </linearGradient>
+          </defs>
+          <text
+            x="0"
+            y="105"
+            fontFamily="Poppins"
+            fontSize="90"
+            fontWeight="700"
+            fill="url(#pinkGrad)"
+          >
+            Blushora
+          </text>
+        </svg>
       </h2>
 
       {/* 🔍 SEARCH BAR */}
@@ -114,8 +132,23 @@ function Navbar() {
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
           />
+
+          {/* ⭐ FLIPKART STYLE SEARCH BUTTON */}
           <button type="submit" className="search-btn">
-            🔍
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#2874F0"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
           </button>
 
           {suggestions.length > 0 && (
@@ -145,13 +178,16 @@ function Navbar() {
           <Link to="/">
             <img src={homeIcon} className="nav-icon" alt="home" />
           </Link>
+
           <Link to="/products">
             <img src={productIcon} className="nav-icon" alt="products" />
           </Link>
 
           <Link to="/cart" className="cart-link">
             <img src={cartIcon} className="nav-icon" alt="cart" />
-            {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
+            {cart.length > 0 && (
+              <span className="cart-count">{cart.length}</span>
+            )}
           </Link>
         </div>
 
@@ -168,38 +204,28 @@ function Navbar() {
 
             {showUserDropdown && (
               <div className="user-dropdown">
-
-                {/* ⭐ NEW PREMIUM HEADING */}
                 <p className="ud-name">{user.name}</p>
-                {user.phone && <p className="ud-phone">📞 {user.phone}</p>}
+                {user.phone && (
+                  <p className="ud-phone">📞 {user.phone}</p>
+                )}
 
-                {/* ⭐ NEW BUTTON STYLE */}
                 <button
                   className="ud-btn"
-                  onClick={() => {
-                    setShowUserDropdown(false);
-                    navigate("/userpanel/profile");
-                  }}
+                  onClick={() => navigate("/userpanel/profile")}
                 >
                   My Profile
                 </button>
 
                 <button
                   className="ud-btn"
-                  onClick={() => {
-                    setShowUserDropdown(false);
-                    navigate("/userpanel/orders");
-                  }}
+                  onClick={() => navigate("/userpanel/orders")}
                 >
                   My Orders
                 </button>
 
                 <button
                   className="ud-btn"
-                  onClick={() => {
-                    setShowUserDropdown(false);
-                    navigate("/userpanel/address");
-                  }}
+                  onClick={() => navigate("/userpanel/address")}
                 >
                   Saved Addresses
                 </button>
@@ -207,10 +233,7 @@ function Navbar() {
                 {user.role === "admin" && (
                   <button
                     className="ud-btn"
-                    onClick={() => {
-                      setShowUserDropdown(false);
-                      navigate("/admin/products");
-                    }}
+                    onClick={() => navigate("/admin/products")}
                   >
                     Admin Dashboard
                   </button>
@@ -231,7 +254,10 @@ function Navbar() {
 
       {/* MOBILE MENU */}
       <div className="mobile-more-menu">
-        <button className="more-btn" onClick={() => setShowMoreMenu(!showMoreMenu)}>
+        <button
+          className="more-btn"
+          onClick={() => setShowMoreMenu(!showMoreMenu)}
+        >
           <FiMoreHorizontal size={22} />
         </button>
 
@@ -262,8 +288,8 @@ function Navbar() {
               <>
                 <button
                   onClick={() => {
-                    setShowMoreMenu(false);
                     navigate("/userpanel");
+                    setShowMoreMenu(false);
                   }}
                 >
                   Dashboard
@@ -272,8 +298,8 @@ function Navbar() {
                 {user.role === "admin" && (
                   <button
                     onClick={() => {
-                      setShowMoreMenu(false);
                       navigate("/admin/products");
+                      setShowMoreMenu(false);
                     }}
                   >
                     Admin Panel
@@ -282,8 +308,8 @@ function Navbar() {
 
                 <button
                   onClick={() => {
-                    setShowMoreMenu(false);
                     handleLogout();
+                    setShowMoreMenu(false);
                   }}
                 >
                   Logout

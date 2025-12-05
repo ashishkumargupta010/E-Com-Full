@@ -141,7 +141,7 @@
   border: none;
   cursor: pointer;
 
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  background: linear-gradient(45deg, #007bff, #0056d6);
   color: white;
   font-size: 15px;
   font-weight: 700;

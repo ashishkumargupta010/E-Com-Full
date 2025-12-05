@@ -31,19 +31,25 @@ import AdminDashboard from "./admin/AdminDashboard";
 import AdminAuth from "./admin/AdminAuth";
 import AdminProducts from "./admin/AdminProducts";
 
+// ⭐ React Toastify
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
-  // 🔥 Correct admin session
+  // Admin Session
   const admin = JSON.parse(localStorage.getItem("adminInfo") || "null");
   const adminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
 
-  // ✔ Correct user session (unchanged)
+  // User Session
   const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
 
   return (
     <div className="app-container">
+
+      {/* Navbar hide on admin pages */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
@@ -73,24 +79,27 @@ function AppContent() {
           <Route path="orders" element={<OrdersPage />} />
         </Route>
 
-        {/* ADMIN ROUTES FIXED */}
+        {/* ADMIN ROUTES */}
         <Route
           path="/admin/*"
           element={
             admin && adminLoggedIn ? (
               <AdminDashboard />
             ) : (
-              <Navigate to="/admin/login" />
+              <Navigate to="/admin/login" replace />
             )
           }
-        >
-          <Route path="products" element={<AdminProducts />} />
-        </Route>
+        />
 
         <Route path="/admin/login" element={<AdminAuth />} />
       </Routes>
 
+      {/* Footer hide on admin */}
       {!isAdminRoute && <Footer />}
+
+      {/* ⭐ Toast Messages Renderer (without this toast will never appear) */}
+      <ToastContainer position="top-right" autoClose={2500} theme="colored" />
+
     </div>
   );
 }

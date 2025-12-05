@@ -1,14 +1,22 @@
 /**********************************************
- 🌈 BASE THEME
+ 🌑 CORPORATE ADMIN THEME (BLACK + WHITE)
 **********************************************/
 :root {
-  --pink-1: #ff6ab7;
-  --pink-2: #ff1493;
+  --black: #111;
+  --dark: #1a1a1a;
+  --gray-1: #f7f7f7;
+  --gray-2: #e5e5e5;
+  --gray-3: #ccc;
+  --gray-4: #999;
+  --gray-5: #555;
 
-  --light-bg: #fff7fb;
+  --white: #fff;
 
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 200, 235, 0.8);
+  --border-light: rgba(0,0,0,0.08);
+  --border-medium: rgba(0,0,0,0.15);
+
+  --shadow-soft: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-medium: 0 4px 18px rgba(0,0,0,0.12);
 
   --transition: 0.25s ease;
 }
@@ -21,32 +29,29 @@
 }
 
 /**********************************************
- 🔥 MAIN ADMIN WRAPPER
+ 📌 MAIN ADMIN WRAPPER
 **********************************************/
 .admin-layout {
   display: flex;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: var(--light-bg);
+  background: var(--gray-1);
 }
 
 /**********************************************
- 📌 FIXED SIDEBAR
+ 📌 FIXED SIDEBAR (Modern White)
 **********************************************/
 .admin-sidebar {
   width: 240px;
   height: 100vh;
-
   position: fixed;
   top: 0;
   left: 0;
 
-  background: var(--glass-bg);
-  border-right: 1px solid var(--glass-border);
-  backdrop-filter: blur(16px);
-
-  box-shadow: 0 4px 20px rgba(255, 105, 180, 0.18);
+  background: var(--white);
+  border-right: 1px solid var(--border-light);
+  box-shadow: var(--shadow-soft);
 
   transition: transform var(--transition);
   z-index: 900;
@@ -63,31 +68,30 @@
 }
 
 /**********************************************
- 🌙 DARK OVERLAY WHEN SIDE MENU OPEN
+ 🌙 OVERLAY FOR MOBILE SIDEBAR
 **********************************************/
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   z-index: 800;
 }
 
 /**********************************************
- 🚀 MAIN AREA (RIGHT SIDE)
+ 🚀 MAIN RIGHT AREA
 **********************************************/
 .admin-main {
-  margin-left: 240px; /* sidebar space */
+  margin-left: 240px;
   flex: 1;
   display: flex;
   flex-direction: column;
-
   height: 100vh;
-  min-width: 0; /* prevents shrinking */
+
   overflow: hidden;
   transition: margin-left var(--transition);
+  background: var(--gray-1);
 }
 
-/* Mobile Main Area */
 @media (max-width: 900px) {
   .admin-main {
     margin-left: 0;
@@ -95,23 +99,30 @@
 }
 
 /**********************************************
- 📌 FIXED NAVBAR TOP
+ 📌 FIXED TOP NAVBAR
 **********************************************/
 .admin-navbar {
   position: fixed;
   top: 0;
   left: 240px;
+
   height: 70px;
   width: calc(100% - 240px);
 
-  background: #fff7fb;
-  border-bottom: 1px solid #ffd4ea;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 1.5rem;
+  box-shadow: var(--shadow-soft);
 
   z-index: 950;
   transition: left var(--transition), width var(--transition);
 }
 
-/* Mobile Navbar */
 @media (max-width: 900px) {
   .admin-navbar {
     left: 0;
@@ -123,41 +134,37 @@
  📄 CONTENT AREA
 **********************************************/
 .admin-content {
-  margin-top: 70px; /* navbar space */
+  margin-top: 70px;
   height: calc(100vh - 70px);
   overflow-y: auto;
 
   padding: 2rem;
-  background: var(--light-bg);
+  background: var(--gray-1);
 
   animation: fadeUp 0.4s ease;
-  min-width: 0;
+}
+
+.admin-content h1,
+.admin-content h2,
+.admin-content h3 {
+  color: var(--black);
 }
 
 /**********************************************
- 🔮 ANIMATION
+ 🔮 FADE ANIMATION
 **********************************************/
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /**********************************************
- 🚫 PREVENT ALL OVERFLOW / SHRINK BUGS
+ 📌 FIX LAYOUT SHRINK ISSUES
 **********************************************/
 .admin-main,
 .admin-content,
-.admin-navbar,
-.admin-navbar-actions,
-.admin-navbar-left {
+.admin-navbar {
   min-width: 0 !important;
-  flex-shrink: 0 !important;
 }
 
 .admin-content * {
@@ -166,9 +173,24 @@
 }
 
 /**********************************************
- 📊 Recharts Fix
+ 📊 CHART FIX
 **********************************************/
 .recharts-wrapper {
   width: 100% !important;
   max-width: 100% !important;
+}
+
+/**********************************************
+ 🔥 OPTIONAL:
+ Clean scrollbar (premium look)
+**********************************************/
+.admin-content::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-content::-webkit-scrollbar-thumb {
+  background: var(--gray-3);
+  border-radius: 8px;
+}
+.admin-content::-webkit-scrollbar-track {
+  background: transparent;
 }

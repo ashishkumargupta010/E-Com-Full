@@ -13,7 +13,9 @@ const AdminSidebar = ({ className }) => {
         <NavLink to="/admin/orders">Orders</NavLink>
         <NavLink to="/admin/coupons">Coupons</NavLink>
         <NavLink to="/admin/reviews">Reviews</NavLink>
-        <NavLink to="/admin/settings">Settings</NavLink>
+        <NavLink to="/admin/settings">Setting</NavLink>
+        <NavLink to="/admin/contacts">Contact Messages</NavLink>
+
       </nav>
     </aside>
   );

@@ -1,11 +1,20 @@
 /**********************************************
- 🌈 BASE THEME
+ 🖤 CORPORATE COUPON PANEL THEME
 **********************************************/
 :root {
-  --pink-1: #ff6ab7;
-  --pink-2: #ff1493;
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --bg-white: #ffffff;
+  --bg-light: #f5f6fa;
+
+  --text-dark: #111;
+  --text-gray: #555;
+  --text-light: #888;
+
+  --border: rgba(0, 0, 0, 0.15);
+  --border-soft: rgba(0, 0, 0, 0.08);
+
+  --shadow: 0 4px 14px rgba(0,0,0,0.10);
+  --shadow-hover: 0 8px 22px rgba(0,0,0,0.15);
+
   --transition: 0.25s ease;
 }
 
@@ -17,12 +26,13 @@
  🎟️ COUPON MAIN BOX
 **********************************************/
 .admin-coupon-box {
-  background: var(--glass-bg);
+  background: var(--bg-white);
   padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.12);
-  backdrop-filter: blur(16px);
+  border-radius: 16px;
+
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow);
+
   animation: fadeUp 0.45s ease;
 
   max-width: 900px;
@@ -33,11 +43,10 @@
  🔥 TITLE
 **********************************************/
 .admin-coupon-box h2 {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  -webkit-background-clip: text;
-  color: transparent;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-dark);
+  text-align: center;
   margin-bottom: 1.5rem;
 }
 
@@ -56,32 +65,38 @@
   min-width: 180px;
 
   padding: 12px;
-  border-radius: 12px;
-  border: 1px solid #ffc2de;
-  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
   background: white;
+  font-size: 15px;
+
   transition: var(--transition);
 }
 
 .add-coupon-form input:focus {
-  border-color: var(--pink-1);
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.25);
+  border-color: #222;
+  box-shadow: 0 0 12px rgba(0,0,0,0.12);
   outline: none;
 }
 
 .add-coupon-form button {
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 12px 22px;
+  border-radius: 10px;
   border: none;
+
   font-weight: 700;
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
+  font-size: 15px;
+
+  background: #222;
   color: white;
   cursor: pointer;
-  box-shadow: 0 8px 22px rgba(255, 20, 147, 0.25);
+
+  transition: var(--transition);
 }
 
 .add-coupon-form button:hover {
-  transform: scale(1.05);
+  background: #000;
+  transform: translateY(-2px);
 }
 
 /**********************************************
@@ -89,9 +104,9 @@
 **********************************************/
 .admin-coupon-box h3 {
   margin-bottom: 1rem;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--pink-2);
+  color: var(--text-dark);
 }
 
 /**********************************************
@@ -104,41 +119,48 @@
 }
 
 .admin-coupon-box li {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-white);
   padding: 14px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  margin-bottom: 12px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow);
+
   font-size: 16px;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 
-  box-shadow: 0 4px 16px rgba(255, 105, 180, 0.1);
+  margin-bottom: 12px;
   transition: var(--transition);
+
   animation: fadeUp 0.3s ease;
 }
 
 .admin-coupon-box li:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 22px rgba(255, 105, 180, 0.18);
+  box-shadow: var(--shadow-hover);
 }
 
 /**********************************************
  ❌ DELETE BUTTON
 **********************************************/
 .admin-coupon-box li button {
-  border: none;
   background: transparent;
+  border: none;
+
   font-size: 20px;
   cursor: pointer;
+
+  color: #444;
   transition: var(--transition);
 }
 
 .admin-coupon-box li button:hover {
-  transform: scale(1.3);
-  color: var(--pink-2);
+  transform: scale(1.2);
+  color: #d10000;
 }
 
 /**********************************************

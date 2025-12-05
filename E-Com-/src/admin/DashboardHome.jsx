@@ -24,45 +24,51 @@ const DashboardHome = () => {
 
   const token = localStorage.getItem("adminToken");
 
-  // ----------------- LOAD DASHBOARD DATA -----------------
+  const BLUE = "#007bff";
+  const BLUE_DARK = "#0056d6";
+  const BLUE_LIGHT = "#e4f0ff";
+
+  const PIE_COLORS = ["#007bff", "#3399ff", "#66b2ff"];
+
   const loadData = async () => {
     try {
-      // ✔ Correct backend route for admin orders
       const resOrders = await fetch(`${API}/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const ordersData = await resOrders.json();
 
-      // ✔ Correct backend route for admin users
       const resUsers = await fetch(`${API}/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const usersData = await resUsers.json();
 
-      if (Array.isArray(ordersData)) setOrders(ordersData);
-      if (Array.isArray(usersData)) setUsers(usersData);
+      setOrders(Array.isArray(ordersData) ? ordersData : []);
+      setUsers(Array.isArray(usersData) ? usersData : []);
     } catch (err) {
       console.log("Dashboard Load Error:", err);
     }
   };
 
   useEffect(() => {
-    loadData();
+    loadData(); // First load
+
+    // 🔥 PULLING / AUTO REFRESH EVERY 5 SECONDS
+    const interval = setInterval(() => {
+      loadData();
+    }, 5000);
+
+    return () => clearInterval(interval); // cleanup
   }, []);
 
-  // ----------------- STATS GENERATION -----------------
-
   const getOrdersThisWeek = () => {
-    const now = new Date();
     const weekAgo = new Date();
-    weekAgo.setDate(now.getDate() - 7);
+    weekAgo.setDate(weekAgo.getDate() - 7);
 
     return orders.filter((o) => new Date(o.createdAt) >= weekAgo).length;
   };
 
   const getActiveCustomers = () => {
-    const unique = new Set(orders.map((o) => o.userId));
-    return unique.size;
+    return new Set(orders.map((o) => o.userId)).size;
   };
 
   const getRevenue = () => {
@@ -71,31 +77,22 @@ const DashboardHome = () => {
       .reduce((sum, o) => sum + (o.total || 0), 0);
   };
 
-  // WEEKLY TREND (Sun → Sat)
   const getWeeklyChartData = () => {
     const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const counts = new Array(7).fill(0);
 
-    orders.forEach((o) => {
-      const d = new Date(o.createdAt).getDay();
-      counts[d]++;
-    });
+    orders.forEach((o) => counts[new Date(o.createdAt).getDay()]++);
 
-    return week.map((day, i) => ({
-      name: day,
-      orders: counts[i],
-    }));
+    return week.map((day, i) => ({ name: day, orders: counts[i] }));
   };
 
-  // Customer Types (New, Returning, VIP)
   const getCustomerTypes = () => {
     let vip = 0,
       returning = 0,
       newbie = 0;
 
     users.forEach((u) => {
-      const spent =
-        u.orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
+      const spent = u.orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
 
       if (spent > 5000) vip++;
       else if ((u.orders?.length || 0) >= 2) returning++;
@@ -109,40 +106,29 @@ const DashboardHome = () => {
     ];
   };
 
-  const COLORS = ["#ff8fa3", "#ffc2d1", "#ffe5ec"];
-
-  // Theme toggle
   const toggleTheme = () => {
     const newTheme = !darkMode;
     setDarkMode(newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
   };
 
-  // Theme Style
   const themeStyle = {
-    background: darkMode ? "#1a1a1a" : "#fff",
-    color: darkMode ? "#ffe4ec" : "#d63384",
+    background: darkMode ? "#1a1a1a" : "#ffffff",
+    color: darkMode ? "#cce0ff" : "#003f7f",
     transition: "all 0.5s ease",
+    padding: "2rem",
+    minHeight: "calc(100vh - 70px)",
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      style={{
-        ...themeStyle,
-        padding: "2rem",
-        minHeight: "calc(100vh - 70px)",
-      }}
-    >
-      {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={themeStyle}>
+      {/* HEADER */}
+      <div style={{ textAlign: "center", marginBottom: "1.4rem" }}>
         <h1
           style={{
             fontSize: "2rem",
             fontWeight: "700",
-            color: darkMode ? "#ffb6c1" : "#d63384",
+            color: darkMode ? "#66b2ff" : "#0056d6",
           }}
         >
           Dashboard Overview
@@ -150,10 +136,10 @@ const DashboardHome = () => {
 
         <motion.button
           onClick={toggleTheme}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.07 }}
           style={{
-            background: darkMode ? "#d63384" : "#ffe4ec",
-            color: darkMode ? "white" : "#d63384",
+            background: darkMode ? BLUE_DARK : BLUE_LIGHT,
+            color: darkMode ? "white" : BLUE_DARK,
             padding: "8px 14px",
             borderRadius: "20px",
             border: "none",
@@ -169,44 +155,25 @@ const DashboardHome = () => {
       </div>
 
       {/* TOP CARDS */}
-      <div
-        style={{
-          display: "flex",
-          gap: "1.5rem",
-          marginTop: "1.5rem",
-        }}
-      >
+      <div style={{ display: "flex", gap: "1.5rem" }}>
         {[
           { title: "Orders This Week", value: getOrdersThisWeek() },
           { title: "Active Customers", value: getActiveCustomers() },
-          {
-            title: "Revenue",
-            value: `₹${getRevenue().toLocaleString()}`,
-          },
+          { title: "Revenue", value: `₹${getRevenue().toLocaleString()}` },
         ].map((card, i) => (
           <motion.div
             key={i}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.04 }}
             style={{
-              background: darkMode ? "#2a2a2a" : "#ffe4ec",
+              background: darkMode ? "#2a2a2a" : "#eef5ff",
               flex: 1,
-              textAlign: "center",
               padding: "1.5rem",
               borderRadius: "14px",
+              textAlign: "center",
             }}
           >
-            <h3 style={{ color: darkMode ? "#ff8fa3" : "#d63384" }}>
-              {card.title}
-            </h3>
-            <p
-              style={{
-                fontSize: "1.7rem",
-                fontWeight: "800",
-                marginTop: "10px",
-              }}
-            >
-              {card.value}
-            </p>
+            <h3 style={{ color: darkMode ? "#66b2ff" : "#0056d6" }}>{card.title}</h3>
+            <p style={{ fontSize: "1.8rem", fontWeight: "800" }}>{card.value}</p>
           </motion.div>
         ))}
       </div>
@@ -217,46 +184,43 @@ const DashboardHome = () => {
           display: "grid",
           gridTemplateColumns: "2fr 1fr",
           gap: "2rem",
-          marginTop: "3rem",
+          marginTop: "2.4rem",
         }}
       >
+        {/* BAR CHART */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           style={{
-            background: darkMode ? "#2a2a2a" : "#fff0f5",
+            background: darkMode ? "#2a2a2a" : "#eef5ff",
             padding: "1.5rem",
             borderRadius: "15px",
           }}
         >
-          <h3 style={{ color: darkMode ? "#ff8fa3" : "#d63384" }}>
+          <h3 style={{ color: darkMode ? "#66b2ff" : "#0056d6" }}>
             📦 Orders Trend
           </h3>
 
           <BarChart width={500} height={250} data={getWeeklyChartData()}>
-            <XAxis stroke={darkMode ? "#ffe4ec" : "#000"} dataKey="name" />
-            <YAxis stroke={darkMode ? "#ffe4ec" : "#000"} />
+            <XAxis stroke={darkMode ? "#cce0ff" : "#000"} dataKey="name" />
+            <YAxis stroke={darkMode ? "#cce0ff" : "#000"} />
             <Tooltip />
-            <Bar
-              dataKey="orders"
-              fill={darkMode ? "#ff8fa3" : "#d63384"}
-              radius={[10, 10, 0, 0]}
-            />
+            <Bar dataKey="orders" fill={BLUE} radius={[10, 10, 0, 0]} />
           </BarChart>
         </motion.div>
 
-        {/* Pie Chart */}
+        {/* PIE CHART */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           style={{
-            background: darkMode ? "#2a2a2a" : "#fff0f5",
+            background: darkMode ? "#2a2a2a" : "#eef5ff",
             padding: "1.5rem",
             borderRadius: "15px",
             textAlign: "center",
           }}
         >
-          <h3 style={{ color: darkMode ? "#ff8fa3" : "#d63384" }}>
+          <h3 style={{ color: darkMode ? "#66b2ff" : "#0056d6" }}>
             👥 Customer Types
           </h3>
 
@@ -269,7 +233,7 @@ const DashboardHome = () => {
               cy="50%"
               label
             >
-              {COLORS.map((c, i) => (
+              {PIE_COLORS.map((c, i) => (
                 <Cell key={i} fill={c} />
               ))}
             </Pie>

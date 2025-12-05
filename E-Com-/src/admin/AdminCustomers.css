@@ -1,14 +1,20 @@
 /**********************************************
- 🌈 THEME COLORS
+ 🖤 CORPORATE CUSTOMERS THEME
 **********************************************/
 :root {
-  --pink-1: #ff6ab7;
-  --pink-2: #ff1493;
+  --bg-white: #ffffff;
+  --bg-light: #f5f6fa;
 
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --text-dark: #111;
+  --text-gray: #555;
+  --text-light: #888;
 
-  --shadow: 0 8px 22px rgba(255, 105, 180, 0.18);
+  --border: rgba(0, 0, 0, 0.12);
+  --soft-border: rgba(0, 0, 0, 0.08);
+
+  --shadow: 0 4px 14px rgba(0,0,0,0.10);
+  --shadow-hover: 0 8px 20px rgba(0,0,0,0.15);
+
   --transition: 0.25s ease;
 }
 
@@ -29,19 +35,14 @@
 **********************************************/
 .admin-customers-wrapper h2 {
   text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-
-  background: linear-gradient(45deg, var(--pink-1), var(--pink-2));
-  -webkit-background-clip: text;
-  color: transparent;
-
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
 }
 
-
 /**********************************************
- 🧊 SUMMARY CARDS (New + Total Customers)
+ 🧊 SUMMARY CARDS (New / Total Customers)
 **********************************************/
 .customer-summary {
   display: flex;
@@ -51,37 +52,40 @@
 
 .customer-card {
   flex: 1;
-  background: var(--glass-bg);
+  background: var(--bg-white);
   padding: 1.2rem;
   border-radius: 14px;
   cursor: pointer;
   text-align: center;
 
+  border: 1px solid var(--soft-border);
   box-shadow: var(--shadow);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px);
 
   transition: var(--transition);
 }
 
 .customer-card:hover {
   transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
 
 .customer-card h3 {
   margin-bottom: 4px;
+  color: var(--text-gray);
 }
 
 .customer-card-count {
   font-size: 28px;
   font-weight: 800;
+  color: var(--text-dark);
 }
 
 .customer-card-view {
-  color: var(--pink-2);
-  text-decoration: underline;
-  margin-top: 4px;
+  color: var(--text-gray);
   font-size: 14px;
+  text-decoration: underline;
+  margin-top: 5px;
+  display: inline-block;
 }
 
 /**********************************************
@@ -89,68 +93,76 @@
 **********************************************/
 .customer-chart-box {
   margin-top: 2rem;
-  background: white;
+  background: var(--bg-white);
   padding: 1.3rem;
   border-radius: 14px;
+  border: 1px solid var(--soft-border);
 
-  box-shadow: 0 3px 14px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow);
 }
 
 .customer-chart-box h3 {
   text-align: center;
   margin-bottom: 12px;
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
 /**********************************************
- 💰 TOP SPENDERS TABLE BOX
+ 💰 TOP SPENDERS TABLE WRAPPER
 **********************************************/
 .customer-top-box {
   margin-top: 2rem;
-  background: white;
+  background: var(--bg-white);
   padding: 1.3rem;
   border-radius: 14px;
 
-  box-shadow: 0 3px 14px rgba(0,0,0,0.12);
+  border: 1px solid var(--soft-border);
+  box-shadow: var(--shadow);
 }
 
 .customer-top-box h3 {
   text-align: center;
   margin-bottom: 15px;
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
 /**********************************************
- 🧾 TABLE
+ 🧾 TABLE (Corporate Clean Style)
 **********************************************/
 .customer-table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--bg-white);
 }
 
 .customer-table thead tr {
-  background: #fff0f6;
+  background: #f0f0f0;
 }
 
 .customer-table th,
 .customer-table td {
   padding: 12px;
   font-size: 15px;
+  border-bottom: 1px solid var(--soft-border);
+  color: var(--text-dark);
 }
 
 .customer-table td small {
-  color: #777;
+  color: var(--text-light);
 }
 
 .customer-table tbody tr {
-  border-bottom: 1px solid #eee;
   transition: var(--transition);
 }
 
 .customer-table tbody tr:hover {
-  background: #fff7fc;
+  background: #f7f7f7;
 }
 
 /**********************************************
- 🔮 MODAL OVERLAY STYLE (if needed)
+ 🔮 MODAL SUPPORT
 **********************************************/
 .modal-open {
   overflow: hidden;
@@ -167,5 +179,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/**********************************************
+ 📱 MOBILE RESPONSIVE
+**********************************************/
+@media (max-width: 768px) {
+  .customer-summary {
+    flex-direction: column;
   }
 }

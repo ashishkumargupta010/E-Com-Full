@@ -14,10 +14,6 @@ const OrdersPage = () => {
   const token = localStorage.getItem("token");
 
   /* 🔥 LOAD ORDERS */
-  useEffect(() => {
-    loadOrders();
-  }, []);
-
   const loadOrders = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/orders/my", {
@@ -34,6 +30,17 @@ const OrdersPage = () => {
       console.error("Fetch Orders Error:", err);
     }
   };
+
+  /* ⚡ AUTO REFRESH / PULLING EVERY 5 sec */
+  useEffect(() => {
+    loadOrders(); // first load
+
+    const interval = setInterval(() => {
+      loadOrders();
+    }, 5000); // 5 sec
+
+    return () => clearInterval(interval);
+  }, []);
 
   /* ⭐ Cancel Order */
   const cancelOrder = async (id) => {
@@ -153,10 +160,11 @@ const OrdersPage = () => {
         <div className="order-list">
           {orders.map((order) => (
             <div className="order-card" key={order.id}>
-              
               {/* ORDER HEADER */}
               <div className="order-header">
-                <span className={`status-badge ${order.status.replace(/\s+/g, "")}`}>
+                <span
+                  className={`status-badge ${order.status.replace(/\s+/g, "")}`}
+                >
                   {order.status}
                 </span>
 
@@ -169,51 +177,117 @@ const OrdersPage = () => {
 
               {/* TIMELINE */}
               <div className="timeline">
-
-                {/* Ordered */}
-                <div className={`step ${["Pending","Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                <div
+                  className={`step ${
+                    [
+                      "Pending",
+                      "Packed",
+                      "Shipped",
+                      "Out for Delivery",
+                      "Delivered",
+                    ].includes(order.status)
+                      ? "active"
+                      : ""
+                  }`}
+                >
                   <div className="step-circle"></div>
                   <p>Ordered</p>
                 </div>
 
-                <div className={`step-line ${["Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+                <div
+                  className={`step-line ${
+                    [
+                      "Packed",
+                      "Shipped",
+                      "Out for Delivery",
+                      "Delivered",
+                    ].includes(order.status)
+                      ? "active"
+                      : ""
+                  }`}
+                />
 
-                {/* Packed */}
-                <div className={`step ${["Packed","Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                <div
+                  className={`step ${
+                    [
+                      "Packed",
+                      "Shipped",
+                      "Out for Delivery",
+                      "Delivered",
+                    ].includes(order.status)
+                      ? "active"
+                      : ""
+                  }`}
+                >
                   <div className="step-circle"></div>
                   <p>Packed</p>
                 </div>
 
-                <div className={`step-line ${["Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+                <div
+                  className={`step-line ${
+                    ["Shipped", "Out for Delivery", "Delivered"].includes(
+                      order.status
+                    )
+                      ? "active"
+                      : ""
+                  }`}
+                />
 
-                {/* Shipped */}
-                <div className={`step ${["Shipped","Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                <div
+                  className={`step ${
+                    ["Shipped", "Out for Delivery", "Delivered"].includes(
+                      order.status
+                    )
+                      ? "active"
+                      : ""
+                  }`}
+                >
                   <div className="step-circle"></div>
                   <p>Shipped</p>
                 </div>
 
-                <div className={`step-line ${["Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`} />
+                <div
+                  className={`step-line ${
+                    ["Out for Delivery", "Delivered"].includes(order.status)
+                      ? "active"
+                      : ""
+                  }`}
+                />
 
-                {/* Out for Delivery */}
-                <div className={`step ${["Out for Delivery","Delivered"].includes(order.status) ? "active" : ""}`}>
+                <div
+                  className={`step ${
+                    ["Out for Delivery", "Delivered"].includes(order.status)
+                      ? "active"
+                      : ""
+                  }`}
+                >
                   <div className="step-circle"></div>
                   <p>Out for Delivery</p>
                 </div>
 
-                <div className={`step-line ${["Delivered"].includes(order.status) ? "active" : ""}`} />
+                <div
+                  className={`step-line ${
+                    ["Delivered"].includes(order.status) ? "active" : ""
+                  }`}
+                />
 
-                {/* Delivered */}
-                <div className={`step ${order.status === "Delivered" ? "active" : ""}`}>
+                <div
+                  className={`step ${
+                    order.status === "Delivered" ? "active" : ""
+                  }`}
+                >
                   <div className="step-circle"></div>
                   <p>Delivered</p>
                 </div>
               </div>
 
-              {/* DELIVERY ADDRESS */}
+              {/* DELIVERY BOX */}
               <div className="delivery-box">
                 <h4>Delivery Address</h4>
 
-                <p><b>{order.address?.name}</b></p>
+                <p>
+                  <b>{order.address?.name}</b>
+                </p>
                 <p>📞 {order.address?.phone}</p>
                 <p>
                   {order.address?.street}, {order.address?.city}
@@ -222,11 +296,10 @@ const OrdersPage = () => {
                 </p>
               </div>
 
-              {/* ORDER ITEMS */}
+              {/* ITEMS */}
               <div className="order-items">
                 {order.items?.map((item) => (
                   <div className="order-item" key={item.id}>
-
                     <img
                       src={item.product?.image}
                       alt=""
@@ -235,11 +308,12 @@ const OrdersPage = () => {
 
                     <div className="item-details">
                       <h3>{item.product?.name}</h3>
-                      <p>₹{item.price} × {item.quantity}</p>
+                      <p>
+                        ₹{item.price} × {item.quantity}
+                      </p>
                       {item.size && <p>Size: {item.size}</p>}
                     </div>
 
-                    {/* ⭐ Review Button */}
                     {order.status === "Delivered" && !item.review && (
                       <button
                         className="review-btn"
@@ -254,10 +328,7 @@ const OrdersPage = () => {
                       </button>
                     )}
 
-                    {item.review && (
-                      <p className="reviewed-tag">Reviewed ✓</p>
-                    )}
-
+                    {item.review && <p className="reviewed-tag">Reviewed ✓</p>}
                   </div>
                 ))}
               </div>
@@ -270,18 +341,23 @@ const OrdersPage = () => {
               {/* ACTION BUTTONS */}
               <div className="order-actions">
                 {order.status === "Pending" && (
-                  <button className="cancel-btn" onClick={() => cancelOrder(order.id)}>
+                  <button
+                    className="cancel-btn"
+                    onClick={() => cancelOrder(order.id)}
+                  >
                     Cancel Order
                   </button>
                 )}
 
                 {order.status === "Delivered" && isReturnAvailable(order) && (
-                  <button className="return-btn" onClick={() => returnOrder(order.id)}>
+                  <button
+                    className="return-btn"
+                    onClick={() => returnOrder(order.id)}
+                  >
                     Return Order
                   </button>
                 )}
               </div>
-
             </div>
           ))}
         </div>
@@ -297,7 +373,9 @@ const OrdersPage = () => {
               {[1, 2, 3, 4, 5].map((s) => (
                 <span
                   key={s}
-                  className={`star ${(hoverRating || rating) >= s ? "filled" : ""}`}
+                  className={`star ${
+                    (hoverRating || rating) >= s ? "filled" : ""
+                  }`}
                   onMouseEnter={() => setHoverRating(s)}
                   onMouseLeave={() => setHoverRating(0)}
                   onClick={() => setRating(s)}
@@ -321,7 +399,10 @@ const OrdersPage = () => {
             <button className="submit-review" onClick={submitReview}>
               Submit Review
             </button>
-            <button className="close-modal" onClick={() => setShowReviewModal(null)}>
+            <button
+              className="close-modal"
+              onClick={() => setShowReviewModal(null)}
+            >
               Close
             </button>
           </div>

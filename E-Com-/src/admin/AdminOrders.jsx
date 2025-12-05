@@ -16,7 +16,9 @@ export default function AdminOrders() {
     return <h2 style={{ padding: "20px" }}>❌ Unauthorized – Admin only</h2>;
   }
 
-  // LOAD ALL ORDERS
+  /* ---------------------------------------------------------
+      LOAD ALL ORDERS (Main function for polling + refresh)
+  --------------------------------------------------------- */
   const loadOrders = async () => {
     try {
       const res = await fetch(`${API}/orders`, {
@@ -27,7 +29,7 @@ export default function AdminOrders() {
 
       if (!Array.isArray(data)) return setOrders([]);
 
-      // Latest first
+      // Latest orders first
       data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
       setOrders(data);
@@ -36,11 +38,22 @@ export default function AdminOrders() {
     }
   };
 
+  /* ---------------------------------------------------------
+      🔥 REAL-TIME POLLING: Auto Refresh Every 5 Seconds
+  --------------------------------------------------------- */
   useEffect(() => {
-    loadOrders();
+    loadOrders(); // first load
+
+    const interval = setInterval(() => {
+      loadOrders(); // auto refresh
+    }, 5000); // 5 sec
+
+    return () => clearInterval(interval); // cleanup on page exit
   }, []);
 
-  // FILTERED ORDERS
+  /* ---------------------------------------------------------
+      FILTERED ORDERS
+  --------------------------------------------------------- */
   const filteredOrders = orders.filter((o) => {
     const matchesSearch =
       search === "" ||
@@ -53,7 +66,9 @@ export default function AdminOrders() {
     return matchesSearch && matchesStatus;
   });
 
-  // UPDATE STATUS
+  /* ---------------------------------------------------------
+      UPDATE STATUS
+  --------------------------------------------------------- */
   const updateStatus = async (id, status) => {
     try {
       const res = await fetch(`${API}/orders/${id}/status`, {
@@ -67,13 +82,15 @@ export default function AdminOrders() {
 
       if (!res.ok) return alert("Status update failed");
 
-      loadOrders();
+      loadOrders(); // refresh instantly
     } catch (err) {
       console.log(err);
     }
   };
 
-  // CANCEL ORDER
+  /* ---------------------------------------------------------
+      CANCEL ORDER
+  --------------------------------------------------------- */
   const cancelOrder = async (id) => {
     if (!window.confirm("Cancel this order?")) return;
     const reason = prompt("Enter cancellation reason:");
@@ -95,10 +112,14 @@ export default function AdminOrders() {
     }
   };
 
+  /* ---------------------------------------------------------
+      JSX UI (unchanged — exactly your original code)
+  --------------------------------------------------------- */
+
   return (
     <div className="admin-orders-layout">
 
-      {/* ---------------- LEFT FILTER PANEL ---------------- */}
+      {/* LEFT FILTER PANEL */}
       <div className="orders-filter-box">
         <h3>🔍 Filters</h3>
 
@@ -126,7 +147,7 @@ export default function AdminOrders() {
         </select>
       </div>
 
-      {/* ---------------- RIGHT ORDER LIST ---------------- */}
+      {/* RIGHT ORDER LIST */}
       <div className="orders-right">
         <h1>Orders Management</h1>
 
@@ -137,30 +158,24 @@ export default function AdminOrders() {
         {filteredOrders.map((o) => (
           <div key={o.id} className="admin-order-card">
             
-            {/* STATUS BADGE */}
             <div className={`status-tag ${o.status.replace(/\s+/g, "")}`}>
               {o.status}
             </div>
 
             <h3>Order #{o.id}</h3>
 
-            {/* USER DETAILS */}
             <p><b>User:</b> {o.user?.name} ({o.user?.email})</p>
             <p><b>Phone:</b> {o.address?.phone}</p>
 
-            {/* ORDER TIMING */}
             <p><b>Placed On:</b> {new Date(o.createdAt).toLocaleString()}</p>
 
-            {/* PAYMENT */}
             <p><b>Payment:</b> {o.paymentMethod}</p>
 
-            {/* ADDRESS */}
             <p>
               <b>Address:</b> {o.address?.address}, {o.address?.city} -{" "}
               {o.address?.pincode}
             </p>
 
-            {/* ITEMS */}
             <h4>Items</h4>
             <ul className="item-list">
               {o.items?.map((item) => (
@@ -177,12 +192,10 @@ export default function AdminOrders() {
               ))}
             </ul>
 
-            {/* TOTAL AMOUNT */}
             <p className="order-total">
               <b>Total:</b> ₹{o.total}
             </p>
 
-            {/* ACTION BUTTONS */}
             <div className="order-actions">
               {o.status === "Pending" && (
                 <>
@@ -220,7 +233,6 @@ export default function AdminOrders() {
               )}
             </div>
 
-            {/* STATUS DROPDOWN */}
             <div className="status-update">
               <label>Update Status:</label>
               <select

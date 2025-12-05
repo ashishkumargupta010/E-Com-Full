@@ -1,0 +1,83 @@
+/* ================================
+   CONTACT MESSAGES — ADMIN PANEL
+   Flipkart-Level Professional UI
+================================ */
+
+.contact-admin-wrapper {
+  padding: 25px;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center; 
+}
+
+/* Loading & No Data */
+.loading,
+.no-data {
+  font-size: 16px;
+  color: #555;
+  margin-top: 20px;
+}
+
+/* TABLE STYLING */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.admin-table thead {
+  background: #f4f4f4;
+}
+
+.admin-table th {
+  padding: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: left;
+  color: #222;
+  border-bottom: 2px solid #ddd;
+}
+
+/* BODY */
+.admin-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+/* LONG MESSAGE WRAP */
+.msg-text {
+  max-width: 350px;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* ROW HOVER EFFECT */
+.admin-table tbody tr:hover {
+  background: #fafafa;
+  transition: 0.2s;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .msg-text {
+    max-width: 200px;
+  }
+}

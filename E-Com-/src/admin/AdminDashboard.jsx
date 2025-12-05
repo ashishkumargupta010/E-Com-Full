@@ -11,6 +11,8 @@ import AdminCoupons from "./AdminCoupons";
 import AdminOrders from "./AdminOrders";
 import AdminReviews from "./AdminReviews";
 import AdminSettings from "./AdminSettings";
+import AdminContacts from "./AdminContacts";
+
 
 import "./AdminDashboard.css"; // make sure filename matches exactly
 
@@ -46,6 +48,8 @@ const AdminDashboard = () => {
             <Route path="orders" element={<AdminOrders />} />
             <Route path="reviews" element={<AdminReviews />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="contacts" element={<AdminContacts />} />
+
           </Routes>
         </div>
       </div>
